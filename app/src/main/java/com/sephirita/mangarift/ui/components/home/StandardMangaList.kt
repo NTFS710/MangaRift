@@ -1,16 +1,13 @@
-package com.sephirita.mangarift.ui.components
+package com.sephirita.mangarift.ui.components.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -59,7 +56,7 @@ fun StandardMangaList(
 
 fun getMangaList(): List<Manga> {
     var listOfMangas: ArrayList<Manga> = arrayListOf()
-    for (i in 0 until 5) {
+    for (i in 0 until 10) {
         listOfMangas.add(getMockedManga())
     }
     return listOfMangas
