@@ -22,6 +22,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -76,34 +78,7 @@ fun DetailPage(
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
                     )
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp)
-                            .clickable {  }
-                    ) {
-                        //Text with stroke border
-
-                        StrokedText(
-                            text = item.title,
-//                            textColor = MaterialTheme.colorScheme.secondary.toArgb(),
-                            size = 54.sp.value,
-//                            textStrokeColor = Black.toArgb(),
-//                            textStrokeWidth = 3f
-                        )
-
-                        val offset = Offset(0f, 10.0f)
-                        Text(
-                            text = "Hello world!",
-                            style = TextStyle(
-                                fontSize = 20.sp,
-                                shadow = Shadow(
-                                    color = Black, offset = offset, blurRadius = 3f
-                                )
-                            )
-                        )
-
-                    }
+                    StrokedText(text = item.title)
                 }
             }
             Box(modifier = Modifier

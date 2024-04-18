@@ -1,69 +1,50 @@
 package com.sephirita.mangarift.ui.components.text
 
-import android.graphics.Color
 import android.graphics.Paint.Style
-import android.graphics.Paint.Join
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Paint
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun StrokedText(
     modifier: Modifier = Modifier,
     text: String = "",
-    textColor: Int = Color.WHITE,
-    textStyle: Style = Style.FILL,
-    size: Float = 64f,
-    textStrokeColor: Int = Color.BLACK,
-    textStrokeStyle: Style = Style.STROKE,
+    textColor: Color = Color.White,
+    size: TextUnit = 20.sp,
+    textStrokeColor: Color = Color.Black,
     textStrokeWidth: Float = 12f,
-    textStrokeMiter: Float = 10f,
-    textStrokeJoin: Join = Join.ROUND
+    textStrokeMiter: Float = 4f,
+    textStrokeJoin: StrokeJoin = StrokeJoin.Round
 ) {
 
-    val textPaintStroke = Paint().asFrameworkPaint().apply {
-        isAntiAlias = true
-        style = textStrokeStyle
-        textSize = size
-        color = textStrokeColor
-        strokeWidth = textStrokeWidth
-        strokeMiter = textStrokeMiter
-        strokeJoin = textStrokeJoin
-    }
-
-    val textPaint = Paint().asFrameworkPaint().apply {
-        isAntiAlias = true
-        style = textStyle
-        textSize = size
-        color = textColor
-    }
-
-    Canvas(
-        modifier = modifier.fillMaxWidth() ,
-        onDraw = {
-            drawIntoCanvas {
-                it.nativeCanvas.drawText(
-                    text,
-                    0f,
-                    0f,
-                    textPaintStroke
+    Box(modifier = modifier) {
+        Text(
+            text = text,
+            style = LocalTextStyle.current.merge(
+                TextStyle(
+                    color = textStrokeColor,
+                    fontSize = size,
+                    drawStyle = Stroke(
+                        width = textStrokeWidth,
+                        miter = textStrokeMiter,
+                        join = textStrokeJoin
+                    )
                 )
-                it.nativeCanvas.drawText(
-                    text,
-                    0f,
-                    0f,
-                    textPaint
-                )
-            }
-        }
-    )
+            )
+        )
+
+        Text(
+            text = text,
+            color = textColor,
+            fontSize = size
+        )
+    }
 }
