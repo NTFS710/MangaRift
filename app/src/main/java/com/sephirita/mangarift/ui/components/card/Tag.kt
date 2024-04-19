@@ -7,14 +7,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sephirita.mangarift.ui.theme.CharcoalGray
 
 @Composable
-fun Tag(name: String) {
-    val background = MaterialTheme.colorScheme.background
+fun Tag(
+    name: String,
+    background: Color = MaterialTheme.colorScheme.background,
+    cornerRadius: Float = 100f
+) {
     Text(
         name,
         fontSize = 12.sp,
@@ -23,9 +26,9 @@ fun Tag(name: String) {
             .drawBehind {
                 drawRoundRect(
                     background,
-                    cornerRadius = CornerRadius(100f, 100f)
+                    cornerRadius = CornerRadius(cornerRadius, cornerRadius)
                 )
             }
-            .padding(horizontal = 6.dp, vertical = 2.dp)
+            .padding(horizontal = 10.dp, vertical = 2.dp)
     )
 }

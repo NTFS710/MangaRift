@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.sephirita.mangarift.data.Manga
+import com.sephirita.mangarift.ui.components.sohprateste.Chapter
 import com.sephirita.mangarift.ui.components.sohprateste.Tag
 
 @Composable
@@ -73,14 +74,85 @@ fun StandardMangaDisplay(
 fun getMockedManga() = Manga(
     id = "dd0b8df1-1b59-4ce3-a6f3-cc19cf6ca4f6",
     author = "Himiya Jouzu",
+    artist = "Himiya Jouzu",
     image = "https://mangadex.org/covers/dd0b8df1-1b59-4ce3-a6f3-cc19cf6ca4f6/334123d5-8f81-479e-a3b4-0ec9eb29bf5e.jpg",
     rating = "8.20",
     tags = getMangaTags(),
-    title = "Iinchou Desu ga Furyou ni Naru Hodo Koi Shitemasu!"
+    title = "Iinchou Desu ga Furyou ni Naru Hodo Koi Shitemasu!",
+    chapters = getMangaChapters()
 )
 
+fun getMangaChapters(): List<Chapter> {
+    val chapters: MutableList<Chapter> = mutableListOf()
+
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 1f,
+            pages = 25,
+            title = "",
+            translatedLanguage = "pt-br"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 2f,
+            pages = 25,
+            title = "",
+            translatedLanguage = "pt-br"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 2f,
+            pages = 25,
+            title = "",
+            translatedLanguage = "pt-br"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 3f,
+            pages = 25,
+            title = "",
+            translatedLanguage = "pt-br"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 4f,
+            pages = 25,
+            title = "",
+            translatedLanguage = "pt-br"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 5f,
+            pages = 25,
+            title = "",
+            translatedLanguage = "pt-br"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 5f,
+            pages = 25,
+            title = "",
+            translatedLanguage = "pt-br"
+        )
+    )
+    return chapters
+}
+
 fun getMangaTags(): List<Tag> {
-    var tags: MutableList<Tag> = mutableListOf()
+    val tags: MutableList<Tag> = mutableListOf()
     tags.add(
         Tag(
             id = "1",

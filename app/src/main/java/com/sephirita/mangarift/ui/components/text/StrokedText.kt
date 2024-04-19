@@ -1,6 +1,5 @@
 package com.sephirita.mangarift.ui.components.text
 
-import android.graphics.Paint.Style
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
@@ -24,7 +23,6 @@ fun StrokedText(
     textStrokeMiter: Float = 4f,
     textStrokeJoin: StrokeJoin = StrokeJoin.Round
 ) {
-
     Box(modifier = modifier) {
         Text(
             text = text,
