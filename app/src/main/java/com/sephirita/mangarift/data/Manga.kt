@@ -10,6 +10,7 @@ data class Manga (
     val image: String,
     val title: String,
     val rating: String,
+    val description: String,
     val tags: List<Tag>,
     val chapters: List<Chapter>
 )

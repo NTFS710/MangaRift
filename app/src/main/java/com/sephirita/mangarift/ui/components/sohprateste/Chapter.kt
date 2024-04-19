@@ -5,5 +5,6 @@ data class Chapter(
     val title: String,
     val translatedLanguage: String,
     val pages: Int,
-    val chapter: Float
+    val chapter: Float,
+    val updatedAt: String
 )

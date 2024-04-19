@@ -77,8 +77,9 @@ fun getMockedManga() = Manga(
     artist = "Himiya Jouzu",
     image = "https://mangadex.org/covers/dd0b8df1-1b59-4ce3-a6f3-cc19cf6ca4f6/334123d5-8f81-479e-a3b4-0ec9eb29bf5e.jpg",
     rating = "8.20",
-    tags = getMangaTags(),
     title = "Iinchou Desu ga Furyou ni Naru Hodo Koi Shitemasu!",
+    description = "Ryoko Masaki é uma presidente de classe séria, no entanto, decidiu se tornar uma delinquente para chamar a atenção de seu amigo de infância, Masato Todoroki. A razão é que, como presidente do comitê disciplinar, Masato sempre faz questão de lembrar os delinquentes sobre suas vestimentas, mas ele não dá atenção a Ryoko, que é séria. Por isso, Ryoko decidiu tingir o cabelo e encurtar a saia, e quando Masato a viu, ficou arrasado e preocupado. Será que isso era o que Ryoko esperava…?\n\nUma comédia romântica ridícula entre uma presidente de classe séria e um membro desatento do comitê disciplinar!",
+    tags = getMangaTags(),
     chapters = getMangaChapters()
 )
 
@@ -91,7 +92,8 @@ fun getMangaChapters(): List<Chapter> {
             chapter = 1f,
             pages = 25,
             title = "",
-            translatedLanguage = "pt-br"
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
         )
     )
     chapters.add(
@@ -100,7 +102,8 @@ fun getMangaChapters(): List<Chapter> {
             chapter = 2f,
             pages = 25,
             title = "",
-            translatedLanguage = "pt-br"
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
         )
     )
     chapters.add(
@@ -109,7 +112,8 @@ fun getMangaChapters(): List<Chapter> {
             chapter = 2f,
             pages = 25,
             title = "",
-            translatedLanguage = "pt-br"
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
         )
     )
     chapters.add(
@@ -118,7 +122,8 @@ fun getMangaChapters(): List<Chapter> {
             chapter = 3f,
             pages = 25,
             title = "",
-            translatedLanguage = "pt-br"
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
         )
     )
     chapters.add(
@@ -127,7 +132,8 @@ fun getMangaChapters(): List<Chapter> {
             chapter = 4f,
             pages = 25,
             title = "",
-            translatedLanguage = "pt-br"
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
         )
     )
     chapters.add(
@@ -136,7 +142,8 @@ fun getMangaChapters(): List<Chapter> {
             chapter = 5f,
             pages = 25,
             title = "",
-            translatedLanguage = "pt-br"
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
         )
     )
     chapters.add(
@@ -145,7 +152,8 @@ fun getMangaChapters(): List<Chapter> {
             chapter = 5f,
             pages = 25,
             title = "",
-            translatedLanguage = "pt-br"
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
         )
     )
     return chapters
