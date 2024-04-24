@@ -15,8 +15,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -31,21 +33,25 @@ import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.sephirita.mangarift.R
 import com.sephirita.mangarift.data.Manga
+import com.sephirita.mangarift.ui.components.header.Header
 import com.sephirita.mangarift.ui.components.rating.RatingBar
 import com.sephirita.mangarift.ui.components.text.StrokedText
+import com.sephirita.mangarift.utils.formatChapterNumber
+import com.sephirita.mangarift.utils.toDate
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalLayoutApi::class)
@@ -54,11 +60,14 @@ fun DetailPage(
     modifier: Modifier = Modifier,
     item: Manga
 ) {
-    // Header com seta de voltar e botão de download
+
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val backGroundHeight = (screenHeight / 10) * 4
 
     Scaffold(
+        topBar = {
+            Header()
+        },
         bottomBar = {
             Column(
                 modifier = Modifier
@@ -99,24 +108,12 @@ fun DetailPage(
                 modifier = Modifier.fillMaxSize()
             ) {
                 Box(
-                    contentAlignment = Alignment.TopCenter
+                    modifier = Modifier
+                        .height(backGroundHeight)
+                        .padding(horizontal = 16.dp),
+                    contentAlignment = Alignment.BottomStart
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .height(backGroundHeight)
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
-                        verticalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            modifier = Modifier.padding(top = 30.dp),
-                            fontSize = 24.sp,
-                            text = "seta",
-                            fontWeight = FontWeight.Bold,
-                            color = Black
-                        )
-                        StrokedText(text = item.title)
-                    }
+                    StrokedText(text = item.title)
                 }
                 Box(
                     modifier = Modifier
@@ -222,20 +219,23 @@ fun DetailPage(
                                             start = 16.dp,
                                             top = 4.dp,
                                             bottom = 4.dp
-                                        )
+                                        ),
+                                        contentAlignment = Center
                                     ) {
                                         Column {
-                                            Row {
-                                                Text(text = "$index.")
+                                            Row(
+                                                verticalAlignment = Alignment.Bottom
+                                            ) {
+                                                Text(text = "${index + 1}.")
                                                 Text(
-                                                    text = "Capítulo ${chapter.chapter}"
+                                                    text = "Capítulo ${chapter.chapter.formatChapterNumber()}"
                                                 )
                                             }
                                             Box(
                                                 modifier = Modifier.padding(start = 16.dp)
                                             ) {
                                                 Text(
-                                                    text = chapter.updatedAt,
+                                                    text = chapter.updatedAt.toDate(),
                                                     fontSize = 10.sp
                                                 )
                                             }

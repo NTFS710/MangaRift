@@ -129,6 +129,16 @@ fun getMangaChapters(): List<Chapter> {
     chapters.add(
         Chapter(
             id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 3.5f,
+            pages = 25,
+            title = "",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
             chapter = 4f,
             pages = 25,
             title = "",
