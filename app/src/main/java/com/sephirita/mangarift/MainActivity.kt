@@ -27,7 +27,7 @@ import com.sephirita.mangarift.utils.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge() // perguntar pro homi se tem como botar só em algumas telas
+        enableEdgeToEdge() // Funciona só na activity que chamou, se botar outra tem que chamar novamente
         super.onCreate(savedInstanceState)
         setContent {
             MangaRiftTheme {
@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-//                    telaDeDetalhes()
+                    telaDeDetalhes()
 //                    telaInicial()
 //                    telaDeBusca()
                 }

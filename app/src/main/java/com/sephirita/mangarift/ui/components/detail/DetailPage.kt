@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,6 +42,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,18 +51,17 @@ import com.sephirita.mangarift.R
 import com.sephirita.mangarift.data.Manga
 import com.sephirita.mangarift.ui.components.header.Header
 import com.sephirita.mangarift.ui.components.rating.RatingBar
+import com.sephirita.mangarift.ui.components.sohprateste.Tag
 import com.sephirita.mangarift.ui.components.text.StrokedText
 import com.sephirita.mangarift.utils.formatChapterNumber
 import com.sephirita.mangarift.utils.toDate
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun DetailPage(
     modifier: Modifier = Modifier,
     item: Manga
 ) {
-
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val backGroundHeight = (screenHeight / 10) * 4
 
@@ -150,6 +151,7 @@ fun DetailPage(
                             )
                         }
                         HorizontalDivider(color = Gray)
+                        // Ainda desse componente
                         Box(
                             modifier = Modifier
                                 .height(50.dp)
@@ -194,6 +196,7 @@ fun DetailPage(
                                 }
                             }
                         }
+//                        Itens da aba capitulos
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -245,39 +248,18 @@ fun DetailPage(
                                 }
                             }
                         }
-//                        Box(
-//                            modifier = Modifier
-//                                .fillMaxSize()
-//                                .padding(horizontal = 16.dp)
-//                        ) {
-//                            Column {
-//
-//                                Spacer(modifier = Modifier.height(8.dp))
-//                                Text(
-//                                    text = "Gêneros",
-//                                    fontSize = 16.sp,
-//                                    fontWeight = FontWeight.Bold
-//                                )
-//                                Spacer(modifier = Modifier.height(8.dp))
-//                                FlowRow(
-//                                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-//                                    verticalArrangement = Arrangement.spacedBy(6.dp),
-//                                    maxLines = 2
-//                                ) {
-//                                    item.tags.forEach {
-//                                        // adicionar clicks na tag, pra abrir a tela de pesquisa usando a tag como fitro
-//                                        Tag(
-//                                            name = it.type,
-//                                            background = MaterialTheme.colorScheme.surface
-//                                        )
-//                                    }
-//                                }
-//                                Spacer(modifier = Modifier.height(8.dp))
-//                                Text(
-//                                    text = item.description,
-//                                    fontSize = 16.sp
-//                                )
-//                            }
+//                        if aba de detalhes clicada, mostra generos e descrição
+//                        Column {
+//                            Genres(
+//                                titleText = item.title,
+//                                tags = item.tags,
+//                                description = item.description
+//                            )
+//                            Spacer(modifier = Modifier.height(8.dp))
+//                            Text(
+//                                text = item.description,
+//                                fontSize = 16.sp
+//                            )
 //                        }
                     }
                 }
