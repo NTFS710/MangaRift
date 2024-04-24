@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -30,7 +31,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sephirita.mangarift.ui.components.home.getMangaList
-import com.sephirita.mangarift.ui.components.search.SearchMangaDisplay
 
 /*
     Ideia do Header
@@ -45,13 +45,12 @@ import com.sephirita.mangarift.ui.components.search.SearchMangaDisplay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBarSample() {
+fun SearchBar() {
     var text by rememberSaveable { mutableStateOf("") }
     var active by rememberSaveable { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.statusBarsPadding()
     ) {
         Box(
             modifier = Modifier
@@ -87,20 +86,5 @@ fun SearchBarSample() {
                 }
             }
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        val searchItems = getMangaList()
-        LazyColumn(
-            contentPadding = PaddingValues(
-                start = 16.dp,
-                end = 16.dp,
-                bottom = 16.dp
-            ),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(searchItems) {
-                SearchMangaDisplay(it)
-            }
-        }
-
     }
 }

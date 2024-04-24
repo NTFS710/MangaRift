@@ -3,6 +3,8 @@ package com.sephirita.mangarift.ui.components.search
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -25,8 +27,9 @@ import com.sephirita.mangarift.data.Manga
 import com.sephirita.mangarift.ui.components.card.Tag
 import com.sephirita.mangarift.ui.components.rating.RatingBar
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun SearchMangaDisplay(item: Manga) {
+fun SearchListItem(item: Manga) {
 
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val itemHeight = screenHeight / 6
@@ -50,8 +53,12 @@ fun SearchMangaDisplay(item: Manga) {
             verticalArrangement = Arrangement.SpaceAround
         ) {
             Text(text = item.title)
-            Row {
-                item.tags.takeLast(3).forEach {
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp),
+                maxLines = 2
+            ) {
+                item.tags.forEach {
                     Tag(name = it.type)
                     Spacer(modifier = Modifier.width(8.dp))
                 }
@@ -73,5 +80,3 @@ fun SearchMangaDisplay(item: Manga) {
         }
     }
 }
-
-// FlowRow : linha com quebra

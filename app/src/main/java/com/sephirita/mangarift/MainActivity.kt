@@ -17,12 +17,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sephirita.mangarift.ui.components.search.SearchBarSample
+import com.sephirita.mangarift.ui.components.search.SearchBar
 import com.sephirita.mangarift.ui.components.home.StandardMangaList
 import com.sephirita.mangarift.ui.components.banner.BannersHome
 import com.sephirita.mangarift.ui.components.detail.DetailPage
 import com.sephirita.mangarift.ui.components.home.getMangaList
 import com.sephirita.mangarift.ui.components.home.getMockedManga
+import com.sephirita.mangarift.ui.components.search.SearchList
 import com.sephirita.mangarift.ui.theme.MangaRiftTheme
 
 class MainActivity : ComponentActivity() {
@@ -35,8 +36,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DetailPage(item = getMockedManga())
+//                    DetailPage(item = getMockedManga())
 //                    telaInicial()
+                    telaDeBusca()
                 }
             }
         }
@@ -45,7 +47,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun telaDeBusca() {
-    SearchBarSample()
+    Column {
+        SearchBar()
+        Spacer(modifier = Modifier.height(16.dp))
+        SearchList(searchItems = getMangaList())
+    }
 }
 
 @Composable
