@@ -18,13 +18,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sephirita.mangarift.ui.components.search.SearchBar
-import com.sephirita.mangarift.ui.components.home.StandardMangaList
+import com.sephirita.mangarift.ui.components.home.HomeItemsList
 import com.sephirita.mangarift.ui.components.banner.BannersHome
 import com.sephirita.mangarift.ui.components.detail.DetailPage
-import com.sephirita.mangarift.ui.components.home.getMangaList
-import com.sephirita.mangarift.ui.components.home.getMockedManga
 import com.sephirita.mangarift.ui.components.search.SearchList
 import com.sephirita.mangarift.ui.theme.MangaRiftTheme
+import com.sephirita.mangarift.utils.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,9 +35,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-//                    DetailPage(item = getMockedManga())
+//                    telaDeDetalhes()
 //                    telaInicial()
-                    telaDeBusca()
+//                    telaDeBusca()
                 }
             }
         }
@@ -63,13 +62,13 @@ private fun telaInicial() {
     ) {
         BannersHome(items = getMangaList())
         Spacer(modifier = Modifier.height(16.dp))
-        StandardMangaList(listTitle = "teste 1", items = getMangaList())
+        HomeItemsList(listTitle = "teste 1", items = getMangaList())
         Spacer(modifier = Modifier.height(16.dp))
-        StandardMangaList(listTitle = "teste 2", items = getMangaList())
+        HomeItemsList(listTitle = "teste 2", items = getMangaList())
         Spacer(modifier = Modifier.height(16.dp))
-        StandardMangaList(listTitle = "teste 3", items = getMangaList())
+        HomeItemsList(listTitle = "teste 3", items = getMangaList())
         Spacer(modifier = Modifier.height(16.dp))
-        StandardMangaList(listTitle = "teste 4", items = getMangaList())
+        HomeItemsList(listTitle = "teste 4", items = getMangaList())
         Spacer(modifier = Modifier.height(16.dp))
     }
 }

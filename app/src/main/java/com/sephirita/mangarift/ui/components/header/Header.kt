@@ -10,16 +10,22 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sephirita.mangarift.R
+
+//    Ideia de Header
+//
+//    Possui itens que devem ou não ser habilitados, dependendo de que classe carrega eles
+//
+//    1 : Botão de voltar
+//    2 : Campo de busca
+//    3 : Botão de DFo
 
 @Composable
 fun Header(

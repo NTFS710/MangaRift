@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.sephirita.mangarift.data.Manga
 
 @Composable
-fun StandardMangaList(
+fun HomeItemsList(
     modifier: Modifier = Modifier,
     listTitle: String,
     items: List<Manga>
@@ -46,18 +46,10 @@ fun StandardMangaList(
                 items(
                     items = items,
                     itemContent = {
-                        StandardMangaDisplay(item = it)
+                        HomeListItem(item = it)
                     }
                 )
             }
         }
     }
-}
-
-fun getMangaList(): List<Manga> {
-    var listOfMangas: ArrayList<Manga> = arrayListOf()
-    for (i in 0 until 10) {
-        listOfMangas.add(getMockedManga())
-    }
-    return listOfMangas
 }
