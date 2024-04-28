@@ -63,7 +63,8 @@ fun DetailPage(
     item: Manga
 ) {
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
-    val backGroundHeight = (screenHeight / 10) * 4
+    val backgroundHeight = (screenHeight / 10) * 4
+    val corner = 24.dp
 
     Scaffold(
         topBar = {
@@ -84,7 +85,7 @@ fun DetailPage(
                         .fillMaxWidth()
                         .padding(horizontal = 52.dp),
                     shape = (RoundedCornerShape(25f)),
-                    onClick = { /*TODO*/ }
+                    onClick = { /* TODO*/ }
                 ) {
                     Text(text = "Ler agora")
                 }
@@ -92,14 +93,15 @@ fun DetailPage(
         }
     ) {
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .navigationBarsPadding()
-                .padding(bottom = 80.dp),
+                .padding(bottom = 65.dp),
             contentAlignment = Alignment.TopCenter
         ) {
             AsyncImage(
+                modifier = Modifier.height(backgroundHeight+corner),
                 alignment = Alignment.TopCenter,
                 contentScale = ContentScale.FillWidth,
                 model = item.image,
@@ -110,7 +112,8 @@ fun DetailPage(
             ) {
                 Box(
                     modifier = Modifier
-                        .height(backGroundHeight)
+                        .height(backgroundHeight)
+                        .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                     contentAlignment = Alignment.BottomStart
                 ) {
@@ -119,12 +122,12 @@ fun DetailPage(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .clip(shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                        .clip(shape = RoundedCornerShape(topStart = corner, topEnd = corner))
                         .background(MaterialTheme.colorScheme.background)
                         .padding(top = 8.dp)
                 ) {
                     Column(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -143,124 +146,15 @@ fun DetailPage(
                                 Text(text = item.rating, fontSize = 20.sp)
                             }
                             Icon(
-                                modifier = modifier
+                                modifier = Modifier
                                     .size(24.dp, 24.dp)
                                     .clickable { },
                                 contentDescription = "Bookmark",
-                                painter = painterResource(id = R.drawable.ic_outline_bookmark) // Adicionar ícone pintado pra mostrarr ao usuário que o mangá está na lista de favoritos dele
+                                painter = painterResource(id = R.drawable.ic_outline_bookmark) // Adicionar ícone pintado pra mostrar ao usuário que o mangá está na lista de favoritos dele
                             )
                         }
                         HorizontalDivider(color = Gray)
-                        // Ainda desse componente
-                        Box(
-                            modifier = Modifier
-                                .height(50.dp)
-                                .fillMaxWidth(), contentAlignment = Center
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxSize(),
-                                horizontalArrangement = Arrangement.SpaceEvenly,
-                                verticalAlignment = CenterVertically
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .weight(0.5f)
-                                        .clip(RoundedCornerShape(bottomEnd = 8.dp))
-                                        .clickable { },
-                                    contentAlignment = Center
-                                ) {
-                                    Text(
-                                        modifier = Modifier,
-                                        textAlign = TextAlign.Center,
-                                        text = "Detalhes",
-                                        fontSize = 20.sp
-                                    )
-                                }
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .weight(0.5f)
-                                        .clip(RoundedCornerShape(bottomStart = 8.dp))
-                                        .background(MaterialTheme.colorScheme.surface)
-                                        .clickable { },
-                                    contentAlignment = Center
-                                ) {
-                                    Text(
-                                        modifier = Modifier,
-                                        textAlign = TextAlign.Center,
-                                        text = "Capítulos",
-                                        color = Gray,
-                                        fontSize = 20.sp
-                                    )
-                                }
-                            }
-                        }
-//                        Itens da aba capitulos
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(top = 8.dp)
-                        ) {
-                            Column {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.End
-                                ) {
-                                    Box {
-                                        Text(text = "Crescente", color = White, fontSize = 12.sp)
-                                    }
-                                    Spacer(modifier = Modifier.width(4.dp))
-                                    Box {
-                                        Text(text = "Decrescente", color = Gray, fontSize = 12.sp)
-                                    }
-                                }
-                                HorizontalDivider()
-                                item.chapters.forEachIndexed { index, chapter ->
-                                    Box(
-                                        modifier = Modifier.padding(
-                                            start = 16.dp,
-                                            top = 4.dp,
-                                            bottom = 4.dp
-                                        ),
-                                        contentAlignment = Center
-                                    ) {
-                                        Column {
-                                            Row(
-                                                verticalAlignment = Alignment.Bottom
-                                            ) {
-                                                Text(text = "${index + 1}.")
-                                                Text(
-                                                    text = "Capítulo ${chapter.chapter.formatChapterNumber()}"
-                                                )
-                                            }
-                                            Box(
-                                                modifier = Modifier.padding(start = 16.dp)
-                                            ) {
-                                                Text(
-                                                    text = chapter.updatedAt.toDate(),
-                                                    fontSize = 10.sp
-                                                )
-                                            }
-                                        }
-                                    }
-                                    HorizontalDivider()
-                                }
-                            }
-                        }
-//                        if aba de detalhes clicada, mostra generos e descrição
-//                        Column {
-//                            Genres(
-//                                titleText = item.title,
-//                                tags = item.tags,
-//                                description = item.description
-//                            )
-//                            Spacer(modifier = Modifier.height(8.dp))
-//                            Text(
-//                                text = item.description,
-//                                fontSize = 16.sp
-//                            )
-//                        }
+                        DetailPageTabs()
                     }
                 }
             }

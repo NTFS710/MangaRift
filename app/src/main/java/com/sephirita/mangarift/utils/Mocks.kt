@@ -22,9 +22,31 @@ fun getMangaChapters(): List<Chapter> {
     chapters.add(
         Chapter(
             id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 2f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 5f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
             chapter = 1f,
             pages = 25,
-            title = "",
+            title = "A trança do rei careca",
             translatedLanguage = "pt-br",
             updatedAt = "2024-01-11T22:19:26+00:00"
         )
@@ -34,27 +56,18 @@ fun getMangaChapters(): List<Chapter> {
             id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
             chapter = 2f,
             pages = 25,
-            title = "",
+            title = "A trança do rei careca",
             translatedLanguage = "pt-br",
             updatedAt = "2024-01-11T22:19:26+00:00"
         )
     )
-    chapters.add(
-        Chapter(
-            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-            chapter = 2f,
-            pages = 25,
-            title = "",
-            translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
-        )
-    )
+
     chapters.add(
         Chapter(
             id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
             chapter = 3f,
             pages = 25,
-            title = "",
+            title = "A trança do rei careca",
             translatedLanguage = "pt-br",
             updatedAt = "2024-01-11T22:19:26+00:00"
         )
@@ -64,7 +77,7 @@ fun getMangaChapters(): List<Chapter> {
             id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
             chapter = 3.5f,
             pages = 25,
-            title = "",
+            title = "A trança do rei careca",
             translatedLanguage = "pt-br",
             updatedAt = "2024-01-11T22:19:26+00:00"
         )
@@ -74,7 +87,18 @@ fun getMangaChapters(): List<Chapter> {
             id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
             chapter = 4f,
             pages = 25,
-            title = "",
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 5f,
+            pages = 25,
+            title = "A trança do rei careca",
             translatedLanguage = "pt-br",
             updatedAt = "2024-01-11T22:19:26+00:00"
         )
@@ -82,9 +106,9 @@ fun getMangaChapters(): List<Chapter> {
     chapters.add(
         Chapter(
             id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-            chapter = 5f,
+            chapter = 6f,
             pages = 25,
-            title = "",
+            title = "A trança do rei careca",
             translatedLanguage = "pt-br",
             updatedAt = "2024-01-11T22:19:26+00:00"
         )
@@ -92,9 +116,89 @@ fun getMangaChapters(): List<Chapter> {
     chapters.add(
         Chapter(
             id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-            chapter = 5f,
+            chapter = 7f,
             pages = 25,
-            title = "",
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 8f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 8f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 8f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 9f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 10f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 10f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 11f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 12f,
+            pages = 25,
+            title = "A trança do rei careca",
             translatedLanguage = "pt-br",
             updatedAt = "2024-01-11T22:19:26+00:00"
         )
