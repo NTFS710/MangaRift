@@ -59,7 +59,6 @@ import com.sephirita.mangarift.utils.toDate
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun DetailPage(
-    modifier: Modifier = Modifier,
     item: Manga
 ) {
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
@@ -154,7 +153,7 @@ fun DetailPage(
                             )
                         }
                         HorizontalDivider(color = Gray)
-                        DetailPageTabs()
+                        DetailPageTabs(item = item)
                     }
                 }
             }

@@ -31,7 +31,7 @@ fun ChaptersList(
     chapters: List<Chapter> = emptyList()
 ) {
     var isOrderCrescent by rememberSaveable { mutableStateOf(true) }
-    var expandedChapterNumbers = remember { mutableStateMapOf<Float, Boolean>() }
+    val expandedChapterNumbers = remember { mutableStateMapOf<Float, Boolean>() }
 
     Box(
         modifier = modifier
@@ -74,26 +74,23 @@ fun ChaptersList(
                 }
             }
 
-            chapters
-                .groupBy { it.chapter }
-                .toSortedMap(
-                    if (isOrderCrescent)
-                        naturalOrder()
-                    else
-                        reverseOrder()
+            chapters.groupBy { it.chapter }.toSortedMap(
+                if (isOrderCrescent)
+                    naturalOrder()
+                else
+                    reverseOrder()
+            ).forEach { (chapterNumber, chapterList) ->
+                val expandedChapter = expandedChapterNumbers[chapterNumber] ?: false
+                HorizontalDivider()
+                ChapterListItem(
+                    chapterNumber = chapterNumber,
+                    chapters = chapterList,
+                    isExpanded = expandedChapter,
+                    onClick = {
+                        expandedChapterNumbers[chapterNumber] = !expandedChapter
+                    }
                 )
-                .forEach { (chapterNumber, chapterList) ->
-                    val expandedChapter = expandedChapterNumbers[chapterNumber] ?: false
-                    HorizontalDivider()
-                    ChapterListItem(
-                        chapterNumber = chapterNumber,
-                        chapters = chapterList,
-                        isExpanded = expandedChapter,
-                        onClick = {
-                            expandedChapterNumbers[chapterNumber] = !expandedChapter
-                        }
-                    )
-                }
+            }
         }
     }
 }

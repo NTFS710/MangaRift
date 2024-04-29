@@ -21,7 +21,6 @@ import com.sephirita.mangarift.ui.components.search.SearchBar
 import com.sephirita.mangarift.ui.components.home.HomeItemsList
 import com.sephirita.mangarift.ui.components.banner.BannersHome
 import com.sephirita.mangarift.ui.components.detail.DetailPage
-import com.sephirita.mangarift.ui.components.detail.TesteDetail
 import com.sephirita.mangarift.ui.components.search.SearchList
 import com.sephirita.mangarift.ui.theme.MangaRiftTheme
 import com.sephirita.mangarift.utils.*
@@ -77,5 +76,4 @@ private fun telaInicial() {
 @Composable
 private fun telaDeDetalhes() {
     DetailPage(item = getMockedManga())
-//    TesteDetail(item = getMockedManga())
 }

@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,18 +24,15 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sephirita.mangarift.utils.getMangaChapters
+import com.sephirita.mangarift.data.Manga
+import com.sephirita.mangarift.ui.model.DetailsPageTab
 
 @Composable
 fun DetailPageTabs(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    item: Manga
 ) {
-    val tabWeight = 0.5f
-    val tabHeight = 50.dp
-    val selectedTabBackgroundColor = MaterialTheme.colorScheme.background
-    val unselectedTabBackgroundColor = MaterialTheme.colorScheme.surface
-    val selectedTabTextColor = White
-    val unselectedTabTextColor = Gray
+    var selectedTab by remember { mutableStateOf(DetailsPageTab.Details) }
 
     val error = false
 
@@ -43,48 +43,36 @@ fun DetailPageTabs(
         Column(modifier = modifier.fillMaxSize()) {
             Row(
                 modifier = Modifier
-                    .height(tabHeight)
+                    .height(50.dp)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(bottomEnd = 8.dp))
-                        .background(unselectedTabBackgroundColor)
-                        .weight(tabWeight)
-                        .clickable {
-//                    muda cor do background e mostrar as coisas da aba de detalhes
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        modifier = Modifier,
-                        textAlign = TextAlign.Center,
-                        text = "Detalhes",
-                        color = unselectedTabTextColor,
-                        fontSize = 20.sp
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(bottomStart = 8.dp))
-                        .background(selectedTabBackgroundColor)
-                        .weight(tabWeight)
-                        .clickable {
-//                    muda cor do background e mostrar a lista de capítulos
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        modifier = Modifier,
-                        textAlign = TextAlign.Center,
-                        text = "Capítulos",
-                        color = selectedTabTextColor,
-                        fontSize = 20.sp
-                    )
+                DetailsPageTab.entries.forEach {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(it.getCorners())
+                            .background(
+                                if (selectedTab == it)
+                                    MaterialTheme.colorScheme.background
+                                else
+                                    MaterialTheme.colorScheme.surface
+                            )
+                            .weight(0.5f)
+                            .clickable {
+                                selectedTab = it
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            modifier = Modifier,
+                            textAlign = TextAlign.Center,
+                            text = it.getText(),
+                            color = if (selectedTab == it) White else Gray,
+                            fontSize = 20.sp
+                        )
+                    }
                 }
             }
             if (error) {
@@ -98,7 +86,10 @@ fun DetailPageTabs(
                     )
                 }
             } else {
-                ChaptersList(chapters = getMangaChapters())
+                when (selectedTab) {
+                    DetailsPageTab.Details -> DetailedInformation(item = item)
+                    DetailsPageTab.Chapters -> ChaptersList(chapters = item.chapters)
+                }
             }
         }
     }

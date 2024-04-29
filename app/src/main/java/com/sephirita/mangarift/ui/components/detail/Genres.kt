@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -29,8 +30,7 @@ fun Genres(
     if (tags.isNotEmpty()) {
         Box(
             modifier = modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp)
+                .fillMaxWidth()
         ) {
             Column {
 
