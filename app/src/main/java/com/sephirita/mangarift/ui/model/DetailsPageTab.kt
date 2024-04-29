@@ -15,6 +15,9 @@ enum class DetailsPageTab {
         override fun getCorners(): RoundedCornerShape {
             return RoundedCornerShape(bottomEnd = 8.dp)
         }
+
+        override val index: Int
+            get() = 0
     },
     Chapters {
         @Composable
@@ -26,6 +29,9 @@ enum class DetailsPageTab {
         override fun getCorners(): RoundedCornerShape {
             return RoundedCornerShape(bottomStart = 8.dp)
         }
+
+        override val index: Int
+            get() = 1
     };
 
     @Composable
@@ -33,4 +39,6 @@ enum class DetailsPageTab {
 
     @Composable
     abstract fun getCorners(): RoundedCornerShape
+
+    abstract val index: Int
 }
