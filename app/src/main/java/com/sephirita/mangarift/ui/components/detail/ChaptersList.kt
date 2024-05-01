@@ -30,55 +30,14 @@ fun ChaptersList(
     modifier: Modifier = Modifier,
     chaptersList: Map<Float, List<Chapter>>,
     expandedChapterList: Map<Float, Boolean>,
-//    sortChaptersCallback: (Boolean) -> Unit,
     expandChapterCallback: (Float) -> Unit
 ) {
-//    var sortInAscending by rememberSaveable { mutableStateOf(true) }
-
     Box(
         modifier = modifier
             .fillMaxSize()
             .padding(top = 8.dp)
     ) {
         Column {
-//            TODO COMES IN V2
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                horizontalArrangement = Arrangement.End
-//            ) {
-//                Box(
-//                    modifier = Modifier.clickable {
-//                        sortInAscending = true
-//                        sortChaptersCallback(true)
-//                    }
-//                ) {
-//                    Text(
-//                        text = "Crescente",
-//                        color = if (sortInAscending)
-//                            Color.White
-//                        else
-//                            Color.Gray,
-//                        fontSize = 12.sp
-//                    )
-//                }
-//                Spacer(modifier = Modifier.width(4.dp))
-//                Box(
-//                    modifier = Modifier.clickable {
-//                        sortInAscending = false
-//                        sortChaptersCallback(false)
-//                    }
-//                ) {
-//                    Text(
-//                        text = "Decrescente",
-//                        color = if (!sortInAscending)
-//                            Color.White
-//                        else
-//                            Color.Gray,
-//                        fontSize = 12.sp
-//                    )
-//                }
-//            }
-
             chaptersList.forEach { (chapterNumber, chapterList) ->
                 val isExpanded = expandedChapterList[chapterNumber] ?: false
                 HorizontalDivider()

@@ -81,16 +81,6 @@ fun DetailPage(
                         verticalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
                         HorizontalDivider()
-//                        TODO COMES IN V2
-//                        Button(
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .padding(horizontal = 52.dp),
-//                            shape = (RoundedCornerShape(25f)),
-//                            onClick = {  }
-//                        ) {
-//                            Text(text = "Ler agora")
-//                        }
                     }
                 }
             ) {
@@ -99,7 +89,7 @@ fun DetailPage(
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
                         .navigationBarsPadding()
-                        .padding(bottom = 65.dp),
+                        .padding(bottom = 10.dp),
                     contentAlignment = Alignment.TopCenter
                 ) {
                     AsyncImage(
@@ -166,7 +156,6 @@ fun DetailPage(
                                     description = manga.description,
                                     chaptersList = viewModel.getChapters(),
                                     expandedChapterList = expandedChapter,
-//                                    sortChaptersCallback = { viewModel.changeChaptersSort(it) },
                                     expandChapterCallback = { viewModel.expandChapter(it) }
                                 )
                             }

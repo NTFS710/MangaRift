@@ -51,13 +51,4 @@ class DetailViewModel : ViewModel() {
         val isExpanded = currentState.expandedChapter[chapterNumber] ?: false
         currentState.expandedChapter[chapterNumber] = !isExpanded
     }
-
-//    fun changeChaptersSort(sortAscending: Boolean = true) {
-//        val currentChapters = _chaptersManga.value.chapters
-//        _chaptersManga.value = FormatedChapters(
-//            currentChapters.toSortedMap(if (sortAscending) naturalOrder() else reverseOrder())
-//        )
-//    }
-
-
 }
