@@ -21,7 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.sephirita.mangarift.data.Manga
+import com.sephirita.mangarift.domain.Manga
 import com.sephirita.mangarift.ui.components.card.Tag
 import com.sephirita.mangarift.ui.theme.TransparentGray
 

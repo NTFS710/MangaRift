@@ -8,13 +8,3 @@ data class Chapter(
     val chapter: Float,
     val updatedAt: String
 )
-
-sealed interface ChapterType {
-    data class Single(
-        val chapter: Chapter
-    ) : ChapterType
-
-    data class Multiple(
-        val chapter: List<Chapter>
-    ) : ChapterType
-}

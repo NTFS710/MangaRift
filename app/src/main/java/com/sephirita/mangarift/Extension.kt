@@ -1,6 +1,6 @@
 package com.sephirita.mangarift
 
-import com.sephirita.mangarift.data.Manga
+import com.sephirita.mangarift.domain.Manga
 
 private const val COVERS_INIT_LINK = "https://mangadex.org/covers"
 

@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.sephirita.mangarift.data.Manga
+import com.sephirita.mangarift.domain.Manga
 
 @Composable
 fun HomeItemsList(

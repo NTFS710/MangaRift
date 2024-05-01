@@ -6,8 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,10 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -29,131 +25,152 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Gray
-import androidx.compose.ui.graphics.Color.Companion.Transparent
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.sephirita.mangarift.R
-import com.sephirita.mangarift.data.Manga
 import com.sephirita.mangarift.ui.components.header.Header
 import com.sephirita.mangarift.ui.components.rating.RatingBar
-import com.sephirita.mangarift.ui.components.sohprateste.Tag
 import com.sephirita.mangarift.ui.components.text.StrokedText
-import com.sephirita.mangarift.utils.formatChapterNumber
-import com.sephirita.mangarift.utils.toDate
+import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun DetailPage(
-    item: Manga
+    id: String
 ) {
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val backgroundHeight = (screenHeight / 10) * 4
     val corner = 24.dp
 
-    Scaffold(
-        topBar = {
-            Header()
-        },
-        bottomBar = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(bottom = 8.dp)
-                    .navigationBarsPadding(),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                HorizontalDivider()
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 52.dp),
-                    shape = (RoundedCornerShape(25f)),
-                    onClick = { /* TODO*/ }
-                ) {
-                    Text(text = "Ler agora")
+    val viewModel: DetailViewModel = koinViewModel()
+    val state by viewModel.detailState.collectAsState()
+
+    LaunchedEffect(key1 = viewModel) {
+        viewModel.getMangaDetails(id)
+    }
+
+    with (state) {
+        if (isLoading) {
+            println("carrega")
+        } else if (isError) {
+            println("deu errado")
+        } else {
+            Scaffold(
+                topBar = {
+                    Header()
+                },
+                bottomBar = {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.background)
+                            .padding(bottom = 8.dp)
+                            .navigationBarsPadding(),
+                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        HorizontalDivider()
+
+                        Button(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 52.dp),
+                            shape = (RoundedCornerShape(25f)),
+                            onClick = {  }
+                        ) {
+                            Text(text = "Ler agora")
+                        }
+                    }
                 }
-            }
-        }
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .navigationBarsPadding()
-                .padding(bottom = 65.dp),
-            contentAlignment = Alignment.TopCenter
-        ) {
-            AsyncImage(
-                modifier = Modifier.height(backgroundHeight+corner),
-                alignment = Alignment.TopCenter,
-                contentScale = ContentScale.FillWidth,
-                model = item.image,
-                contentDescription = "Background Detail Image"
-            )
-            Column(
-                modifier = Modifier.fillMaxSize()
             ) {
-                Box(
-                    modifier = Modifier
-                        .height(backgroundHeight)
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    contentAlignment = Alignment.BottomStart
-                ) {
-                    StrokedText(text = item.title)
-                }
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .clip(shape = RoundedCornerShape(topStart = corner, topEnd = corner))
-                        .background(MaterialTheme.colorScheme.background)
-                        .padding(top = 8.dp)
+                        .verticalScroll(rememberScrollState())
+                        .navigationBarsPadding()
+                        .padding(bottom = 65.dp),
+                    contentAlignment = Alignment.TopCenter
                 ) {
+                    AsyncImage(
+                        modifier = Modifier.height(backgroundHeight+corner),
+                        alignment = Alignment.TopCenter,
+                        contentScale = ContentScale.FillWidth,
+                        model = manga.image,
+                        contentDescription = "Background Detail Image"
+                    )
                     Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        modifier = Modifier.fillMaxSize()
                     ) {
-                        Row(
+                        Box(
                             modifier = Modifier
+                                .height(backgroundHeight)
                                 .fillMaxWidth()
-                                .padding(bottom = 8.dp),
-                            verticalAlignment = CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceEvenly
+                                .padding(horizontal = 16.dp),
+                            contentAlignment = Alignment.BottomStart
                         ) {
-                            Row(verticalAlignment = CenterVertically) {
-                                RatingBar(
-                                    rating = item.rating.toDouble(), starSize = 26.dp
-                                )
-                                Spacer(modifier = Modifier.width(4.dp))
-                                Text(text = item.rating, fontSize = 20.sp)
-                            }
-                            Icon(
-                                modifier = Modifier
-                                    .size(24.dp, 24.dp)
-                                    .clickable { },
-                                contentDescription = "Bookmark",
-                                painter = painterResource(id = R.drawable.ic_outline_bookmark) // Adicionar ícone pintado pra mostrar ao usuário que o mangá está na lista de favoritos dele
-                            )
+                            StrokedText(text = manga.title)
                         }
-                        HorizontalDivider(color = Gray)
-                        DetailPageTabs(item = item)
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(
+                                    shape = RoundedCornerShape(
+                                        topStart = corner,
+                                        topEnd = corner
+                                    )
+                                )
+                                .background(MaterialTheme.colorScheme.background)
+                                .padding(top = 8.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(bottom = 8.dp),
+                                    verticalAlignment = CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceEvenly
+                                ) {
+                                    Row(verticalAlignment = CenterVertically) {
+                                        RatingBar(
+                                            rating = manga.rating.toDouble(), starSize = 26.dp
+                                        )
+                                        Spacer(modifier = Modifier.width(4.dp))
+                                        Text(text = manga.rating, fontSize = 20.sp)
+                                    }
+                                    Icon(
+                                        modifier = Modifier
+                                            .size(24.dp, 24.dp)
+                                            .clickable { },
+                                        contentDescription = "Bookmark",
+                                        painter = painterResource(id = R.drawable.ic_outline_bookmark) // Adicionar ícone pintado pra mostrar ao usuário que o mangá está na lista de favoritos dele
+                                    )
+                                }
+                                HorizontalDivider(color = Gray)
+                                DetailPageTabs(
+                                    tags = manga.tags,
+                                    description = manga.description,
+                                    chaptersList = viewModel.getChapters(),
+                                    expandedChapterList = expandedChapter,
+                                    sortChaptersCallback = { viewModel.changeChaptersSort(it) },
+                                    expandChapterCallback = { viewModel.expandChapter(it) }
+                                )
+                            }
+                        }
                     }
                 }
             }

@@ -75,5 +75,5 @@ private fun telaInicial() {
 
 @Composable
 private fun telaDeDetalhes() {
-    DetailPage(item = getMockedManga())
+    DetailPage(id = getMockedManga().id)
 }

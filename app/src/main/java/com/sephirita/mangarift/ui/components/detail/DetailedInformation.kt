@@ -10,12 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sephirita.mangarift.data.Manga
+import com.sephirita.mangarift.domain.Manga
+import com.sephirita.mangarift.ui.components.sohprateste.Tag
 
 @Composable
 fun DetailedInformation(
     modifier: Modifier = Modifier,
-    item: Manga
+    tags:  List<Tag>,
+    description: String
 ) {
     Box(
         modifier = modifier
@@ -23,9 +25,9 @@ fun DetailedInformation(
             .padding(horizontal = 16.dp)
     ) {
         Column {
-            Genres(tags = item.tags)
+            Genres(tags = tags)
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = item.description)
+            Text(text = description)
             Spacer(modifier = Modifier.height(16.dp))
         }
     }

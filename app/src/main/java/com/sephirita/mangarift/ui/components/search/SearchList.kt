@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sephirita.mangarift.data.Manga
+import com.sephirita.mangarift.domain.Manga
 
 @Composable
 fun SearchList(

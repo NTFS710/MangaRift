@@ -22,9 +22,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.sephirita.mangarift.data.Manga
-import com.sephirita.mangarift.ui.components.sohprateste.Chapter
-import com.sephirita.mangarift.ui.components.sohprateste.Tag
+import com.sephirita.mangarift.domain.Manga
 
 @Composable
 fun HomeListItem(

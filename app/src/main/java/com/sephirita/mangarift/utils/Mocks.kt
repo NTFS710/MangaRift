@@ -1,6 +1,6 @@
 package com.sephirita.mangarift.utils
 
-import com.sephirita.mangarift.data.Manga
+import com.sephirita.mangarift.domain.Manga
 import com.sephirita.mangarift.ui.components.sohprateste.Chapter
 import com.sephirita.mangarift.ui.components.sohprateste.Tag
 
@@ -30,16 +30,16 @@ fun getMangaChapters(): List<Chapter> {
         )
     )
 
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 5f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 5f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
 
     chapters.add(
         Chapter(
@@ -72,137 +72,137 @@ fun getMangaChapters(): List<Chapter> {
             updatedAt = "2024-01-11T22:19:26+00:00"
         )
     )
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 3.5f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 4f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
-//
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 5f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 6f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 7f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 8f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 8f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 8f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 9f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 10f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 10f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 11f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
-//    chapters.add(
-//        Chapter(
-//            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
-//            chapter = 12f,
-//            pages = 25,
-//            title = "A trança do rei careca",
-//            translatedLanguage = "pt-br",
-//            updatedAt = "2024-01-11T22:19:26+00:00"
-//        )
-//    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 3.5f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 4f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 5f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 6f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 7f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 8f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 8f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 8f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 9f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 10f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 10f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 11f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
+    chapters.add(
+        Chapter(
+            id = "110fba8e-4f68-47d6-b3cd-aef95b999638",
+            chapter = 12f,
+            pages = 25,
+            title = "A trança do rei careca",
+            translatedLanguage = "pt-br",
+            updatedAt = "2024-01-11T22:19:26+00:00"
+        )
+    )
     return chapters
 }
 

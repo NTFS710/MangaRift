@@ -28,10 +28,12 @@ import com.sephirita.mangarift.ui.components.sohprateste.Chapter
 @Composable
 fun ChaptersList(
     modifier: Modifier = Modifier,
-    chapters: List<Chapter> = emptyList()
+    chaptersList: Map<Float, List<Chapter>>,
+    expandedChapterList: Map<Float, Boolean>,
+    sortChaptersCallback: (Boolean) -> Unit,
+    expandChapterCallback: (Float) -> Unit
 ) {
-    var isOrderCrescent by rememberSaveable { mutableStateOf(true) }
-    val expandedChapterNumbers = remember { mutableStateMapOf<Float, Boolean>() }
+    var sortInAscending by rememberSaveable { mutableStateOf(true) }
 
     Box(
         modifier = modifier
@@ -45,12 +47,13 @@ fun ChaptersList(
             ) {
                 Box(
                     modifier = Modifier.clickable {
-                        isOrderCrescent = true
+                        sortInAscending = true
+                        sortChaptersCallback(true)
                     }
                 ) {
                     Text(
                         text = "Crescente",
-                        color = if (isOrderCrescent)
+                        color = if (sortInAscending)
                             Color.White
                         else
                             Color.Gray,
@@ -60,12 +63,13 @@ fun ChaptersList(
                 Spacer(modifier = Modifier.width(4.dp))
                 Box(
                     modifier = Modifier.clickable {
-                        isOrderCrescent = false
+                        sortInAscending = false
+                        sortChaptersCallback(false)
                     }
                 ) {
                     Text(
                         text = "Decrescente",
-                        color = if (!isOrderCrescent)
+                        color = if (!sortInAscending)
                             Color.White
                         else
                             Color.Gray,
@@ -74,20 +78,15 @@ fun ChaptersList(
                 }
             }
 
-            chapters.groupBy { it.chapter }.toSortedMap(
-                if (isOrderCrescent)
-                    naturalOrder()
-                else
-                    reverseOrder()
-            ).forEach { (chapterNumber, chapterList) ->
-                val expandedChapter = expandedChapterNumbers[chapterNumber] ?: false
+            chaptersList.forEach { (chapterNumber, chapterList) ->
+                val isExpanded = expandedChapterList[chapterNumber] ?: false
                 HorizontalDivider()
                 ChapterListItem(
                     chapterNumber = chapterNumber,
                     chapters = chapterList,
-                    isExpanded = expandedChapter,
+                    isExpanded = isExpanded,
                     onClick = {
-                        expandedChapterNumbers[chapterNumber] = !expandedChapter
+                        expandChapterCallback(chapterNumber)
                     }
                 )
             }

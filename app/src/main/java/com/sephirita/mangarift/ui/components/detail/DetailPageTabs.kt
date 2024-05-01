@@ -1,5 +1,7 @@
 package com.sephirita.mangarift.ui.components.detail
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,18 +20,24 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.unit.sp
-import com.sephirita.mangarift.data.Manga
+import com.sephirita.mangarift.ui.components.sohprateste.Chapter
+import com.sephirita.mangarift.ui.components.sohprateste.Tag
 import com.sephirita.mangarift.ui.model.DetailsPageTab
 import kotlinx.coroutines.launch
+import java.util.SortedMap
 
 @Composable
 fun DetailPageTabs(
     modifier: Modifier = Modifier,
-    item: Manga
+    tags: List<Tag>,
+    description: String,
+    chaptersList: Map<Float, List<Chapter>>,
+    expandedChapterList: Map<Float, Boolean>,
+    sortChaptersCallback: (Boolean) -> Unit,
+    expandChapterCallback: (Float) -> Unit
 ) {
     val pagerState = rememberPagerState(pageCount = { DetailsPageTab.entries.size })
     val coroutineScope = rememberCoroutineScope()
-    val error = false
 
     Box(
         modifier = modifier.fillMaxSize(),
@@ -70,12 +78,22 @@ fun DetailPageTabs(
                 }
             )
             HorizontalPager(
+                modifier = Modifier.fillMaxSize().animateContentSize(tween(300)),
+                verticalAlignment = Alignment.Top,
                 state = pagerState,
                 userScrollEnabled = false
             ) { page ->
                 when (page) {
-                    DetailsPageTab.Details.index -> DetailedInformation(item = item)
-                    DetailsPageTab.Chapters.index -> ChaptersList(chapters = item.chapters)
+                    DetailsPageTab.Details.index -> DetailedInformation(
+                        tags = tags,
+                        description = description
+                    )
+                    DetailsPageTab.Chapters.index -> ChaptersList(
+                        chaptersList = chaptersList,
+                        expandedChapterList = expandedChapterList,
+                        sortChaptersCallback = sortChaptersCallback,
+                        expandChapterCallback = expandChapterCallback
+                    )
                 }
             }
         }
