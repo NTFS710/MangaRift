@@ -81,16 +81,16 @@ fun DetailPage(
                         verticalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
                         HorizontalDivider()
-
-                        Button(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 52.dp),
-                            shape = (RoundedCornerShape(25f)),
-                            onClick = {  }
-                        ) {
-                            Text(text = "Ler agora")
-                        }
+//                        TODO COMES IN V2
+//                        Button(
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .padding(horizontal = 52.dp),
+//                            shape = (RoundedCornerShape(25f)),
+//                            onClick = {  }
+//                        ) {
+//                            Text(text = "Ler agora")
+//                        }
                     }
                 }
             ) {
@@ -166,7 +166,7 @@ fun DetailPage(
                                     description = manga.description,
                                     chaptersList = viewModel.getChapters(),
                                     expandedChapterList = expandedChapter,
-                                    sortChaptersCallback = { viewModel.changeChaptersSort(it) },
+//                                    sortChaptersCallback = { viewModel.changeChaptersSort(it) },
                                     expandChapterCallback = { viewModel.expandChapter(it) }
                                 )
                             }

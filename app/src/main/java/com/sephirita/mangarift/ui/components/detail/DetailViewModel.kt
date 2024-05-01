@@ -52,12 +52,12 @@ class DetailViewModel : ViewModel() {
         currentState.expandedChapter[chapterNumber] = !isExpanded
     }
 
-    fun changeChaptersSort(sortAscending: Boolean = true) {
-        val currentChapters = _chaptersManga.value.chapters
-        _chaptersManga.value = FormatedChapters(
-            currentChapters.toSortedMap(if (sortAscending) naturalOrder() else reverseOrder())
-        )
-    }
+//    fun changeChaptersSort(sortAscending: Boolean = true) {
+//        val currentChapters = _chaptersManga.value.chapters
+//        _chaptersManga.value = FormatedChapters(
+//            currentChapters.toSortedMap(if (sortAscending) naturalOrder() else reverseOrder())
+//        )
+//    }
 
 
 }
