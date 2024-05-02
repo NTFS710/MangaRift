@@ -12,7 +12,8 @@ import com.sephirita.mangarift.domain.Manga
 @Composable
 fun SearchList(
     modifier: Modifier = Modifier,
-    searchItems: List<Manga>
+    searchItems: List<Manga>,
+    detailNavigation: (String) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -24,7 +25,7 @@ fun SearchList(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(searchItems) {
-            SearchListItem(it)
+            SearchListItem(item = it, onClick = { detailNavigation(it.id) })
         }
     }
 }

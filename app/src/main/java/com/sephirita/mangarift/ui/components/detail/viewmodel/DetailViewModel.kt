@@ -1,21 +1,15 @@
-package com.sephirita.mangarift.ui.components.detail
+package com.sephirita.mangarift.ui.components.detail.viewmodel
 
-import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sephirita.mangarift.ui.components.detail.state.DetailState
 import com.sephirita.mangarift.ui.components.sohprateste.Chapter
 import com.sephirita.mangarift.ui.model.FormatedChapters
 import com.sephirita.mangarift.utils.getMockedManga
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import okhttp3.internal.notifyAll
-import okhttp3.internal.wait
 import java.util.SortedMap
 
 class DetailViewModel : ViewModel() {
@@ -28,7 +22,6 @@ class DetailViewModel : ViewModel() {
     fun getMangaDetails(mangaId: String) {
         // TODO fazer a chamada pra api : Loading ; Sucesso ; Error
         viewModelScope.launch {
-            delay(2000)
             val manga = getMockedManga()
             _detailState.value = DetailState(
                 isLoading = false,

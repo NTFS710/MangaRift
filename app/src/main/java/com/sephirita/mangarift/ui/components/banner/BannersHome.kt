@@ -13,7 +13,10 @@ import androidx.compose.ui.unit.dp
 import com.sephirita.mangarift.domain.Manga
 
 @Composable
-fun BannersHome(items: List<Manga>) {
+fun BannersHome(
+    items: List<Manga>,
+    detailNavigation: (String) -> Unit
+) {
 
     val itemWidth = LocalConfiguration.current.screenWidthDp.dp + 0.55.dp
 
@@ -29,7 +32,7 @@ fun BannersHome(items: List<Manga>) {
             items(
                 items = items,
                 itemContent = {
-                    Banner(item = it, itemWidth)
+                    Banner(item = it, itemWidth, onClick = { detailNavigation(it.id) })
                 }
             )
         }

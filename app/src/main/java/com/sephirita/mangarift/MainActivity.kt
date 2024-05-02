@@ -17,17 +17,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sephirita.mangarift.ui.components.search.SearchBar
-import com.sephirita.mangarift.ui.components.home.HomeItemsList
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.sephirita.mangarift.destinations.DetailsScreenDestination
+import com.sephirita.mangarift.destinations.SearchScreenDestination
 import com.sephirita.mangarift.ui.components.banner.BannersHome
 import com.sephirita.mangarift.ui.components.detail.DetailPage
+import com.sephirita.mangarift.ui.components.home.HomeItemsList
+import com.sephirita.mangarift.ui.components.search.SearchBar
 import com.sephirita.mangarift.ui.components.search.SearchList
 import com.sephirita.mangarift.ui.theme.MangaRiftTheme
-import com.sephirita.mangarift.utils.*
+import com.sephirita.mangarift.utils.getMangaList
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge() // Funciona só na activity que chamou, se botar outra tem que chamar novamente
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
             MangaRiftTheme {
@@ -35,45 +40,80 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    telaDeDetalhes()
-//                    telaInicial()
-//                    telaDeBusca()
+                    DestinationsNavHost(navGraph = NavGraphs.root)
                 }
             }
         }
     }
 }
 
+@Destination(start = true)
 @Composable
-private fun telaDeBusca() {
-    Column {
-        SearchBar()
-        Spacer(modifier = Modifier.height(16.dp))
-        SearchList(searchItems = getMangaList())
-    }
-}
-
-@Composable
-private fun telaInicial() {
+fun HomeScreen(
+    navigator: DestinationsNavigator
+) {
     Column(
-        modifier = Modifier.verticalScroll(rememberScrollState()),
+        modifier = Modifier
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BannersHome(items = getMangaList())
+        BannersHome(
+            items = getMangaList(),
+            detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) }
+        )
         Spacer(modifier = Modifier.height(16.dp))
-        HomeItemsList(listTitle = "teste 1", items = getMangaList())
+        HomeItemsList(
+            listTitle = "teste 1",
+            items = getMangaList(),
+            detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) },
+            searchNavigation = { navigator.navigate(SearchScreenDestination) }
+        )
         Spacer(modifier = Modifier.height(16.dp))
-        HomeItemsList(listTitle = "teste 2", items = getMangaList())
+        HomeItemsList(
+            listTitle = "teste 2",
+            items = getMangaList(),
+            detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) },
+            searchNavigation = { navigator.navigate(SearchScreenDestination) }
+        )
         Spacer(modifier = Modifier.height(16.dp))
-        HomeItemsList(listTitle = "teste 3", items = getMangaList())
+        HomeItemsList(
+            listTitle = "teste 2",
+            items = getMangaList(),
+            detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) },
+            searchNavigation = { navigator.navigate(SearchScreenDestination) }
+        )
         Spacer(modifier = Modifier.height(16.dp))
-        HomeItemsList(listTitle = "teste 4", items = getMangaList())
+        HomeItemsList(
+            listTitle = "teste 4",
+            items = getMangaList(),
+            detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) },
+            searchNavigation = { navigator.navigate(SearchScreenDestination) }
+        )
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
+@Destination
 @Composable
-private fun telaDeDetalhes() {
-    DetailPage(id = getMockedManga().id)
+fun SearchScreen(
+    navigator: DestinationsNavigator
+) {
+    Column {
+        SearchBar()
+        Spacer(modifier = Modifier.height(16.dp))
+        SearchList(
+            searchItems = getMangaList(),
+            detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) }
+        )
+    }
+}
+
+@Destination
+@Composable
+fun DetailsScreen(
+    navigator: DestinationsNavigator,
+    id: String
+) {
+    DetailPage(id = id)
 }

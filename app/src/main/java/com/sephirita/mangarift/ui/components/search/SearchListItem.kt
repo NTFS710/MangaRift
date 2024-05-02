@@ -1,6 +1,7 @@
 package com.sephirita.mangarift.ui.components.search
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -29,8 +30,10 @@ import com.sephirita.mangarift.ui.components.rating.RatingBar
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun SearchListItem(item: Manga) {
-
+fun SearchListItem(
+    item: Manga,
+    onClick: () -> Unit
+) {
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val itemHeight = screenHeight / 6
 
@@ -39,6 +42,7 @@ fun SearchListItem(item: Manga) {
             .height(itemHeight)
             .clip(RoundedCornerShape(12.dp))
             .background(MaterialTheme.colorScheme.surface)
+            .clickable(onClick = onClick)
     ) {
         AsyncImage(
             modifier = Modifier.fillMaxHeight(),

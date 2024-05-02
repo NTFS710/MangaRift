@@ -26,12 +26,16 @@ import com.sephirita.mangarift.ui.components.card.Tag
 import com.sephirita.mangarift.ui.theme.TransparentGray
 
 @Composable
-fun Banner(item: Manga, itemWidth: Dp) {
+fun Banner(
+    item: Manga,
+    itemWidth: Dp,
+    onClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .clickable { }
+            .clickable(onClick = onClick)
     ) {
 
         AsyncImage(

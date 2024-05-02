@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -40,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.sephirita.mangarift.R
+import com.sephirita.mangarift.ui.components.detail.viewmodel.DetailViewModel
 import com.sephirita.mangarift.ui.components.header.Header
 import com.sephirita.mangarift.ui.components.rating.RatingBar
 import com.sephirita.mangarift.ui.components.text.StrokedText

@@ -27,7 +27,8 @@ import com.sephirita.mangarift.domain.Manga
 @Composable
 fun HomeListItem(
     modifier: Modifier = Modifier,
-    item: Manga
+    item: Manga,
+    onClick: () -> Unit
 ) {
     val screenSize = LocalConfiguration.current.screenWidthDp.dp
     val itemWidth = screenSize / 3
@@ -36,9 +37,7 @@ fun HomeListItem(
     Box(
         modifier = modifier
             .size(width = itemWidth, height = itemHeight)
-            .clickable {
-                println("F total")
-            },
+            .clickable(onClick = onClick ),
         contentAlignment = Alignment.CenterStart
     ) {
         Column(

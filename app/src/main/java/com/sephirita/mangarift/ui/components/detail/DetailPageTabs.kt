@@ -24,7 +24,6 @@ import com.sephirita.mangarift.ui.components.sohprateste.Chapter
 import com.sephirita.mangarift.ui.components.sohprateste.Tag
 import com.sephirita.mangarift.ui.model.DetailsPageTab
 import kotlinx.coroutines.launch
-import java.util.SortedMap
 
 @Composable
 fun DetailPageTabs(
