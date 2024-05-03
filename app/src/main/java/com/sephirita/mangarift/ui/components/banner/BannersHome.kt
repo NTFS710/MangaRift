@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.sephirita.mangarift.domain.Manga
+import com.sephirita.mangarift.domain.model.Manga
 
 @Composable
 fun BannersHome(

@@ -1,6 +1,6 @@
 package com.sephirita.mangarift.utils
 
-import com.sephirita.mangarift.domain.Manga
+import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.ui.components.sohprateste.Chapter
 import com.sephirita.mangarift.ui.components.sohprateste.Tag
 

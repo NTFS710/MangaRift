@@ -24,7 +24,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.sephirita.mangarift.domain.Manga
+import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.ui.components.card.Tag
 import com.sephirita.mangarift.ui.components.rating.RatingBar
 

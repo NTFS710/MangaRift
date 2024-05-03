@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.domain
+package com.sephirita.mangarift.domain.model
 
 import com.sephirita.mangarift.ui.components.sohprateste.Chapter
 import com.sephirita.mangarift.ui.components.sohprateste.Tag
