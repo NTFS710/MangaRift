@@ -1,6 +1,6 @@
-package com.sephirita.mangarift.data.response.manga
+package com.sephirita.mangarift.data.model.response.manga
 
-import com.sephirita.mangarift.data.response.Error
+import com.sephirita.mangarift.data.model.response.Error
 
 data class MangaList(
     val result: String,

@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.data.response
+package com.sephirita.mangarift.data.model.response
 
 data class MainResponse(
     val result: String,

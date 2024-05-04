@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.data.response.manga
+package com.sephirita.mangarift.data.model.response.manga
 
 data class MangaAttributes(
     val title: List<Map<String, String>>?, // Lista -> sigla da lingua - Título na lingua

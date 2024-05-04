@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.data.response.manga
+package com.sephirita.mangarift.data.model.response.manga
 
 data class MangaRelationshipAttributes(
     val description: String?,
