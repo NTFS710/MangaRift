@@ -3,9 +3,9 @@ package com.sephirita.mangarift.data.remote.dto.model.manga
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MangaRelationship(
+data class Manga(
     val id: String,
     val type: String,
-    val attributes: MangaRelationshipAttributes? = null,
-    val related: String? = null
+    val attributes: MangaAttributes?,
+    val relationships: List<MangaRelationship>?
 )

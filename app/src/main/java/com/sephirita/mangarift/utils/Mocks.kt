@@ -7,7 +7,6 @@ import com.sephirita.mangarift.ui.components.sohprateste.Tag
 fun getMockedManga() = Manga(
     id = "dd0b8df1-1b59-4ce3-a6f3-cc19cf6ca4f6",
     author = "Himiya Jouzu",
-    artist = "Himiya Jouzu",
     image = "https://mangadex.org/covers/dd0b8df1-1b59-4ce3-a6f3-cc19cf6ca4f6/334123d5-8f81-479e-a3b4-0ec9eb29bf5e.jpg",
     rating = "8.20",
     title = "Iinchou Desu ga Furyou ni Naru Hodo Koi Shitemasu!",
@@ -211,48 +210,38 @@ fun getMangaTags(): List<Tag> {
     tags.add(
         Tag(
             id = "1",
-            type = "Suggestive",
-            attributes = null,
-            relationships = null
+            type = "Suggestive"
         )
     )
     tags.add(
         Tag(
             id = "2",
-            type = "Comedy",
-            attributes = null,
-            relationships = null
+            type = "Comedy"
         )
     )
     tags.add(
         Tag(
             id = "3",
-            type = "Romance",
-            attributes = null,
-            relationships = null
+            type = "Romance"
         )
     )
     tags.add(
         Tag(
             id = "4",
-            type = "Slice of Life",
-            attributes = null,
-            relationships = null
+            type = "Slice of Life"
         )
     )
     tags.add(
         Tag(
             id = "5",
-            type = "School Life",
-            attributes = null,
-            relationships = null
+            type = "School Life"
         )
     )
     return tags
 }
 
 fun getMangaList(): List<Manga> {
-    var listOfMangas: ArrayList<Manga> = arrayListOf()
+    val listOfMangas: ArrayList<Manga> = arrayListOf()
     for (i in 0 until 10) {
         listOfMangas.add(getMockedManga())
     }

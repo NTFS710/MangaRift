@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TagAttributes(
-    val name: List<Map<String, String>>?,
+    val name: Map<String, String>?,
     val group: String?,
     val version: Int?
 )

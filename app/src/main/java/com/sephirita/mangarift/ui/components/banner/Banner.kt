@@ -5,6 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -12,43 +14,38 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.ui.components.card.Tag
 import com.sephirita.mangarift.ui.theme.TransparentGray
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Banner(
     item: Manga,
-    itemWidth: Dp,
     onClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
+            .fillMaxSize()
             .clickable(onClick = onClick)
     ) {
-
         AsyncImage(
-            modifier = Modifier.width(itemWidth),
+            modifier = Modifier.fillMaxSize(),
             alignment = Alignment.TopCenter,
-            contentScale = ContentScale.FillWidth,
+            contentScale = ContentScale.Crop,
             model = item.image,
             contentDescription = "Background Banner Image"
         )
-
         Box(
             modifier = Modifier
-                .width(itemWidth)
+                .fillMaxWidth()
                 .background(TransparentGray)
                 .padding(start = 10.dp, end = 10.dp, top = 50.dp)
         ) {
@@ -61,13 +58,12 @@ fun Banner(
                     ) {
                         AsyncImage(
                             modifier = Modifier.fillMaxSize(),
-                            alignment = Alignment.CenterStart,
-                            contentScale = ContentScale.Fit,
+                            alignment = Alignment.Center,
+                            contentScale = ContentScale.Crop,
                             model = item.image,
                             contentDescription = "Background Banner Image"
                         )
                     }
-
                     Box(
                         modifier = Modifier
                             .weight(0.5f)
@@ -83,13 +79,13 @@ fun Banner(
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(0.1f),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                FlowRow(
+                    modifier = Modifier.weight(0.1f),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                    maxLines = 1
                 ) {
-                    item.tags.takeLast(5).forEach {
+                    item.tags.forEach {
                         Tag(name = it.type)
                     }
                 }

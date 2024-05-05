@@ -1,6 +1,5 @@
 package com.sephirita.mangarift.data.remote.dto.model.manga
 
-import com.sephirita.mangarift.data.remote.dto.model.Data.Manga
 import com.sephirita.mangarift.data.remote.dto.model.Error
 
 data class MangaList(

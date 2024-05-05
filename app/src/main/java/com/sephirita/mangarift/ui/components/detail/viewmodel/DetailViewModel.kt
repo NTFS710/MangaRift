@@ -36,7 +36,7 @@ class DetailViewModel : ViewModel() {
     fun getChapters(): Map<Float, List<Chapter>> = _chaptersManga.value.chapters
 
     private fun setChapters(chapters: List<Chapter>): SortedMap<Float, List<Chapter>> =
-       chapters.groupBy { it.chapter }.toSortedMap(naturalOrder())
+        chapters.groupBy { it.chapter }.toSortedMap(naturalOrder())
 
 
     fun expandChapter(chapterNumber: Float) {

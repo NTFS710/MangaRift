@@ -4,11 +4,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MangaRelationshipAttributes(
-    val description: String?,
-    val volume: String?,
-    val fileName: String?,
-    val locale: String?,
-    val createdAt: String?,
-    val updatedAt: String?,
-    val version: Int?
+    val name: String? = null,
+    val description: String? = null,
+    val volume: String? = null,
+    val fileName: String? = null,
+    val locale: String? = null,
+    val createdAt: String? = null,
+    val updatedAt: String? = null,
+    val version: Int? = null
 )
