@@ -10,9 +10,10 @@ import com.sephirita.mangarift.utils.getMangaList
 
 @Composable
 fun SearchPage(
-    modifier: Modifier = Modifier,
+    initialSearch: String,
     detailNavigation: (String) -> Unit
 ) {
+//    TODO verificar a initialList, se for vazia manga lista vazia, se não for, usamos um useCase
     Column {
         SearchBar()
         Spacer(modifier = Modifier.height(16.dp))

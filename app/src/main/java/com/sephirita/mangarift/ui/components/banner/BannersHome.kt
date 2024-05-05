@@ -14,9 +14,7 @@ fun BannersHome(
     items: List<Manga>,
     detailNavigation: (String) -> Unit
 ) {
-
     val pagerState = rememberPagerState(pageCount = { items.size })
-
     HorizontalPager(
         state = pagerState,
         modifier = Modifier

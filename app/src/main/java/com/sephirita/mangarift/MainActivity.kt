@@ -14,6 +14,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sephirita.mangarift.destinations.DetailsScreenDestination
 import com.sephirita.mangarift.destinations.SearchScreenDestination
+import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.ui.components.detail.DetailPage
 import com.sephirita.mangarift.ui.components.home.HomePage
 import com.sephirita.mangarift.ui.components.search.SearchPage
@@ -44,16 +45,18 @@ fun HomeScreen(
 ) {
     HomePage(
         detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) },
-        searchNavigation = { navigator.navigate(SearchScreenDestination) }
+        searchNavigation = { navigator.navigate(SearchScreenDestination(it)) }
     )
 }
 
 @Destination
 @Composable
 fun SearchScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    initialSearch: String = ""
 ) {
     SearchPage(
+        initialSearch = initialSearch,
         detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) }
     )
 }

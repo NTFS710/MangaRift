@@ -25,7 +25,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomePage(
     detailNavigation: (String) -> Unit,
-    searchNavigation: () -> Unit
+    searchNavigation: (String) -> Unit
 ) {
 
     val viewModel: HomeViewModel = koinViewModel()
@@ -40,7 +40,6 @@ fun HomePage(
     ) {
         viewModel.getMangas()
     }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,20 +57,22 @@ fun HomePage(
                     Spacer(modifier = Modifier.height(16.dp))
                 }
                 MangaListType.LatestUpdates -> {
+                    val items = viewModel.latestUpdatesList.value
                     HomeItemsList(
                         listTitle = it.title,
-                        items = viewModel.latestUpdatesList.value,
+                        items = items,
                         detailNavigation = { detailNavigation(it) },
-                        searchNavigation = searchNavigation
+                        searchNavigation = { searchNavigation(it.name) }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
                 MangaListType.RecentlyAdded -> {
+                    val items = viewModel.recentlyAddedList.value
                     HomeItemsList(
                         listTitle = it.title,
-                        items = viewModel.recentlyAddedList.value,
+                        items = items,
                         detailNavigation = { detailNavigation(it) },
-                        searchNavigation = searchNavigation
+                        searchNavigation = { searchNavigation(it.name) }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
