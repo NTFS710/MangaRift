@@ -48,7 +48,8 @@ import org.koin.androidx.compose.koinViewModel
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun DetailPage(
-    id: String
+    id: String,
+    onBackPressed: () -> Unit
 ) {
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val backgroundHeight = (screenHeight / 10) * 4
@@ -68,9 +69,7 @@ fun DetailPage(
             println("deu errado")
         } else {
             Scaffold(
-                topBar = {
-                    Header()
-                },
+                topBar = { Header(onBackPressed = onBackPressed) },
                 bottomBar = {
                     Column(
                         modifier = Modifier

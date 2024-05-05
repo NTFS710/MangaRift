@@ -1,5 +1,8 @@
-package com.sephirita.mangarift.data.model.response.manga
+package com.sephirita.mangarift.data.remote.dto.model.manga
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class MangaAttributes(
     val title: List<Map<String, String>>?, // Lista -> sigla da lingua - Título na lingua
     val altTitles: List<Map<String, String>>?, // Lista -> sigla da lingua - Título alternativo na lingua

@@ -1,5 +1,8 @@
-package com.sephirita.mangarift.data.model.response.chapter
+package com.sephirita.mangarift.data.remote.dto.model.chapter
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ChapterAttributes(
     val volume: String?,
     val chapter: String?,

@@ -29,7 +29,8 @@ import com.sephirita.mangarift.R
 
 @Composable
 fun Header(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onBackPressed: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -53,7 +54,7 @@ fun Header(
             modifier = Modifier
                 .size(32.dp)
                 .clip(CircleShape)
-                .clickable { },
+                .clickable(onClick = onBackPressed),
             painter = painterResource(id = R.drawable.ic_round_arrow_back),
             contentDescription = "Icone para voltar na navegação"
         )
