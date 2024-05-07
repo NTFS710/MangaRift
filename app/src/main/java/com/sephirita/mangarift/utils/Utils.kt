@@ -1,5 +1,6 @@
 package com.sephirita.mangarift.utils
 
+import com.sephirita.mangarift.data.remote.dto.model.DetailedMangaResponse
 import com.sephirita.mangarift.data.remote.dto.model.MangaListResponse
 import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.ui.components.sohprateste.Tag
@@ -39,6 +40,27 @@ fun MangaListResponse.toList(): List<Manga> {
         )
     }
     return mangaList
+}
+
+fun DetailedMangaResponse.toManga(): Manga {
+    val manga = data?.let { manga ->
+        val (author, image) = findAuthorAndCover(manga)
+        val title = manga.attributes?.title
+        val description = manga.attributes?.description
+        Manga(
+            id = manga.id,
+            author = author ?: "",
+            image = image ?: "",
+            title = title?.get("pt-br") ?: title?.get("en") ?: "",
+            rating = "8.5",
+            description = description?.get("pt-br") ?: description?.get("en") ?: "",
+            tags = getTags(manga.attributes?.tags),
+            chapters = emptyList()
+        )
+    }
+
+
+    return manga ?: Manga()
 }
 
 private fun findAuthorAndCover(manga: com.sephirita.mangarift.data.remote.dto.model.manga.Manga): Pair<String?, String?> {

@@ -47,8 +47,8 @@ fun HomePage(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        MangaListType.entries.forEach {
-            when (it) {
+        MangaListType.entries.forEach { mangaType ->
+            when (mangaType) {
                 MangaListType.PopularNewTitles -> {
                     BannersHome(
                         items = viewModel.popularNewTitlesList.value,
@@ -59,20 +59,20 @@ fun HomePage(
                 MangaListType.LatestUpdates -> {
                     val items = viewModel.latestUpdatesList.value
                     HomeItemsList(
-                        listTitle = it.title,
+                        listTitle = mangaType.title,
                         items = items,
                         detailNavigation = { detailNavigation(it) },
-                        searchNavigation = { searchNavigation(it.name) }
+                        searchNavigation = { searchNavigation(mangaType.name) }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
                 MangaListType.RecentlyAdded -> {
                     val items = viewModel.recentlyAddedList.value
                     HomeItemsList(
-                        listTitle = it.title,
+                        listTitle = mangaType.title,
                         items = items,
                         detailNavigation = { detailNavigation(it) },
-                        searchNavigation = { searchNavigation(it.name) }
+                        searchNavigation = { searchNavigation(mangaType.name) }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }

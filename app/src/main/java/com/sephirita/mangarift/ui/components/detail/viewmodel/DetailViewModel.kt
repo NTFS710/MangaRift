@@ -3,6 +3,7 @@ package com.sephirita.mangarift.ui.components.detail.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sephirita.mangarift.ui.components.detail.state.DetailState
+import com.sephirita.mangarift.ui.components.detail.usecase.MangaDetailsUseCase
 import com.sephirita.mangarift.ui.components.sohprateste.Chapter
 import com.sephirita.mangarift.ui.model.FormatedChapters
 import com.sephirita.mangarift.utils.getMockedManga
@@ -12,7 +13,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.SortedMap
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(
+    private val getMangaDetailsUseCase: MangaDetailsUseCase
+) : ViewModel() {
 
     private val _chaptersManga = MutableStateFlow(FormatedChapters())
 
@@ -23,9 +26,10 @@ class DetailViewModel : ViewModel() {
         // TODO fazer a chamada pra api : Loading ; Sucesso ; Error
         viewModelScope.launch {
             val manga = getMockedManga()
+            val result = getMangaDetailsUseCase(mangaId)
             _detailState.value = DetailState(
                 isLoading = false,
-                manga = manga
+                manga = result
             )
             _chaptersManga.value = FormatedChapters(
                 chapters = setChapters(manga.chapters)

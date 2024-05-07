@@ -29,7 +29,7 @@ import com.sephirita.mangarift.domain.model.Manga
 fun HomeListItem(
     modifier: Modifier = Modifier,
     item: Manga,
-    onClick: () -> Unit
+    onClick: (String) -> Unit
 ) {
     val screenSize = LocalConfiguration.current.screenWidthDp.dp
     val itemWidth = screenSize / 3
@@ -38,7 +38,7 @@ fun HomeListItem(
     Box(
         modifier = modifier
             .size(width = itemWidth, height = itemHeight)
-            .clickable(onClick = onClick ),
+            .clickable{ onClick(item.id) },
         contentAlignment = Alignment.CenterStart
     ) {
         Column(

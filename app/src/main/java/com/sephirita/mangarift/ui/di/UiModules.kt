@@ -1,6 +1,7 @@
 package com.sephirita.mangarift.ui.di
 
 
+import com.sephirita.mangarift.ui.components.detail.usecase.MangaDetailsUseCase
 import com.sephirita.mangarift.ui.components.detail.viewmodel.DetailViewModel
 import com.sephirita.mangarift.ui.components.home.usecase.LatestUpdatesUseCase
 import com.sephirita.mangarift.ui.components.home.usecase.PopularNewTitlesUseCase
@@ -18,7 +19,9 @@ val uiModules = module {
         )
     }
     viewModel {
-        DetailViewModel()
+        DetailViewModel(
+            get()
+        )
     }
     factory {
         PopularNewTitlesUseCase(get())
@@ -28,5 +31,8 @@ val uiModules = module {
     }
     factory {
         LatestUpdatesUseCase(get())
+    }
+    factory {
+        MangaDetailsUseCase(get())
     }
 }
