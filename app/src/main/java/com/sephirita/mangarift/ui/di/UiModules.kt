@@ -1,6 +1,7 @@
 package com.sephirita.mangarift.ui.di
 
 
+import com.sephirita.mangarift.ui.components.detail.usecase.MangaChaptersUseCase
 import com.sephirita.mangarift.ui.components.detail.usecase.MangaDetailsUseCase
 import com.sephirita.mangarift.ui.components.detail.viewmodel.DetailViewModel
 import com.sephirita.mangarift.ui.components.home.usecase.LatestUpdatesUseCase
@@ -20,6 +21,7 @@ val uiModules = module {
     }
     viewModel {
         DetailViewModel(
+            get(),
             get()
         )
     }
@@ -34,5 +36,8 @@ val uiModules = module {
     }
     factory {
         MangaDetailsUseCase(get())
+    }
+    factory {
+        MangaChaptersUseCase(get())
     }
 }

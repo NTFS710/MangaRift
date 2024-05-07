@@ -33,7 +33,6 @@ class ServiceImpl(
                     encodedParameters.append("contentRating[]", "safe")
                     encodedParameters.append("contentRating[]", "erotica")
                     encodedParameters.append("contentRating[]", "suggestive")
-                    encodedParameters.append("contentRating[]", "pornographic")
                     encodedParameters.append("limit", "15")
                 }
             }.body()
@@ -54,7 +53,6 @@ class ServiceImpl(
                     encodedParameters.append("contentRating[]", "safe")
                     encodedParameters.append("contentRating[]", "erotica")
                     encodedParameters.append("contentRating[]", "suggestive")
-                    encodedParameters.append("contentRating[]", "pornographic")
                     encodedParameters.append("limit", "15")
                 }
             }.body()
@@ -75,7 +73,6 @@ class ServiceImpl(
                     encodedParameters.append("contentRating[]", "safe")
                     encodedParameters.append("contentRating[]", "erotica")
                     encodedParameters.append("contentRating[]", "suggestive")
-                    encodedParameters.append("contentRating[]", "pornographic")
                     encodedParameters.append("limit", "15")
                 }
             }.body()
@@ -92,6 +89,9 @@ class ServiceImpl(
                     encodedParameters.append("includes[]", "scanlation_group")
                     encodedParameters.append("translatedLanguage[]", "pt-br")
                     encodedParameters.append("translatedLanguage[]", "en")
+                    encodedParameters.append("contentRating[]", "safe")
+                    encodedParameters.append("contentRating[]", "erotica")
+                    encodedParameters.append("contentRating[]", "suggestive")
                 }
             }.body()
         } catch (e: Exception) {

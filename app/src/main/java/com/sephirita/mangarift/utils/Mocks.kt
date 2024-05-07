@@ -25,7 +25,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
 
@@ -36,7 +37,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
 
@@ -47,7 +49,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     chapters.add(
@@ -57,7 +60,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
 
@@ -68,7 +72,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     chapters.add(
@@ -78,7 +83,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     chapters.add(
@@ -88,7 +94,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
 
@@ -99,7 +106,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     chapters.add(
@@ -109,7 +117,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     chapters.add(
@@ -119,7 +128,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     chapters.add(
@@ -129,7 +139,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     chapters.add(
@@ -139,7 +150,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     chapters.add(
@@ -149,7 +161,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     chapters.add(
@@ -159,7 +172,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     chapters.add(
@@ -169,7 +183,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     chapters.add(
@@ -179,7 +194,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     chapters.add(
@@ -189,7 +205,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     chapters.add(
@@ -199,7 +216,8 @@ fun getMangaChapters(): List<Chapter> {
             pages = 25,
             title = "A trança do rei careca",
             translatedLanguage = "pt-br",
-            updatedAt = "2024-01-11T22:19:26+00:00"
+            updatedAt = "2024-01-11T22:19:26+00:00",
+            scan = ""
         )
     )
     return chapters

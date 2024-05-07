@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class ChapterRelationships(
     val id: String,
     val type: String,
-    val attributes: ChapterRelationshipsAttributes?
+    val attributes: ChapterRelationshipsAttributes? = null
 )

@@ -1,11 +1,14 @@
 package com.sephirita.mangarift.utils
 
+import com.sephirita.mangarift.data.remote.dto.model.ChapterListResponse
 import com.sephirita.mangarift.data.remote.dto.model.DetailedMangaResponse
 import com.sephirita.mangarift.data.remote.dto.model.MangaListResponse
 import com.sephirita.mangarift.domain.model.Manga
+import com.sephirita.mangarift.ui.components.sohprateste.Chapter
 import com.sephirita.mangarift.ui.components.sohprateste.Tag
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
+import java.util.SortedMap
 
 private const val AUTHOR_TYPE = "author"
 private const val COVER_ART_TYPE = "cover_art"
@@ -61,6 +64,27 @@ fun DetailedMangaResponse.toManga(): Manga {
 
 
     return manga ?: Manga()
+}
+
+fun ChapterListResponse.formatChapters(): Map<Float, List<Chapter>> {
+
+    val chapters = mutableListOf<Chapter>()
+    this.data.forEach { currentChapter ->
+        val scanName = currentChapter.relationships?.find { it.type == "scanlation_group" }?.attributes?.name
+        chapters.add(
+            Chapter(
+                id = currentChapter.id,
+                title = currentChapter.attributes.title ?: "",
+                translatedLanguage = currentChapter.attributes.translatedLanguage ?: "",
+                pages = currentChapter.attributes.pages ?: 0,
+                chapter = currentChapter.attributes.chapter ?: 0F,
+                updatedAt = currentChapter.attributes.updatedAt ?: "",
+                scan = scanName ?: ""
+            )
+        )
+    }
+
+    return chapters.groupBy { it.chapter }.toSortedMap()
 }
 
 private fun findAuthorAndCover(manga: com.sephirita.mangarift.data.remote.dto.model.manga.Manga): Pair<String?, String?> {

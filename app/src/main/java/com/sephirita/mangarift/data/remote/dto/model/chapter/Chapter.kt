@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class Chapter(
     val id: String,
     val type: String,
-    val attributes: ChapterAttributes?,
+    val attributes: ChapterAttributes,
     val relationships: List<ChapterRelationships>?
 )

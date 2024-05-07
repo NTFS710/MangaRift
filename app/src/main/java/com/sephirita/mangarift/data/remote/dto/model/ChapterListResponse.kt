@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ChapterListResponse(
     val result: String,
-    val response: String?,
-    val errors: List<Error>?,
-    val data: List<Chapter>?,
-    val limit: Int?,
-    val offset: Int?,
-    val total: Int?
+    val response: String? = null,
+    val errors: List<Error>? = null,
+    val data: List<Chapter>,
+    val limit: Int? = null,
+    val offset: Int? = null,
+    val total: Int? = null
 )

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ChapterAttributes(
     val volume: String?,
-    val chapter: String?,
+    val chapter: Float? = null,
     val title: String?,
     val translatedLanguage: String?,
     val publishAt: String?,
