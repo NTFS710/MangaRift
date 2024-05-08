@@ -3,6 +3,7 @@ package com.sephirita.mangarift.data.remote.dto
 import com.sephirita.mangarift.data.remote.dto.model.ChapterListResponse
 import com.sephirita.mangarift.data.remote.dto.model.DetailedMangaResponse
 import com.sephirita.mangarift.data.remote.dto.model.MangaListResponse
+import com.sephirita.mangarift.data.remote.dto.model.chapter.page.ChapterPagesResponse
 
 interface Service {
     suspend fun getPopularNewTitles(): MangaListResponse
@@ -11,10 +12,9 @@ interface Service {
 
     suspend fun getLatestUpdates(): MangaListResponse
 
-    suspend fun getChapters(id: String): ChapterListResponse
+    suspend fun getChapters(mangaId: String): ChapterListResponse
 
-    suspend fun getMangaDetails(id: String): DetailedMangaResponse // A gente vai vendo aí
+    suspend fun getMangaDetails(mangaId: String): DetailedMangaResponse
 
-    // TODO essa eu realmente não sei como fazer
-    suspend fun getChapterPDF() // essa aqui é complexa
+    suspend fun getChapterPDF(chapterId: String): ChapterPagesResponse
 }

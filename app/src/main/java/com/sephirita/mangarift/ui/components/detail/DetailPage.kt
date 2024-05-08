@@ -49,7 +49,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun DetailPage(
     id: String,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    readerNavigation: (String) -> Unit
 ) {
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val backgroundHeight = (screenHeight / 10) * 4
@@ -155,7 +156,8 @@ fun DetailPage(
                                     description = manga.description,
                                     chaptersList = viewModel.getChapters(),
                                     expandedChapterList = expandedChapter,
-                                    expandChapterCallback = { viewModel.expandChapter(it) }
+                                    expandChapterCallback = { viewModel.expandChapter(it) },
+                                    readerNavigation = readerNavigation
                                 )
                             }
                         }

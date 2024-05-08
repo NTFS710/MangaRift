@@ -15,7 +15,8 @@ fun ChaptersList(
     modifier: Modifier = Modifier,
     chaptersList: Map<Float, List<Chapter>>,
     expandedChapterList: Map<Float, Boolean>,
-    expandChapterCallback: (Float) -> Unit
+    expandChapterCallback: (Float) -> Unit,
+    readerNavigation: (String) -> Unit
 ) {
     Box(
         modifier = modifier
@@ -30,9 +31,8 @@ fun ChaptersList(
                     chapterNumber = chapterNumber,
                     chapters = chapterList,
                     isExpanded = isExpanded,
-                    onClick = {
-                        expandChapterCallback(chapterNumber)
-                    }
+                    onClick = { expandChapterCallback(chapterNumber) },
+                    readerNavigation = readerNavigation
                 )
             }
         }

@@ -3,6 +3,7 @@ package com.sephirita.mangarift.utils
 import com.sephirita.mangarift.data.remote.dto.model.ChapterListResponse
 import com.sephirita.mangarift.data.remote.dto.model.DetailedMangaResponse
 import com.sephirita.mangarift.data.remote.dto.model.MangaListResponse
+import com.sephirita.mangarift.data.remote.dto.model.chapter.page.ChapterPagesResponse
 import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.ui.components.sohprateste.Chapter
 import com.sephirita.mangarift.ui.components.sohprateste.Tag
@@ -85,6 +86,16 @@ fun ChapterListResponse.formatChapters(): Map<Float, List<Chapter>> {
     }
 
     return chapters.groupBy { it.chapter }.toSortedMap()
+}
+
+fun ChapterPagesResponse.formatChapterToView(): List<String> {
+    val chapterPages = mutableListOf<String>()
+    chapter.data.forEach {
+        chapterPages.add(
+            "$baseUrl/data/${chapter.hash}/$it"
+        )
+    }
+    return chapterPages
 }
 
 private fun findAuthorAndCover(manga: com.sephirita.mangarift.data.remote.dto.model.manga.Manga): Pair<String?, String?> {

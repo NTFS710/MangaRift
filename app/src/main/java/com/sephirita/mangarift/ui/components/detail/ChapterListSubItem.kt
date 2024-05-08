@@ -20,14 +20,13 @@ import com.sephirita.mangarift.utils.formatChapterNumber
 @Composable
 fun ChapterListSubItem(
     modifier: Modifier = Modifier,
-    chapter: Chapter
+    chapter: Chapter,
+    readerNavigation: () -> Unit
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clickable {
-//                Abrir o capítulo pro usuário ler
-            }
+            .clickable(onClick = readerNavigation )
     ) {
         Row(
             modifier = Modifier.padding(

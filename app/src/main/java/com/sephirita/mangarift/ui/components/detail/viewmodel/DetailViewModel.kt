@@ -7,12 +7,10 @@ import com.sephirita.mangarift.ui.components.detail.usecase.MangaChaptersUseCase
 import com.sephirita.mangarift.ui.components.detail.usecase.MangaDetailsUseCase
 import com.sephirita.mangarift.ui.components.sohprateste.Chapter
 import com.sephirita.mangarift.ui.model.FormatedChapters
-import com.sephirita.mangarift.utils.getMockedManga
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.util.SortedMap
 
 class DetailViewModel(
     private val getMangaDetailsUseCase: MangaDetailsUseCase,

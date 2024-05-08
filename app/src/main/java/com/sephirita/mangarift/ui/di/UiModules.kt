@@ -1,6 +1,7 @@
 package com.sephirita.mangarift.ui.di
 
 
+import com.sephirita.mangarift.ui.components.detail.usecase.ChapterPagesUseCase
 import com.sephirita.mangarift.ui.components.detail.usecase.MangaChaptersUseCase
 import com.sephirita.mangarift.ui.components.detail.usecase.MangaDetailsUseCase
 import com.sephirita.mangarift.ui.components.detail.viewmodel.DetailViewModel
@@ -8,6 +9,7 @@ import com.sephirita.mangarift.ui.components.home.usecase.LatestUpdatesUseCase
 import com.sephirita.mangarift.ui.components.home.usecase.PopularNewTitlesUseCase
 import com.sephirita.mangarift.ui.components.home.usecase.RecentlyAddedUseCase
 import com.sephirita.mangarift.ui.components.home.viewmodel.HomeViewModel
+import com.sephirita.mangarift.ui.components.reader.ReaderViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -25,6 +27,11 @@ val uiModules = module {
             get()
         )
     }
+    viewModel {
+        ReaderViewModel(
+            get()
+        )
+    }
     factory {
         PopularNewTitlesUseCase(get())
     }
@@ -39,5 +46,8 @@ val uiModules = module {
     }
     factory {
         MangaChaptersUseCase(get())
+    }
+    factory {
+        ChapterPagesUseCase(get())
     }
 }

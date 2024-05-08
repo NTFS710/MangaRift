@@ -4,17 +4,10 @@ import com.sephirita.mangarift.data.remote.dto.Service
 import com.sephirita.mangarift.data.remote.dto.model.ChapterListResponse
 import com.sephirita.mangarift.data.remote.dto.model.DetailedMangaResponse
 import com.sephirita.mangarift.data.remote.dto.model.MangaListResponse
-import com.sephirita.mangarift.data.remote.dto.model.manga.Manga
+import com.sephirita.mangarift.data.remote.dto.model.chapter.page.ChapterPagesResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
-import io.ktor.client.request.parameter
-import io.ktor.client.request.url
-import io.ktor.http.URLProtocol
-import io.ktor.http.append
-import io.ktor.http.encodedPath
-import io.ktor.http.parameters
 
 class ServiceImpl(
     private val client: HttpClient
@@ -81,9 +74,9 @@ class ServiceImpl(
         }
     }
 
-    override suspend fun getChapters(id: String): ChapterListResponse {
+    override suspend fun getChapters(mangaId: String): ChapterListResponse {
         return try {
-            client.get("${HttpRoutes.MANGA}/$id/feed") {
+            client.get("${HttpRoutes.MANGA}/$mangaId/feed") {
                 url {
                     encodedParameters.append("order[chapter]", "asc")
                     encodedParameters.append("includes[]", "scanlation_group")
@@ -99,9 +92,9 @@ class ServiceImpl(
         }
     }
 
-    override suspend fun getMangaDetails(id: String): DetailedMangaResponse {
+    override suspend fun getMangaDetails(mangaId: String): DetailedMangaResponse {
         return try {
-            client.get("${HttpRoutes.MANGA}/$id") {
+            client.get("${HttpRoutes.MANGA}/$mangaId") {
                 url {
                     encodedParameters.append("includes[]", "cover_art")
                 }
@@ -111,7 +104,11 @@ class ServiceImpl(
         }
     }
 
-    override suspend fun getChapterPDF() {
-        TODO("Not yet implemented")
+    override suspend fun getChapterPDF(chapterId: String): ChapterPagesResponse {
+        return try {
+            client.get("${HttpRoutes.CHAPTERS}/$chapterId").body()
+        } catch (e: Exception) {
+            throw (e)
+        }
     }
 }

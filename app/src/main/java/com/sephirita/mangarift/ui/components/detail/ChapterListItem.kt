@@ -23,7 +23,8 @@ fun ChapterListItem(
     chapterNumber: Float,
     chapters: List<Chapter>,
     isExpanded: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    readerNavigation: (String) -> Unit
 ) {
     val paddingBottom = if (isExpanded) 0.dp else 4.dp
 
@@ -53,7 +54,10 @@ fun ChapterListItem(
             if (isExpanded) {
                 chapters.forEach {
                     HorizontalDivider()
-                    ChapterListSubItem(chapter = it)
+                    ChapterListSubItem(
+                        chapter = it,
+                        readerNavigation = { readerNavigation(it.id) }
+                    )
                 }
             }
         }

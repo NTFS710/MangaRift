@@ -32,7 +32,8 @@ fun DetailPageTabs(
     description: String,
     chaptersList: Map<Float, List<Chapter>>,
     expandedChapterList: Map<Float, Boolean>,
-    expandChapterCallback: (Float) -> Unit
+    expandChapterCallback: (Float) -> Unit,
+    readerNavigation: (String) -> Unit
 ) {
     val pagerState = rememberPagerState(pageCount = { DetailsPageTab.entries.size })
     val coroutineScope = rememberCoroutineScope()
@@ -89,7 +90,8 @@ fun DetailPageTabs(
                     DetailsPageTab.Chapters.index -> ChaptersList(
                         chaptersList = chaptersList,
                         expandedChapterList = expandedChapterList,
-                        expandChapterCallback = expandChapterCallback
+                        expandChapterCallback = expandChapterCallback,
+                        readerNavigation = readerNavigation
                     )
                 }
             }
