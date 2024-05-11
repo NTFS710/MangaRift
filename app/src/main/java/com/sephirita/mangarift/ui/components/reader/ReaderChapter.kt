@@ -1,21 +1,31 @@
 package com.sephirita.mangarift.ui.components.reader
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -25,29 +35,58 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import coil.compose.AsyncImage
 import org.koin.androidx.compose.koinViewModel
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ReaderChapter(chapterId: String) {
     val viewModel: ReaderViewModel = koinViewModel()
     val chapterPages by viewModel.chapterPages.collectAsState()
 
-    var scale by remember { mutableStateOf(1f) }
+    val context = LocalContext.current
+    var scale by remember { mutableFloatStateOf(1f) }
     var offset by remember { mutableStateOf(Offset.Zero) }
-
+    var showDialog by remember { mutableStateOf(false) }
+    val pagerState = rememberPagerState(pageCount = { chapterPages.size })
 
     LaunchedEffect(key1 = Unit) {
         viewModel.getChapterToRead(chapterId)
     }
-    val pagerState = rememberPagerState(pageCount = { chapterPages.size })
-    HideSystemBars()
+
+    DisposableEffect(Unit) {
+        val window = context.findActivity()?.window ?: return@DisposableEffect onDispose {}
+        val insetsController = WindowCompat.getInsetsController(window, window.decorView)
+        insetsController.apply {
+            hide(WindowInsetsCompat.Type.statusBars())
+            hide(WindowInsetsCompat.Type.navigationBars())
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+        onDispose {
+            insetsController.apply {
+                show(WindowInsetsCompat.Type.statusBars())
+                show(WindowInsetsCompat.Type.navigationBars())
+                systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+            }
+        }
+    }
+
+
     BoxWithConstraints(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .combinedClickable(
+                onClick = {},
+                onLongClick = { showDialog = true },
+                interactionSource = null,
+                indication = null
+            )
     ) {
         val transformableState =
             rememberTransformableState { zoomChange, offsetChange, rotationChange ->
@@ -61,6 +100,37 @@ fun ReaderChapter(chapterId: String) {
                     y = (offset.y + (scale * offsetChange.y)).coerceIn(-maxY, maxY)
                 )
             }
+
+        if (showDialog) {
+            Dialog(onDismissRequest = { showDialog = false }) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Column {
+                        Button(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = { /*TODO*/ }
+                        ) {
+                            Row {
+//                                Icon(painter = , contentDescription = )
+                                Text(text = "Padrão")
+                            }
+                        }
+                        Button(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = { /*TODO*/ }
+                        ) {
+                            Row {
+//                                Icon(painter = , contentDescription = )
+                                Text(text = "Webtoon")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         HorizontalPager(
             state = pagerState,
             modifier = Modifier
@@ -83,30 +153,6 @@ fun ReaderChapter(chapterId: String) {
                 model = currentItem,
                 contentDescription = "PDF Image"
             )
-        }
-    }
-}
-
-@Composable
-fun HideSystemBars() {
-    val context = LocalContext.current
-
-    DisposableEffect(Unit) {
-        val window = context.findActivity()?.window ?: return@DisposableEffect onDispose {}
-        val insetsController = WindowCompat.getInsetsController(window, window.decorView)
-
-        insetsController.apply {
-            hide(WindowInsetsCompat.Type.statusBars())
-            hide(WindowInsetsCompat.Type.navigationBars())
-            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        }
-
-        onDispose {
-            insetsController.apply {
-                show(WindowInsetsCompat.Type.statusBars())
-                show(WindowInsetsCompat.Type.navigationBars())
-                systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
-            }
         }
     }
 }
