@@ -24,7 +24,9 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBar() {
+fun SearchBar(
+    onSearch: (String) -> Unit
+) {
     var text by rememberSaveable { mutableStateOf("") }
     var active by rememberSaveable { mutableStateOf(false) }
 
@@ -36,7 +38,10 @@ fun SearchBar() {
             modifier = Modifier.align(Alignment.Center),
             query = text,
             onQueryChange = { text = it },
-            onSearch = { active = false },
+            onSearch = {
+                onSearch(text)
+                active = false
+            },
             active = active,
             onActiveChange = {
                 active = it
@@ -45,21 +50,21 @@ fun SearchBar() {
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
             trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
         ) {
-            repeat(4) { idx ->
-                val resultText = "Suggestion $idx"
-                ListItem(
-                    headlineContent = { Text(resultText) },
-                    supportingContent = { Text("Additional info") },
-                    leadingContent = { Icon(Icons.Filled.Star, contentDescription = null) },
-                    modifier = Modifier
-                        .clickable {
-                            text = resultText
-                            active = false
-                        }
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 4.dp)
-                )
-            }
+//            repeat(4) { idx ->
+//                val resultText = "Suggestion $idx"
+//                ListItem(
+//                    headlineContent = { Text(resultText) },
+//                    supportingContent = { Text("Additional info") },
+//                    leadingContent = { Icon(Icons.Filled.Star, contentDescription = null) },
+//                    modifier = Modifier
+//                        .clickable {
+//                            text = resultText
+//                            active = false
+//                        }
+//                        .fillMaxWidth()
+//                        .padding(horizontal = 16.dp, vertical = 4.dp)
+//                )
+//            }
         }
     }
 }

@@ -88,7 +88,7 @@ fun DetailsScreen(
 ) {
     DetailPage(
         id = id,
-        onBackPressed = { navigator.popBackStack() },
+        onBackPressed = { navigator.navigateUp() },
         readerNavigation = { navigator.navigate(PDFScreenDestination(it)) }
     )
 }

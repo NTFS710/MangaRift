@@ -74,6 +74,26 @@ class ServiceImpl(
         }
     }
 
+    override suspend fun getMangaWithTitle(mangaTitle: String): MangaListResponse {
+        return try {
+            client.get(HttpRoutes.MANGA) {
+                url {
+                    if (mangaTitle.isNotBlank()) encodedParameters.append("title", mangaTitle)
+                    encodedParameters.append("hasAvailableChapters", "true")
+                    encodedParameters.append("availableTranslatedLanguage[]", "pt-br")
+                    encodedParameters.append("availableTranslatedLanguage[]", "en")
+                    encodedParameters.append("includes[]", "cover_art")
+                    encodedParameters.append("contentRating[]", "safe")
+                    encodedParameters.append("contentRating[]", "erotica")
+                    encodedParameters.append("contentRating[]", "suggestive")
+                    encodedParameters.append("limit", "50")
+                }
+            }.body()
+        } catch (e: Exception) {
+            throw (e)
+        }
+    }
+
     override suspend fun getChapters(mangaId: String): ChapterListResponse {
         return try {
             client.get("${HttpRoutes.MANGA}/$mangaId/feed") {

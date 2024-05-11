@@ -3,13 +3,16 @@ package com.sephirita.mangarift.ui.components.search
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -36,45 +40,55 @@ fun SearchListItem(
 ) {
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val itemHeight = screenHeight / 6
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val imageWidth = (screenWidth / 100) * 25
 
     Row(
         modifier = Modifier
             .height(itemHeight)
+            .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .background(MaterialTheme.colorScheme.surface)
             .clickable(onClick = onClick)
     ) {
         AsyncImage(
-            modifier = Modifier.fillMaxHeight(),
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(imageWidth),
             alignment = Alignment.TopCenter,
-            contentScale = ContentScale.FillHeight,
+            contentScale = ContentScale.Crop,
             model = item.image,
             contentDescription = "Background Banner Image"
         )
-        Spacer(modifier = Modifier.width(8.dp))
         Column(
-            modifier = Modifier.fillMaxHeight(),
-            verticalArrangement = Arrangement.SpaceAround
+            modifier = Modifier
+                .fillMaxHeight()
+                .padding(top = 4.dp, start = 6.dp, end = 6.dp/*, bottom = 4.dp*/),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = item.title)
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp),
-                maxLines = 2
-            ) {
-                item.tags.forEach {
-                    Tag(name = it.type)
-                    Spacer(modifier = Modifier.width(8.dp))
+            Box {
+                Column {
+                    Text(text = item.title, overflow = TextOverflow.Ellipsis, maxLines = 2)
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                        maxLines = 1
+                    ) {
+                        item.tags.forEach {
+                            Tag(name = it.type)
+                        }
+                    }
                 }
             }
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 RatingBar(
                     rating = item.rating.toDouble(),
                     stars = 1,
+                    starSize = 22.dp
                 )
-                Spacer(Modifier.width(8.dp))
                 Text(
                     color = Color.White,
                     text = item.rating,

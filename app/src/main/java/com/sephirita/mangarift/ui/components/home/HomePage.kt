@@ -14,12 +14,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.ui.components.banner.BannersHome
-import com.sephirita.mangarift.ui.components.detail.viewmodel.DetailViewModel
 import com.sephirita.mangarift.ui.components.home.viewmodel.HomeViewModel
 import com.sephirita.mangarift.ui.model.MangaListType
-import com.sephirita.mangarift.utils.getMangaList
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -62,7 +59,7 @@ fun HomePage(
                         listTitle = mangaType.title,
                         items = items,
                         detailNavigation = { detailNavigation(it) },
-                        searchNavigation = { searchNavigation(mangaType.name) }
+                        searchNavigation = { searchNavigation("") }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
@@ -72,7 +69,7 @@ fun HomePage(
                         listTitle = mangaType.title,
                         items = items,
                         detailNavigation = { detailNavigation(it) },
-                        searchNavigation = { searchNavigation(mangaType.name) }
+                        searchNavigation = { searchNavigation("") }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }

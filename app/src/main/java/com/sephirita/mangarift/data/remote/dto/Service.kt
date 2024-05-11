@@ -12,9 +12,11 @@ interface Service {
 
     suspend fun getLatestUpdates(): MangaListResponse
 
-    suspend fun getChapters(mangaId: String): ChapterListResponse
+    suspend fun getMangaWithTitle(mangaTitle: String): MangaListResponse
 
     suspend fun getMangaDetails(mangaId: String): DetailedMangaResponse
+
+    suspend fun getChapters(mangaId: String): ChapterListResponse
 
     suspend fun getChapterPDF(chapterId: String): ChapterPagesResponse
 }
