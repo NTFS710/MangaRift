@@ -29,7 +29,7 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sephirita.mangarift.destinations.DetailsScreenDestination
-import com.sephirita.mangarift.destinations.PDFScreenDestination
+import com.sephirita.mangarift.destinations.ReaderScreenDestination
 import com.sephirita.mangarift.destinations.SearchScreenDestination
 import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.ui.components.banner.Banner
@@ -89,13 +89,13 @@ fun DetailsScreen(
     DetailPage(
         id = id,
         onBackPressed = { navigator.navigateUp() },
-        readerNavigation = { navigator.navigate(PDFScreenDestination(it)) }
+        readerNavigation = { navigator.navigate(ReaderScreenDestination(it)) }
     )
 }
 
 @Destination
 @Composable
-fun PDFScreen(
+fun ReaderScreen(
     navigator: DestinationsNavigator,
     chapterId: String
 ) {

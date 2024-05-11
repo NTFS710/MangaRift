@@ -128,29 +128,29 @@ fun DetailPage(
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(bottom = 8.dp),
-                                    verticalAlignment = CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceEvenly
-                                ) {
-                                    Row(verticalAlignment = CenterVertically) {
-                                        RatingBar(
-                                            rating = manga.rating.toDouble(), starSize = 26.dp
-                                        )
-                                        Spacer(modifier = Modifier.width(4.dp))
-                                        Text(text = manga.rating, fontSize = 20.sp)
-                                    }
-                                    Icon(
-                                        modifier = Modifier
-                                            .size(24.dp, 24.dp)
-                                            .clickable { },
-                                        contentDescription = "Bookmark",
-                                        painter = painterResource(id = R.drawable.ic_outline_bookmark) // Adicionar ícone pintado pra mostrar ao usuário que o mangá está na lista de favoritos dele
-                                    )
-                                }
-                                HorizontalDivider(color = Gray)
+//                                Row(
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .padding(bottom = 8.dp),
+//                                    verticalAlignment = CenterVertically,
+//                                    horizontalArrangement = Arrangement.SpaceEvenly
+//                                ) {
+//                                    Row(verticalAlignment = CenterVertically) {
+//                                        RatingBar(
+//                                            rating = manga.rating.toDouble(), starSize = 26.dp
+//                                        )
+//                                        Spacer(modifier = Modifier.width(4.dp))
+//                                        Text(text = manga.rating, fontSize = 20.sp)
+//                                    }
+//                                    Icon(
+//                                        modifier = Modifier
+//                                            .size(24.dp, 24.dp)
+//                                            .clickable { },
+//                                        contentDescription = "Bookmark",
+//                                        painter = painterResource(id = R.drawable.ic_outline_bookmark) // Adicionar ícone pintado pra mostrar ao usuário que o mangá está na lista de favoritos dele
+//                                    )
+//                                }
+//                                HorizontalDivider(color = Gray)
                                 DetailPageTabs(
                                     tags = manga.tags,
                                     description = manga.description,
