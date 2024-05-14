@@ -5,11 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.sephirita.mangarift.ui.components.detail.state.DetailState
 import com.sephirita.mangarift.ui.components.detail.usecase.MangaChaptersUseCase
 import com.sephirita.mangarift.ui.components.detail.usecase.MangaDetailsUseCase
-import com.sephirita.mangarift.ui.components.sohprateste.Chapter
+import com.sephirita.mangarift.ui.model.ChaptersOrder
 import com.sephirita.mangarift.ui.model.FormatedChapters
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
@@ -18,6 +19,7 @@ class DetailViewModel(
 ) : ViewModel() {
 
     private val _chaptersManga = MutableStateFlow(FormatedChapters())
+    val chaptersManga: StateFlow<FormatedChapters> = _chaptersManga.asStateFlow()
 
     private val _detailState = MutableStateFlow(DetailState())
     val detailState: StateFlow<DetailState> = _detailState.asStateFlow()
@@ -32,12 +34,20 @@ class DetailViewModel(
                 manga = result
             )
             _chaptersManga.value = FormatedChapters(
-                chapters = chapters
+                order = ChaptersOrder.Natural,
+                natural = chapters,
+                reversed = chapters.toSortedMap(reverseOrder())
             )
         }
     }
 
-    fun getChapters(): Map<Float, List<Chapter>> = _chaptersManga.value.chapters
+    fun changeOrder(order: ChaptersOrder) {
+        _chaptersManga.update {
+            it.copy(
+                order = order
+            )
+        }
+    }
 
     fun expandChapter(chapterNumber: Float) {
         val currentState = detailState.value

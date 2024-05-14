@@ -22,7 +22,9 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.unit.sp
 import com.sephirita.mangarift.ui.components.sohprateste.Chapter
 import com.sephirita.mangarift.ui.components.sohprateste.Tag
+import com.sephirita.mangarift.ui.model.ChaptersOrder
 import com.sephirita.mangarift.ui.model.DetailsPageTab
+import com.sephirita.mangarift.ui.model.FormatedChapters
 import kotlinx.coroutines.launch
 
 @Composable
@@ -30,7 +32,8 @@ fun DetailPageTabs(
     modifier: Modifier = Modifier,
     tags: List<Tag>,
     description: String,
-    chaptersList: Map<Float, List<Chapter>>,
+    chapters: FormatedChapters,
+    changeChaptersOrder: (ChaptersOrder) -> Unit,
     expandedChapterList: Map<Float, Boolean>,
     expandChapterCallback: (Float) -> Unit,
     readerNavigation: (String) -> Unit
@@ -77,7 +80,9 @@ fun DetailPageTabs(
                 }
             )
             HorizontalPager(
-                modifier = Modifier.fillMaxSize().animateContentSize(tween(300)),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .animateContentSize(tween(300)),
                 verticalAlignment = Alignment.Top,
                 state = pagerState,
                 userScrollEnabled = false
@@ -88,7 +93,8 @@ fun DetailPageTabs(
                         description = description
                     )
                     DetailsPageTab.Chapters.index -> ChaptersList(
-                        chaptersList = chaptersList,
+                        chapters = chapters,
+                        changeChaptersOrder = changeChaptersOrder,
                         expandedChapterList = expandedChapterList,
                         expandChapterCallback = expandChapterCallback,
                         readerNavigation = readerNavigation

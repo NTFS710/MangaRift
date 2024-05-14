@@ -45,6 +45,7 @@ fun DetailPage(
 
     val viewModel: DetailViewModel = koinViewModel()
     val state by viewModel.detailState.collectAsState()
+    val chaptersState by viewModel.chaptersManga.collectAsState()
 
     LaunchedEffect(key1 = viewModel) {
         viewModel.getMangaDetails(id)
@@ -141,7 +142,8 @@ fun DetailPage(
                                 DetailPageTabs(
                                     tags = manga.tags,
                                     description = manga.description,
-                                    chaptersList = viewModel.getChapters(),
+                                    chapters = chaptersState,
+                                    changeChaptersOrder = { viewModel.changeOrder(it) },
                                     expandedChapterList = expandedChapter,
                                     expandChapterCallback = { viewModel.expandChapter(it) },
                                     readerNavigation = readerNavigation
