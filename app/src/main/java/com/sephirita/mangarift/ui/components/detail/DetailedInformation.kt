@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sephirita.mangarift.domain.model.Tag
+import com.sephirita.mangarift.ui.components.card.TagSection
 
 @Composable
 fun DetailedInformation(
@@ -24,7 +25,8 @@ fun DetailedInformation(
             .padding(horizontal = 16.dp)
     ) {
         Column {
-            Genres(tags = tags)
+            Spacer(modifier = Modifier.height(8.dp))
+            TagSection(titleText = "Gêneros", tags = tags)
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = description)
             Spacer(modifier = Modifier.height(16.dp))

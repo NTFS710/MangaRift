@@ -3,12 +3,8 @@ package com.sephirita.mangarift.ui.components.search
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,15 +20,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.sephirita.mangarift.domain.model.Manga
-import com.sephirita.mangarift.ui.components.card.Tag
+import com.sephirita.mangarift.ui.components.card.TagSection
 import com.sephirita.mangarift.ui.components.rating.RatingBar
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SearchListItem(
     item: Manga,
@@ -63,23 +57,19 @@ fun SearchListItem(
         Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .padding(top = 4.dp, start = 6.dp, end = 6.dp/*, bottom = 4.dp*/),
+                .padding(top = 4.dp, start = 6.dp, end = 6.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Box {
-                Column {
-                    Text(text = item.title, overflow = TextOverflow.Ellipsis, maxLines = 2)
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalArrangement = Arrangement.spacedBy(6.dp),
-                        maxLines = 1
-                    ) {
-                        item.tags.forEach {
-                            Tag(name = it.type)
-                        }
-                    }
-                }
-            }
+            TagSection(
+                titleText = item.title,
+                titleSize = 14.sp,
+                tags = item.tags,
+                tagsMaxLines = 1,
+                titleWeight = null,
+                titleHeight = 14.sp * 1.2,
+                spacerHeight = 2.dp,
+                tagBackground = MaterialTheme.colorScheme.background
+            )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp)

@@ -5,8 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,10 +20,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sephirita.mangarift.domain.model.Manga
-import com.sephirita.mangarift.ui.components.card.Tag
+import com.sephirita.mangarift.ui.components.card.TagSection
 import com.sephirita.mangarift.ui.theme.TransparentGray
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Banner(
     item: Manga,
@@ -79,16 +76,8 @@ fun Banner(
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                FlowRow(
-                    modifier = Modifier.weight(0.1f),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp),
-                    maxLines = 1
-                ) {
-                    item.tags.forEach {
-                        Tag(name = it.type)
-                    }
-                }
+                TagSection(tags = item.tags, tagsMaxLines = 1)
+                Spacer(modifier = Modifier.height(2.dp))
             }
         }
     }
