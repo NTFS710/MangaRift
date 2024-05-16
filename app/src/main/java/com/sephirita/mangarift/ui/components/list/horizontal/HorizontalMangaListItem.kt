@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.home
+package com.sephirita.mangarift.ui.components.list.horizontal
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -26,7 +26,7 @@ import coil.compose.rememberImagePainter
 import com.sephirita.mangarift.domain.model.Manga
 
 @Composable
-fun HomeListItem(
+fun HorizontalMangaListItem(
     modifier: Modifier = Modifier,
     item: Manga,
     onClick: (String) -> Unit
