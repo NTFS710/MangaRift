@@ -10,8 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sephirita.mangarift.domain.Manga
-import com.sephirita.mangarift.ui.components.sohprateste.Tag
+import com.sephirita.mangarift.domain.model.Tag
 
 @Composable
 fun DetailedInformation(

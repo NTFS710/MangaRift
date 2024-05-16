@@ -19,17 +19,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.sephirita.mangarift.R
 
-//    Ideia de Header
-//
-//    Possui itens que devem ou não ser habilitados, dependendo de que classe carrega eles
-//
-//    1 : Botão de voltar
-//    2 : Campo de busca
-//    3 : Botão de DFo
-
 @Composable
 fun Header(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onBackPressed: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -53,10 +46,9 @@ fun Header(
             modifier = Modifier
                 .size(32.dp)
                 .clip(CircleShape)
-                .clickable { },
+                .clickable(onClick = onBackPressed),
             painter = painterResource(id = R.drawable.ic_round_arrow_back),
             contentDescription = "Icone para voltar na navegação"
         )
-        //Adicionar Icon de download
     }
 }

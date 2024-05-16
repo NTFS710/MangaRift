@@ -7,12 +7,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sephirita.mangarift.domain.Manga
+import com.sephirita.mangarift.domain.model.Manga
 
 @Composable
 fun SearchList(
     modifier: Modifier = Modifier,
-    searchItems: List<Manga>
+    searchItems: List<Manga>,
+    detailNavigation: (String) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -24,7 +25,7 @@ fun SearchList(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(searchItems) {
-            SearchListItem(it)
+            SearchListItem(item = it, onClick = { detailNavigation(it.id) })
         }
     }
 }

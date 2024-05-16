@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,12 +23,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.sephirita.mangarift.domain.Manga
+import com.sephirita.mangarift.domain.model.Manga
 
 @Composable
 fun HomeListItem(
     modifier: Modifier = Modifier,
-    item: Manga
+    item: Manga,
+    onClick: (String) -> Unit
 ) {
     val screenSize = LocalConfiguration.current.screenWidthDp.dp
     val itemWidth = screenSize / 3
@@ -36,9 +38,7 @@ fun HomeListItem(
     Box(
         modifier = modifier
             .size(width = itemWidth, height = itemHeight)
-            .clickable {
-                println("F total")
-            },
+            .clickable{ onClick(item.id) },
         contentAlignment = Alignment.CenterStart
     ) {
         Column(
@@ -48,10 +48,11 @@ fun HomeListItem(
         ) {
             Image(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .clip(shape = RoundedCornerShape(4.dp))
                     .weight(0.85f),
-                alignment = Alignment.Center,
-                contentScale = ContentScale.FillWidth,
+                alignment = Alignment.TopCenter,
+                contentScale = ContentScale.Crop,
                 painter = painter,
                 contentDescription = "Manga Cover Image"
             )

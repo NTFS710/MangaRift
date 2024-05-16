@@ -30,6 +30,5 @@ fun Tag(
                 )
             }
             .padding(horizontal = 10.dp, vertical = 2.dp)
-//            .clickable { adicionar clicks na tag, pra abrir a tela de pesquisa usando a tag como fitro }
     )
 }
