@@ -113,7 +113,7 @@ fun DetailsScreen(
                                     )
                                 )
                                 .background(MaterialTheme.colorScheme.background)
-                                .padding(top = 8.dp)
+//                                .padding(top = 8.dp)
                         ) {
                             Column(
                                 modifier = Modifier.fillMaxSize(),

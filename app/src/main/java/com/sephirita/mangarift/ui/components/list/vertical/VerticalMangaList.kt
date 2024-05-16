@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.search
+package com.sephirita.mangarift.ui.components.list.vertical
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.sephirita.mangarift.domain.model.Manga
 
 @Composable
-fun SearchList(
+fun VerticalMangaList(
     modifier: Modifier = Modifier,
     searchItems: List<Manga>,
     detailNavigation: (String) -> Unit,
@@ -25,7 +25,7 @@ fun SearchList(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(searchItems) {
-            SearchListItem(item = it, onClick = { detailNavigation(it.id) })
+            VerticalMangaListItem(item = it, onClick = { detailNavigation(it.id) })
         }
     }
 }

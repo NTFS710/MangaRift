@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.search
+package com.sephirita.mangarift.ui.components.list.vertical
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,7 +28,7 @@ import com.sephirita.mangarift.ui.components.card.TagSection
 import com.sephirita.mangarift.ui.components.rating.RatingBar
 
 @Composable
-fun SearchListItem(
+fun VerticalMangaListItem(
     item: Manga,
     onClick: () -> Unit
 ) {

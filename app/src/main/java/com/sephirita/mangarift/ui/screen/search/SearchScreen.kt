@@ -1,10 +1,21 @@
 package com.sephirita.mangarift.ui.screen.search
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.sephirita.mangarift.ui.components.search.SearchPage
+import com.sephirita.mangarift.ui.components.list.vertical.VerticalMangaList
+import com.sephirita.mangarift.ui.components.search.SearchBar
 import com.sephirita.mangarift.ui.screen.destinations.DetailsScreenDestination
+import com.sephirita.mangarift.ui.screen.search.viewModel.SearchViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Destination
 @Composable
@@ -12,8 +23,34 @@ fun SearchScreen(
     navigator: DestinationsNavigator,
     initialSearch: String = ""
 ) {
-    SearchPage(
-        initialSearch = initialSearch,
-        detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) }
-    )
+    val viewModel: SearchViewModel = koinViewModel()
+    val searchState by viewModel.searchState.collectAsState()
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.search(initialSearch)
+    }
+    with(searchState) {
+        when {
+            isLoading -> {
+
+            }
+
+            isError -> {
+
+            }
+
+            else -> {
+                Column {
+                    SearchBar(
+                        onSearch = { viewModel.search(it) }
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    VerticalMangaList(
+                        searchItems = searchState.mangaList,
+                        detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) }
+                    )
+                }
+            }
+        }
+    }
 }
