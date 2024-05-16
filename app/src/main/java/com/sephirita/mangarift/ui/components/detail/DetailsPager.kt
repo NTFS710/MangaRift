@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.unit.sp
 import com.sephirita.mangarift.domain.model.Tag
-import com.sephirita.mangarift.ui.components.chapter.ChaptersList
+import com.sephirita.mangarift.ui.components.chapter.ChaptersSection
 import com.sephirita.mangarift.ui.model.ChaptersOrder
 import com.sephirita.mangarift.ui.model.DetailsTab
 import com.sephirita.mangarift.ui.model.FormatedChapters
@@ -88,11 +88,11 @@ fun DetailsPager(
                 userScrollEnabled = false
             ) { page ->
                 when (page) {
-                    DetailsTab.Details.index -> DetailedInformation(
+                    DetailsTab.Details.index -> DetailsSection(
                         tags = tags,
                         description = description
                     )
-                    DetailsTab.Chapters.index -> ChaptersList(
+                    DetailsTab.Chapters.index -> ChaptersSection(
                         chapters = chapters,
                         changeChaptersOrder = changeChaptersOrder,
                         expandedChapterList = expandedChapterList,

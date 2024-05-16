@@ -1,87 +1,64 @@
 package com.sephirita.mangarift.ui.components.chapter
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sephirita.mangarift.ui.model.ChaptersOrder
-import com.sephirita.mangarift.ui.model.ChaptersOrder.Natural
-import com.sephirita.mangarift.ui.model.ChaptersOrder.Reversed
-import com.sephirita.mangarift.ui.model.FormatedChapters
+import com.sephirita.mangarift.domain.model.Chapter
+import com.sephirita.mangarift.domain.formatChapterNumber
+import com.sephirita.mangarift.domain.toDate
 
 @Composable
 fun ChaptersList(
     modifier: Modifier = Modifier,
-    chapters: FormatedChapters,
-    changeChaptersOrder: (ChaptersOrder) -> Unit,
-    expandedChapterList: Map<Float, Boolean>,
-    expandChapterCallback: (Float) -> Unit,
+    chapterNumber: Float,
+    chapters: List<Chapter>,
+    isExpanded: Boolean,
+    onClick: () -> Unit,
     readerNavigation: (String) -> Unit
 ) {
-    val chaptersList = if (chapters.order == Natural) chapters.natural else chapters.reversed
+    val paddingBottom = if (isExpanded) 0.dp else 4.dp
 
     Box(
         modifier = modifier
-            .fillMaxSize()
-            .padding(top = 8.dp)
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .animateContentSize(),
+        contentAlignment = Alignment.CenterStart
     ) {
-        Column {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Box(
-                    modifier = Modifier.clickable { changeChaptersOrder(Natural) }
-                ) {
-                    Text(
-                        modifier = Modifier.padding(horizontal = 2.dp),
-                        text = "Crescente",
-                        color = if (chapters.order == Natural)
-                            Color.White
-                        else
-                            Color.Gray,
-                        fontSize = 12.sp
-                    )
-                }
-                Spacer(modifier = Modifier.width(4.dp))
-                Box(
-                    modifier = Modifier.clickable { changeChaptersOrder(Reversed) }
-                ) {
-                    Text(
-                        modifier = Modifier.padding(horizontal = 2.dp),
-                        text = "Decrescente",
-                        color = if (chapters.order == Reversed)
-                            Color.White
-                        else
-                            Color.Gray,
-                        fontSize = 12.sp
-                    )
-                }
-            }
-
-            chaptersList.forEach { (chapterNumber, chapterList) ->
-                val isExpanded = expandedChapterList[chapterNumber] ?: false
-                HorizontalDivider()
-                ChapterListItem(
-                    chapterNumber = chapterNumber,
-                    chapters = chapterList,
-                    isExpanded = isExpanded,
-                    onClick = { expandChapterCallback(chapterNumber) },
-                    readerNavigation = readerNavigation
+        Column(
+            modifier = Modifier
+                .padding(
+                    top = 4.dp,
+                    bottom = paddingBottom
                 )
+        ) {
+            Text(
+                modifier = Modifier.padding(start = 16.dp),
+                text = "Capítulo ${chapterNumber.formatChapterNumber()}"
+            )
+            Text(
+                modifier = Modifier.padding(start = 16.dp),
+                text = chapters.first().updatedAt.toDate(),
+                fontSize = 10.sp
+            )
+            if (isExpanded) {
+                chapters.forEach {
+                    HorizontalDivider()
+                    ChaptersListItem(
+                        chapter = it,
+                        readerNavigation = { readerNavigation(it.id) }
+                    )
+                }
             }
         }
     }

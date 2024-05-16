@@ -14,7 +14,7 @@ import com.sephirita.mangarift.domain.model.Tag
 import com.sephirita.mangarift.ui.components.card.TagSection
 
 @Composable
-fun DetailedInformation(
+fun DetailsSection(
     modifier: Modifier = Modifier,
     tags:  List<Tag>,
     description: String

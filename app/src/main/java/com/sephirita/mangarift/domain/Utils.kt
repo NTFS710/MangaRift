@@ -1,5 +1,6 @@
 package com.sephirita.mangarift.domain
 
+import com.sephirita.mangarift.R
 import com.sephirita.mangarift.data.remote.dto.model.ChapterListResponse
 import com.sephirita.mangarift.data.remote.dto.model.DetailedMangaResponse
 import com.sephirita.mangarift.data.remote.dto.model.MangaListResponse
@@ -7,6 +8,7 @@ import com.sephirita.mangarift.data.remote.dto.model.chapter.page.ChapterPagesRe
 import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.domain.model.Chapter
 import com.sephirita.mangarift.domain.model.Tag
+import com.sephirita.mangarift.ui.model.Language
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
@@ -77,20 +79,26 @@ fun ChapterListResponse.formatChapters(): Map<Float, List<Chapter>> {
     val chapters = mutableListOf<Chapter>()
     this.data.forEach { currentChapter ->
         val scanName = currentChapter.relationships?.find { it.type == "scanlation_group" }?.attributes?.name
+        val languageFlag = when (currentChapter.attributes.translatedLanguage) {
+        Language.PT_BR -> R.drawable.ic_br_flag
+        Language.EN -> R.drawable.ic_en_flag
+        else -> R.drawable.ic_unk_flag
+    }
         chapters.add(
             Chapter(
                 id = currentChapter.id,
                 title = currentChapter.attributes.title ?: "",
                 translatedLanguage = currentChapter.attributes.translatedLanguage ?: "",
+                languageFlag = languageFlag,
                 pages = currentChapter.attributes.pages ?: 0,
-                chapter = currentChapter.attributes.chapter ?: 0F,
+                chapterNumber = currentChapter.attributes.chapter ?: 0F,
                 updatedAt = currentChapter.attributes.updatedAt ?: "",
                 scan = scanName ?: ""
             )
         )
     }
 
-    return chapters.groupBy { it.chapter }.toSortedMap()
+    return chapters.groupBy { it.chapterNumber }.toSortedMap()
 }
 
 fun ChapterPagesResponse.formatChapterToView(): List<String> {
