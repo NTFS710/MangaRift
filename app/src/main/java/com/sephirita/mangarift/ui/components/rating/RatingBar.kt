@@ -1,9 +1,6 @@
 package com.sephirita.mangarift.ui.components.rating
 
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -27,7 +24,7 @@ fun RatingBar(
         for (index in 1..stars) {
             val image = if (index <= rating) {
                 R.drawable.ic_round_star
-            }else if (isHalfStar) {
+            } else if (isHalfStar) {
                 isHalfStar = false
                 R.drawable.ic_round_star_half
             } else {
