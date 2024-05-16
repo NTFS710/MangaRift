@@ -94,6 +94,48 @@ class ServiceImpl(
         }
     }
 
+    override suspend fun getMangaDetails(mangaId: String): DetailedMangaResponse {
+        return try {
+            client.get("${HttpRoutes.MANGA}/$mangaId") {
+                url {
+                    encodedParameters.append("includes[]", "cover_art")
+                }
+            }.body()
+        } catch (e: Exception) {
+            throw (e)
+        }
+    }
+
+    override suspend fun getSeasonMangaIds(): DetailedMangaResponse {
+        return try {
+            client.get(HttpRoutes.SEASON).body()
+        } catch (e: Exception) {
+            throw (e)
+        }
+    }
+
+    override suspend fun getSeasonMangas(mangaIdList: List<String>): MangaListResponse {
+        return try {
+            client.get(HttpRoutes.MANGA) {
+                url {
+                    mangaIdList.forEach {
+                        encodedParameters.append("ids[]", it)
+                    }
+                    encodedParameters.append("hasAvailableChapters", "true")
+                    encodedParameters.append("availableTranslatedLanguage[]", "pt-br")
+                    encodedParameters.append("availableTranslatedLanguage[]", "en")
+                    encodedParameters.append("includes[]", "cover_art")
+                    encodedParameters.append("contentRating[]", "safe")
+                    encodedParameters.append("contentRating[]", "erotica")
+                    encodedParameters.append("contentRating[]", "suggestive")
+                    encodedParameters.append("limit", "${mangaIdList.size}")
+                }
+            }.body()
+        } catch (e: Exception) {
+            throw (e)
+        }
+    }
+
     override suspend fun getChapters(mangaId: String): ChapterListResponse {
         return try {
             client.get("${HttpRoutes.MANGA}/$mangaId/feed") {
@@ -105,18 +147,6 @@ class ServiceImpl(
                     encodedParameters.append("contentRating[]", "safe")
                     encodedParameters.append("contentRating[]", "erotica")
                     encodedParameters.append("contentRating[]", "suggestive")
-                }
-            }.body()
-        } catch (e: Exception) {
-            throw (e)
-        }
-    }
-
-    override suspend fun getMangaDetails(mangaId: String): DetailedMangaResponse {
-        return try {
-            client.get("${HttpRoutes.MANGA}/$mangaId") {
-                url {
-                    encodedParameters.append("includes[]", "cover_art")
                 }
             }.body()
         } catch (e: Exception) {

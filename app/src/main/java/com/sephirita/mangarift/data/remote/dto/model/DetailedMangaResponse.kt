@@ -12,5 +12,4 @@ data class DetailedMangaResponse(
     val limit: Int? = null,
     val offset: Int? = null,
     val total: Int? = null
-
 )

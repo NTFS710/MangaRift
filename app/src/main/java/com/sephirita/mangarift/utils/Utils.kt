@@ -67,6 +67,12 @@ fun DetailedMangaResponse.toManga(): Manga {
     return manga ?: Manga()
 }
 
+fun DetailedMangaResponse.toMangaIdsList(): List<String> {
+    val mangaIds = mutableListOf<String>()
+    data?.relationships?.forEach { mangaIds.add(it.id) }
+    return mangaIds
+}
+
 fun ChapterListResponse.formatChapters(): Map<Float, List<Chapter>> {
 
     val chapters = mutableListOf<Chapter>()

@@ -53,6 +53,16 @@ fun HomePage(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
+                MangaListType.Seasonal -> {
+                    val items = viewModel.seasonList.value
+                    HomeItemsList(
+                        listTitle = mangaType.title,
+                        items = items,
+                        detailNavigation = { detailNavigation(it) },
+                        searchNavigation = { searchNavigation("") }
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
                 MangaListType.LatestUpdates -> {
                     val items = viewModel.latestUpdatesList.value
                     HomeItemsList(

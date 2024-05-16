@@ -7,6 +7,7 @@ import com.sephirita.mangarift.ui.components.home.state.HomeState
 import com.sephirita.mangarift.ui.components.home.usecase.LatestUpdatesUseCase
 import com.sephirita.mangarift.ui.components.home.usecase.PopularNewTitlesUseCase
 import com.sephirita.mangarift.ui.components.home.usecase.RecentlyAddedUseCase
+import com.sephirita.mangarift.ui.components.home.usecase.SeasonUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val getPopularNewTitlesUseCase: PopularNewTitlesUseCase,
     private val getRecentlyAddedUseCase: RecentlyAddedUseCase,
-    private val getLatestUpdatesUseCase: LatestUpdatesUseCase
+    private val getLatestUpdatesUseCase: LatestUpdatesUseCase,
+    private val getSeasonUseCase: SeasonUseCase,
 ) : ViewModel() {
     private val _homeState = MutableStateFlow(HomeState())
     val homeState: StateFlow<HomeState> = _homeState.asStateFlow()
@@ -29,15 +31,15 @@ class HomeViewModel(
     private val _latestUpdatesState = MutableStateFlow(listOf(Manga()))
     val latestUpdatesList: StateFlow<List<Manga>> = _latestUpdatesState.asStateFlow()
 
+    private val _seasonState = MutableStateFlow(listOf(Manga()))
+    val seasonList: StateFlow<List<Manga>> = _seasonState.asStateFlow()
+
     fun getMangas() {
-        // TODO pegar 4 ou 5 listas de manga
         viewModelScope.launch {
             _popularNewTitlesState.value = getPopularNewTitlesUseCase()
+            _seasonState.value = getSeasonUseCase()
             _recentlyAddedState.value = getRecentlyAddedUseCase()
             _latestUpdatesState.value = getLatestUpdatesUseCase()
-//            MangaListType.Seasonal -> {
-//                println("getSeasonalUseCase()")
-//            }
         }
     }
 }

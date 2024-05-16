@@ -5,6 +5,10 @@ enum class MangaListType {
         override val title: String
         get() = "Novos Títulos Populares"
     },
+    Seasonal {
+        override val title: String
+            get() = "Temporada"
+    },
     LatestUpdates {
         override val title: String
             get() = "Últimas Atualizações"
@@ -13,10 +17,6 @@ enum class MangaListType {
         override val title: String
             get() = "Recentemente Adicionados"
     };
-//    Seasonal {
-//        override val title: String
-//            get() = "Sazonal"
-//    };
 
     abstract val title: String
 }
