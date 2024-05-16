@@ -8,14 +8,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sephirita.mangarift.ui.components.banner.BannersHome
-import com.sephirita.mangarift.ui.components.home.viewmodel.HomeViewModel
+import com.sephirita.mangarift.ui.components.banner.BannerPager
+import com.sephirita.mangarift.ui.screen.home.viewmodel.HomeViewModel
 import com.sephirita.mangarift.ui.model.MangaListType
 import org.koin.androidx.compose.koinViewModel
 
@@ -24,19 +23,9 @@ fun HomePage(
     detailNavigation: (String) -> Unit,
     searchNavigation: (String) -> Unit
 ) {
-
     val viewModel: HomeViewModel = koinViewModel()
-    val popularNewTitlesState by viewModel.popularNewTitlesList.collectAsState()
-    val recentlyAddedState by viewModel.recentlyAddedList.collectAsState()
-    val latestUpdatesState by viewModel.latestUpdatesList.collectAsState()
+    val state by viewModel.homeState.collectAsState()
 
-    LaunchedEffect(
-        key1 = recentlyAddedState,
-        key2 = popularNewTitlesState,
-        key3 = latestUpdatesState
-    ) {
-        viewModel.getMangas()
-    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -47,14 +36,14 @@ fun HomePage(
         MangaListType.entries.forEach { mangaType ->
             when (mangaType) {
                 MangaListType.PopularNewTitles -> {
-                    BannersHome(
-                        items = viewModel.popularNewTitlesList.value,
+                    BannerPager(
+                        items = state.popularNewTitles,
                         detailNavigation = { detailNavigation(it) }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
                 MangaListType.Seasonal -> {
-                    val items = viewModel.seasonList.value
+                    val items = state.season
                     HomeItemsList(
                         listTitle = mangaType.title,
                         items = items,
@@ -64,7 +53,7 @@ fun HomePage(
                     Spacer(modifier = Modifier.height(16.dp))
                 }
                 MangaListType.LatestUpdates -> {
-                    val items = viewModel.latestUpdatesList.value
+                    val items = state.latestUpdates
                     HomeItemsList(
                         listTitle = mangaType.title,
                         items = items,
@@ -74,7 +63,7 @@ fun HomePage(
                     Spacer(modifier = Modifier.height(16.dp))
                 }
                 MangaListType.RecentlyAdded -> {
-                    val items = viewModel.recentlyAddedList.value
+                    val items = state.recentlyAdded
                     HomeItemsList(
                         listTitle = mangaType.title,
                         items = items,

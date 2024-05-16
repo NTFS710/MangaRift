@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sephirita.mangarift.ui.components.card.Tag
-import com.sephirita.mangarift.ui.components.sohprateste.Tag
+import com.sephirita.mangarift.domain.model.Tag
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

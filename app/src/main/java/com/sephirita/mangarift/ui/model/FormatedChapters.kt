@@ -1,6 +1,6 @@
 package com.sephirita.mangarift.ui.model
 
-import com.sephirita.mangarift.ui.components.sohprateste.Chapter
+import com.sephirita.mangarift.domain.model.Chapter
 
 data class FormatedChapters(
     val order: ChaptersOrder = ChaptersOrder.Natural,

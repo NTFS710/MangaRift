@@ -9,8 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sephirita.mangarift.ui.components.search.viewModel.SearchViewModel
-import com.sephirita.mangarift.utils.getMangaList
+import com.sephirita.mangarift.ui.screen.search.viewModel.SearchViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -20,7 +19,7 @@ fun SearchPage(
 ) {
     val viewModel: SearchViewModel = koinViewModel()
     val searchState by viewModel.searchState.collectAsState()
-    // salvar num remembersaveable e ver com if
+
     LaunchedEffect(key1 = Unit) {
         viewModel.search(initialSearch)
     }

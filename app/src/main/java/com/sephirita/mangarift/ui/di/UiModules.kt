@@ -1,18 +1,18 @@
 package com.sephirita.mangarift.ui.di
 
 
-import com.sephirita.mangarift.ui.components.detail.usecase.ChapterPagesUseCase
-import com.sephirita.mangarift.ui.components.detail.usecase.MangaChaptersUseCase
-import com.sephirita.mangarift.ui.components.detail.usecase.MangaDetailsUseCase
-import com.sephirita.mangarift.ui.components.detail.viewmodel.DetailViewModel
-import com.sephirita.mangarift.ui.components.home.usecase.LatestUpdatesUseCase
-import com.sephirita.mangarift.ui.components.home.usecase.PopularNewTitlesUseCase
-import com.sephirita.mangarift.ui.components.home.usecase.RecentlyAddedUseCase
-import com.sephirita.mangarift.ui.components.home.usecase.SeasonUseCase
-import com.sephirita.mangarift.ui.components.home.viewmodel.HomeViewModel
-import com.sephirita.mangarift.ui.components.reader.ReaderViewModel
-import com.sephirita.mangarift.ui.components.search.usecase.MangaWithTitleUseCase
-import com.sephirita.mangarift.ui.components.search.viewModel.SearchViewModel
+import com.sephirita.mangarift.domain.usecase.ChapterPagesUseCase
+import com.sephirita.mangarift.domain.usecase.MangaChaptersUseCase
+import com.sephirita.mangarift.domain.usecase.MangaDetailsUseCase
+import com.sephirita.mangarift.ui.screen.detail.viewmodel.DetailViewModel
+import com.sephirita.mangarift.domain.usecase.LatestUpdatesUseCase
+import com.sephirita.mangarift.domain.usecase.PopularNewTitlesUseCase
+import com.sephirita.mangarift.domain.usecase.RecentlyAddedUseCase
+import com.sephirita.mangarift.domain.usecase.SeasonUseCase
+import com.sephirita.mangarift.ui.screen.home.viewmodel.HomeViewModel
+import com.sephirita.mangarift.ui.screen.reader.viewmodel.ReaderViewModel
+import com.sephirita.mangarift.domain.usecase.MangaWithTitleUseCase
+import com.sephirita.mangarift.ui.screen.search.viewModel.SearchViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
