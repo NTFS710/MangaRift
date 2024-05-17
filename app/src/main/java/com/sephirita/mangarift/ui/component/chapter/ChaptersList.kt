@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.chapter
+package com.sephirita.mangarift.ui.component.chapter
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable

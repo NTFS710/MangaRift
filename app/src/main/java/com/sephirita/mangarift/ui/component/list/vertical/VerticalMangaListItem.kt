@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.list.vertical
+package com.sephirita.mangarift.ui.component.list.vertical
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.sephirita.mangarift.domain.model.Manga
-import com.sephirita.mangarift.ui.components.card.TagSection
-import com.sephirita.mangarift.ui.components.rating.RatingBar
+import com.sephirita.mangarift.ui.component.card.TagSection
+import com.sephirita.mangarift.ui.component.rating.RatingBar
 
 @Composable
 fun VerticalMangaListItem(

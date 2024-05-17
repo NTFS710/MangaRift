@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.header
+package com.sephirita.mangarift.ui.component.header
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

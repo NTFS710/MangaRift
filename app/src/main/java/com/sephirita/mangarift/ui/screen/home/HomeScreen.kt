@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.sephirita.mangarift.ui.components.banner.BannerPager
-import com.sephirita.mangarift.ui.components.list.horizontal.HorizontalMangaList
+import com.sephirita.mangarift.ui.component.banner.BannerPager
+import com.sephirita.mangarift.ui.component.list.horizontal.HorizontalMangaList
 import com.sephirita.mangarift.ui.model.MangaListType
 import com.sephirita.mangarift.ui.screen.destinations.DetailsScreenDestination
 import com.sephirita.mangarift.ui.screen.destinations.SearchScreenDestination

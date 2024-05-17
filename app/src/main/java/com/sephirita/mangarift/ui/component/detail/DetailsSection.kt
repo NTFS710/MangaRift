@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.detail
+package com.sephirita.mangarift.ui.component.detail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sephirita.mangarift.domain.model.Tag
-import com.sephirita.mangarift.ui.components.card.TagSection
+import com.sephirita.mangarift.ui.component.card.TagSection
 
 @Composable
 fun DetailsSection(

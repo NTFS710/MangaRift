@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.sephirita.mangarift.ui.components.list.vertical.VerticalMangaList
-import com.sephirita.mangarift.ui.components.search.SearchBar
+import com.sephirita.mangarift.ui.component.list.vertical.VerticalMangaList
+import com.sephirita.mangarift.ui.component.search.SearchBar
 import com.sephirita.mangarift.ui.screen.destinations.DetailsScreenDestination
 import com.sephirita.mangarift.ui.screen.search.viewModel.SearchViewModel
 import org.koin.androidx.compose.koinViewModel

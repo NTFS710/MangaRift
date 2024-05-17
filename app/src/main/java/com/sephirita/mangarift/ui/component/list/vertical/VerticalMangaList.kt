@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.list.vertical
+package com.sephirita.mangarift.ui.component.list.vertical
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues

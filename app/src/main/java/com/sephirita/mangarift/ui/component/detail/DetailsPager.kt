@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.detail
+package com.sephirita.mangarift.ui.component.detail
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.unit.sp
 import com.sephirita.mangarift.domain.model.Tag
-import com.sephirita.mangarift.ui.components.chapter.ChaptersSection
+import com.sephirita.mangarift.ui.component.chapter.ChaptersSection
 import com.sephirita.mangarift.ui.model.ChaptersOrder
 import com.sephirita.mangarift.ui.model.DetailsTab
 import com.sephirita.mangarift.ui.model.FormatedChapters

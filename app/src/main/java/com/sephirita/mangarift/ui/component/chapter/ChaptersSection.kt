@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.chapter
+package com.sephirita.mangarift.ui.component.chapter
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

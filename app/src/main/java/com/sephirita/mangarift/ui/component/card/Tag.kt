@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.card
+package com.sephirita.mangarift.ui.component.card
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme

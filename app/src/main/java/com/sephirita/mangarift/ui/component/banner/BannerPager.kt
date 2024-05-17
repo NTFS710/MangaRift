@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.banner
+package com.sephirita.mangarift.ui.component.banner
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height

@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.banner
+package com.sephirita.mangarift.ui.component.banner
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,7 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sephirita.mangarift.domain.model.Manga
-import com.sephirita.mangarift.ui.components.card.TagSection
+import com.sephirita.mangarift.ui.component.card.TagSection
 import com.sephirita.mangarift.ui.theme.TransparentGray
 
 @Composable

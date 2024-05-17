@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.rating
+package com.sephirita.mangarift.ui.component.rating
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size

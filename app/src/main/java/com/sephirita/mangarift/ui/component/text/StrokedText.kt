@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.text
+package com.sephirita.mangarift.ui.component.text
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.LocalTextStyle

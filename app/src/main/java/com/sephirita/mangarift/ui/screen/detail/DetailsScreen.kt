@@ -29,9 +29,9 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.sephirita.mangarift.ui.components.detail.DetailsPager
-import com.sephirita.mangarift.ui.components.header.Header
-import com.sephirita.mangarift.ui.components.text.StrokedText
+import com.sephirita.mangarift.ui.component.detail.DetailsPager
+import com.sephirita.mangarift.ui.component.header.Header
+import com.sephirita.mangarift.ui.component.text.StrokedText
 import com.sephirita.mangarift.ui.screen.destinations.ReaderScreenDestination
 import com.sephirita.mangarift.ui.screen.detail.viewmodel.DetailViewModel
 import org.koin.androidx.compose.koinViewModel

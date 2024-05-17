@@ -1,4 +1,4 @@
-package com.sephirita.mangarift.ui.components.card
+package com.sephirita.mangarift.ui.component.card
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
