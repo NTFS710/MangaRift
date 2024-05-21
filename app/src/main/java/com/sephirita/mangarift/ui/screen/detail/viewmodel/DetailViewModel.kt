@@ -2,11 +2,15 @@ package com.sephirita.mangarift.ui.screen.detail.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sephirita.mangarift.domain.model.Chapter
+import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.ui.screen.detail.state.DetailState
 import com.sephirita.mangarift.domain.usecase.MangaChaptersUseCase
 import com.sephirita.mangarift.domain.usecase.MangaDetailsUseCase
 import com.sephirita.mangarift.ui.model.ChaptersOrder
 import com.sephirita.mangarift.ui.model.FormatedChapters
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,19 +29,28 @@ class DetailViewModel(
     val detailState: StateFlow<DetailState> = _detailState.asStateFlow()
 
     fun getMangaDetails(mangaId: String) {
-        // TODO fazer a chamada pra api : Loading ; Sucesso ; Error
+
         viewModelScope.launch {
-            val result = getMangaDetailsUseCase(mangaId)
-            val chapters = getMangaChaptersUseCase(mangaId)
-            _detailState.value = DetailState(
-                isLoading = false,
-                manga = result
+            val callsResults = awaitAll(
+                async { getMangaDetailsUseCase(mangaId) },
+                async { getMangaChaptersUseCase(mangaId) }
             )
-            _chaptersManga.value = FormatedChapters(
-                order = ChaptersOrder.Natural,
-                natural = chapters,
-                reversed = chapters.toSortedMap(reverseOrder())
-            )
+
+            val details = callsResults[0] as? Manga
+            val chapters = (callsResults[1] as? Map<Float, List<Chapter>>)
+            if (details == null || chapters == null) {
+                _detailState.value = DetailState(isLoading = false, isError = true)
+            } else {
+                _detailState.value = DetailState(
+                    isLoading = false,
+                    manga = details
+                )
+                _chaptersManga.value = FormatedChapters(
+                    order = ChaptersOrder.Natural,
+                    natural = chapters,
+                    reversed = chapters.toSortedMap(reverseOrder())
+                )
+            }
         }
     }
 

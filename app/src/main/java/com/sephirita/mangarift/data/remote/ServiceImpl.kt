@@ -1,9 +1,11 @@
 package com.sephirita.mangarift.data.remote
 
+import androidx.compose.ui.geometry.Offset
 import com.sephirita.mangarift.data.remote.dto.Service
 import com.sephirita.mangarift.data.remote.dto.model.ChapterListResponse
 import com.sephirita.mangarift.data.remote.dto.model.DetailedMangaResponse
 import com.sephirita.mangarift.data.remote.dto.model.MangaListResponse
+import com.sephirita.mangarift.data.remote.dto.model.SeasonResponse
 import com.sephirita.mangarift.data.remote.dto.model.chapter.page.ChapterPagesResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -86,7 +88,6 @@ class ServiceImpl(
                     encodedParameters.append("contentRating[]", "safe")
                     encodedParameters.append("contentRating[]", "erotica")
                     encodedParameters.append("contentRating[]", "suggestive")
-                    encodedParameters.append("limit", "50")
                 }
             }.body()
         } catch (e: Exception) {
@@ -106,7 +107,7 @@ class ServiceImpl(
         }
     }
 
-    override suspend fun getSeasonMangaIds(): DetailedMangaResponse {
+    override suspend fun getSeasonMangaIds(): SeasonResponse {
         return try {
             client.get(HttpRoutes.SEASON).body()
         } catch (e: Exception) {
@@ -114,7 +115,7 @@ class ServiceImpl(
         }
     }
 
-    override suspend fun getSeasonMangas(mangaIdList: List<String>): MangaListResponse {
+    override suspend fun getSeasonMangas(mangaIdList: List<String>, limit: Int): MangaListResponse {
         return try {
             client.get(HttpRoutes.MANGA) {
                 url {
@@ -122,13 +123,14 @@ class ServiceImpl(
                         encodedParameters.append("ids[]", it)
                     }
                     encodedParameters.append("hasAvailableChapters", "true")
+                    encodedParameters.append("order[followedCount]", "desc")
                     encodedParameters.append("availableTranslatedLanguage[]", "pt-br")
                     encodedParameters.append("availableTranslatedLanguage[]", "en")
                     encodedParameters.append("includes[]", "cover_art")
                     encodedParameters.append("contentRating[]", "safe")
                     encodedParameters.append("contentRating[]", "erotica")
                     encodedParameters.append("contentRating[]", "suggestive")
-                    encodedParameters.append("limit", "${mangaIdList.size}")
+                    encodedParameters.append("limit", "$limit")
                 }
             }.body()
         } catch (e: Exception) {
@@ -136,12 +138,13 @@ class ServiceImpl(
         }
     }
 
-    override suspend fun getChapters(mangaId: String): ChapterListResponse {
+    override suspend fun getChapters(mangaId: String, offset: Int): ChapterListResponse {
         return try {
             client.get("${HttpRoutes.MANGA}/$mangaId/feed") {
                 url {
                     encodedParameters.append("order[chapter]", "asc")
                     encodedParameters.append("includeEmptyPages", "0")
+                    encodedParameters.append("offset", "$offset")
                     encodedParameters.append("includes[]", "scanlation_group")
                     encodedParameters.append("translatedLanguage[]", "pt-br")
                     encodedParameters.append("translatedLanguage[]", "en")

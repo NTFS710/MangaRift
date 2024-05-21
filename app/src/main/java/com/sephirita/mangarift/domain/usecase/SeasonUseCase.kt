@@ -3,11 +3,11 @@ package com.sephirita.mangarift.domain.usecase
 import com.sephirita.mangarift.data.remote.dto.Service
 import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.domain.toList
-import com.sephirita.mangarift.domain.toMangaIdsList
 
 class SeasonUseCase(private val api: Service) {
-    suspend operator fun invoke(): List<Manga> {
-        val mangaIdList = api.getSeasonMangaIds().toMangaIdsList()
-        return api.getSeasonMangas(mangaIdList).toList()
+    suspend operator fun invoke(getAll: Boolean = false): List<Manga> {
+        val mangaIdList = api.getSeasonMangaIds().mangaIds
+        val limit = if (getAll) mangaIdList.size else 15
+        return api.getSeasonMangas(mangaIdList, limit).toList()
     }
 }

@@ -4,6 +4,7 @@ import com.sephirita.mangarift.R
 import com.sephirita.mangarift.data.remote.dto.model.ChapterListResponse
 import com.sephirita.mangarift.data.remote.dto.model.DetailedMangaResponse
 import com.sephirita.mangarift.data.remote.dto.model.MangaListResponse
+import com.sephirita.mangarift.data.remote.dto.model.SeasonResponse
 import com.sephirita.mangarift.data.remote.dto.model.chapter.page.ChapterPagesResponse
 import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.domain.model.Chapter
@@ -66,12 +67,6 @@ fun DetailedMangaResponse.toManga(): Manga {
 
 
     return manga ?: Manga()
-}
-
-fun DetailedMangaResponse.toMangaIdsList(): List<String> {
-    val mangaIds = mutableListOf<String>()
-    data?.relationships?.forEach { mangaIds.add(it.id) }
-    return mangaIds
 }
 
 fun ChapterListResponse.formatChapters(): Map<Float, List<Chapter>> {
