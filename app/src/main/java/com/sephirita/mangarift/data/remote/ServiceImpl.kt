@@ -141,6 +141,7 @@ class ServiceImpl(
             client.get("${HttpRoutes.MANGA}/$mangaId/feed") {
                 url {
                     encodedParameters.append("order[chapter]", "asc")
+                    encodedParameters.append("includeEmptyPages", "0")
                     encodedParameters.append("includes[]", "scanlation_group")
                     encodedParameters.append("translatedLanguage[]", "pt-br")
                     encodedParameters.append("translatedLanguage[]", "en")

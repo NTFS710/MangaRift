@@ -11,9 +11,11 @@ import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -26,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -34,8 +37,11 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.sephirita.mangarift.ui.component.dialog.ReadingStyleDialog
+import com.sephirita.mangarift.ui.component.load.Loader
+import com.sephirita.mangarift.ui.model.StateAnimationType
 import com.sephirita.mangarift.ui.screen.reader.viewmodel.ReaderViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -103,14 +109,17 @@ fun ReaderScreen(chapterId: String) {
                 beyondViewportPageCount = 3
             ) {
                 val currentItem = chapterPages[it]
-                AsyncImage(
+                SubcomposeAsyncImage(
                     modifier = Modifier
                         .fillMaxSize()
                         .transformable(state = transformableState, canPan = { scale != 1f }),
                     contentScale = ContentScale.Fit,
                     alignment = Alignment.Center,
                     model = currentItem,
-                    contentDescription = "PDF Image"
+                    contentDescription = "Manga Page",
+                    loading = {
+                        Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
+                    }
                 )
             }
         } else {
@@ -128,13 +137,16 @@ fun ReaderScreen(chapterId: String) {
             ) {
                 chapterPages.forEachIndexed { index, it ->
                     val currentItem = chapterPages[index]
-                    AsyncImage(
+                    SubcomposeAsyncImage(
                         modifier = Modifier
                             .fillMaxSize(),
                         contentScale = ContentScale.Fit,
                         alignment = Alignment.Center,
                         model = currentItem,
-                        contentDescription = "PDF Image"
+                        contentDescription = "Manga Page",
+                        loading = {
+                            Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
+                        }
                     )
                 }
             }

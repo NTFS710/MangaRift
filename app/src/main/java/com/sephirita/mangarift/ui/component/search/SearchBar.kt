@@ -35,6 +35,7 @@ fun SearchBar(
             onQueryChange = { text = it },
             onSearch = {
                 onSearch(text)
+                // Loading Here
                 active = false
             },
             active = active,

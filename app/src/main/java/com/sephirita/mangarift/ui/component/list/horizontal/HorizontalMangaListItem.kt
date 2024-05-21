@@ -1,6 +1,5 @@
 package com.sephirita.mangarift.ui.component.list.horizontal
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,8 +21,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberImagePainter
+import coil.compose.SubcomposeAsyncImage
 import com.sephirita.mangarift.domain.model.Manga
+import com.sephirita.mangarift.ui.component.load.Loader
+import com.sephirita.mangarift.ui.model.StateAnimationType
 
 @Composable
 fun HorizontalMangaListItem(
@@ -34,7 +35,6 @@ fun HorizontalMangaListItem(
     val screenSize = LocalConfiguration.current.screenWidthDp.dp
     val itemWidth = screenSize / 3
     val itemHeight = itemWidth + 60.dp
-    val painter = rememberImagePainter(data = item.image)
     Box(
         modifier = modifier
             .size(width = itemWidth, height = itemHeight)
@@ -46,15 +46,18 @@ fun HorizontalMangaListItem(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Image(
+            SubcomposeAsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(shape = RoundedCornerShape(4.dp))
                     .weight(0.85f),
                 alignment = Alignment.TopCenter,
                 contentScale = ContentScale.Crop,
-                painter = painter,
-                contentDescription = "Manga Cover Image"
+                model = item.image,
+                contentDescription = "Manga Cover Image",
+                loading = {
+                    Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
+                }
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(

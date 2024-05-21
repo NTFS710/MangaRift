@@ -5,6 +5,7 @@ import com.sephirita.mangarift.domain.formatChapterToView
 
 class ChapterPagesUseCase(private val api: Service) {
     suspend operator fun invoke(chapterId: String): List<String> {
-        return api.getChapterPDF(chapterId).formatChapterToView()
+        val chapter = api.getChapterPDF(chapterId).formatChapterToView()
+        return chapter
     }
 }

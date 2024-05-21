@@ -26,17 +26,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.rememberLottieComposition
+import coil.compose.SubcomposeAsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sephirita.mangarift.ui.component.detail.DetailsPager
 import com.sephirita.mangarift.ui.component.header.Header
+import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.component.text.StrokedText
-import com.sephirita.mangarift.ui.model.StateAnimation
+import com.sephirita.mangarift.ui.model.StateAnimationType
 import com.sephirita.mangarift.ui.screen.destinations.ReaderScreenDestination
 import com.sephirita.mangarift.ui.screen.detail.viewmodel.DetailViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -63,19 +60,7 @@ fun DetailsScreen(
     with(state) {
         when {
             isLoading -> {
-                val loadingComposition by rememberLottieComposition(
-                    spec = LottieCompositionSpec.Url(StateAnimation.DETAILED_PAGES)
-                )
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    LottieAnimation(
-                        composition = loadingComposition,
-                        iterations = LottieConstants.IterateForever
-                    )
-                }
+                Loader(StateAnimationType.DETAILED_PAGES)
             }
 
             isError -> {
@@ -106,7 +91,7 @@ fun DetailsScreen(
                             .padding(bottom = 10.dp),
                         contentAlignment = Alignment.TopCenter
                     ) {
-                        AsyncImage(
+                        SubcomposeAsyncImage(
                             modifier = Modifier.height(backgroundHeight + corner),
                             alignment = Alignment.TopCenter,
                             contentScale = ContentScale.FillWidth,
