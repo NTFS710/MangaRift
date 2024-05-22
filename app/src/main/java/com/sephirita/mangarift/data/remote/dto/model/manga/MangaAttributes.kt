@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 data class MangaAttributes(
     val title: Map<String, String>? = null,
     val altTitles: List<Map<String, String>>? = null,
-    val availableTranslatedLanguages: List<String>? = null,
     val chapterNumbersResetOnNewVolume: Boolean? = null,
     val contentRating: String? = null,
     val createdAt: String? = null,

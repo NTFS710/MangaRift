@@ -1,6 +1,5 @@
 package com.sephirita.mangarift.data.remote
 
-import androidx.compose.ui.geometry.Offset
 import com.sephirita.mangarift.data.remote.dto.Service
 import com.sephirita.mangarift.data.remote.dto.model.ChapterListResponse
 import com.sephirita.mangarift.data.remote.dto.model.DetailedMangaResponse
@@ -82,12 +81,14 @@ class ServiceImpl(
                 url {
                     if (mangaTitle.isNotBlank()) encodedParameters.append("title", mangaTitle)
                     encodedParameters.append("hasAvailableChapters", "true")
+                    encodedParameters.append("order[followedCount]", "desc")
                     encodedParameters.append("availableTranslatedLanguage[]", "pt-br")
                     encodedParameters.append("availableTranslatedLanguage[]", "en")
                     encodedParameters.append("includes[]", "cover_art")
                     encodedParameters.append("contentRating[]", "safe")
                     encodedParameters.append("contentRating[]", "erotica")
                     encodedParameters.append("contentRating[]", "suggestive")
+                    encodedParameters.append("limit", "100")
                 }
             }.body()
         } catch (e: Exception) {

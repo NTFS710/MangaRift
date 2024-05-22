@@ -12,20 +12,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.ui.component.card.TagSection
-import com.sephirita.mangarift.ui.component.rating.RatingBar
+import com.sephirita.mangarift.ui.component.load.Loader
+import com.sephirita.mangarift.ui.model.StateAnimationType
 
 @Composable
 fun VerticalMangaListItem(
@@ -45,46 +44,49 @@ fun VerticalMangaListItem(
             .background(MaterialTheme.colorScheme.surface)
             .clickable(onClick = onClick)
     ) {
-        AsyncImage(
+        SubcomposeAsyncImage(
             modifier = Modifier
                 .fillMaxHeight()
                 .width(imageWidth),
             alignment = Alignment.TopCenter,
             contentScale = ContentScale.Crop,
             model = item.image,
-            contentDescription = "Background Banner Image"
+            contentDescription = "Background Banner Image",
+            loading = {
+                Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
+            }
         )
         Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .padding(top = 4.dp, start = 6.dp, end = 6.dp),
+                .padding(top = 8.dp, start = 6.dp, end = 6.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             TagSection(
                 titleText = item.title,
                 titleSize = 14.sp,
                 tags = item.tags,
-                tagsMaxLines = 1,
+                tagsMaxLines = 2,
                 titleWeight = null,
                 titleHeight = 14.sp * 1.2,
-                spacerHeight = 2.dp,
+                spacerHeight = 4.dp,
                 tagBackground = MaterialTheme.colorScheme.background
             )
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                RatingBar(
-                    rating = item.rating.toDouble(),
-                    stars = 1,
-                    starSize = 22.dp
-                )
-                Text(
-                    color = Color.White,
-                    text = item.rating,
-                    fontSize = 14.sp
-                )
-            }
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically,
+//                horizontalArrangement = Arrangement.spacedBy(4.dp)
+//            ) {
+//                RatingBar(
+//                    rating = item.rating.toDouble(),
+//                    stars = 1,
+//                    starSize = 22.dp
+//                )
+//                Text(
+//                    color = Color.White,
+//                    text = item.rating,
+//                    fontSize = 14.sp
+//                )
+//            }
         }
     }
 }

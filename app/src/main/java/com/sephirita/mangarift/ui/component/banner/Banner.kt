@@ -14,13 +14,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.SubcomposeAsyncImageContent
 import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.ui.component.card.TagSection
+import com.sephirita.mangarift.ui.component.load.Loader
+import com.sephirita.mangarift.ui.model.StateAnimationType
 import com.sephirita.mangarift.ui.theme.TransparentGray
 
 @Composable
@@ -28,17 +36,22 @@ fun Banner(
     item: Manga,
     onClick: () -> Unit
 ) {
+    var showBannerContent by rememberSaveable { mutableStateOf(false) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .clickable(onClick = onClick)
     ) {
-        AsyncImage(
+        SubcomposeAsyncImage(
             modifier = Modifier.fillMaxSize(),
             alignment = Alignment.TopCenter,
             contentScale = ContentScale.Crop,
             model = item.image,
-            contentDescription = "Background Banner Image"
+            contentDescription = "Background Banner Image",
+            loading = {
+                Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
+            }
         )
         Box(
             modifier = Modifier
@@ -53,12 +66,15 @@ fun Banner(
                             .fillMaxHeight()
                             .weight(0.5f)
                     ) {
-                        AsyncImage(
+                        SubcomposeAsyncImage(
                             modifier = Modifier.fillMaxSize(),
                             alignment = Alignment.Center,
                             contentScale = ContentScale.Crop,
                             model = item.image,
-                            contentDescription = "Background Banner Image"
+                            contentDescription = "Background Banner Image",
+                            loading = {
+                                Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
+                            }
                         )
                     }
                     Box(
