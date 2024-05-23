@@ -23,7 +23,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SearchScreen(
     navigator: DestinationsNavigator,
-    initialSearch: String = ""
+    initialSearch: String = "" // passar o MangaListType
 ) {
     val viewModel: SearchViewModel = koinViewModel()
     val searchState by viewModel.searchState.collectAsState()

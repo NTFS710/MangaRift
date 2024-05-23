@@ -28,28 +28,32 @@ class DetailViewModel(
     private val _detailState = MutableStateFlow(DetailState())
     val detailState: StateFlow<DetailState> = _detailState.asStateFlow()
 
+    private var fetched: Boolean = false
+
     fun getMangaDetails(mangaId: String) {
-
-        viewModelScope.launch {
-            val callsResults = awaitAll(
-                async { getMangaDetailsUseCase(mangaId) },
-                async { getMangaChaptersUseCase(mangaId) }
-            )
-
-            val details = callsResults[0] as? Manga
-            val chapters = (callsResults[1] as? Map<Float, List<Chapter>>)
-            if (details == null || chapters == null) {
-                _detailState.value = DetailState(isLoading = false, isError = true)
-            } else {
-                _detailState.value = DetailState(
-                    isLoading = false,
-                    manga = details
+        if (!fetched) {
+            viewModelScope.launch {
+                val callsResults = awaitAll(
+                    async { getMangaDetailsUseCase(mangaId).getOrDefault(Manga()) },
+                    async { getMangaChaptersUseCase(mangaId).getOrDefault(emptyMap()) }
                 )
-                _chaptersManga.value = FormatedChapters(
-                    order = ChaptersOrder.Natural,
-                    natural = chapters,
-                    reversed = chapters.toSortedMap(reverseOrder())
-                )
+
+                val details = callsResults[0] as? Manga
+                val chapters = (callsResults[1] as? Map<Float, List<Chapter>>)
+                if (details == null || chapters == null) {
+                    _detailState.value = DetailState(isLoading = false, isError = true)
+                } else {
+                    _detailState.value = DetailState(
+                        isLoading = false,
+                        manga = details
+                    )
+                    _chaptersManga.value = FormatedChapters(
+                        order = ChaptersOrder.Natural,
+                        natural = chapters,
+                        reversed = chapters.toSortedMap(reverseOrder())
+                    )
+                    fetched = true
+                }
             }
         }
     }

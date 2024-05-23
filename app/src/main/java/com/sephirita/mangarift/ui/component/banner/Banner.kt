@@ -36,8 +36,6 @@ fun Banner(
     item: Manga,
     onClick: () -> Unit
 ) {
-    var showBannerContent by rememberSaveable { mutableStateOf(false) }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -80,7 +78,7 @@ fun Banner(
                     Box(
                         modifier = Modifier
                             .weight(0.5f)
-                            .padding(start = 8.dp)
+                            .padding(start = 8.dp, end = 32.dp)
                     ) {
                         Column(
                             modifier = Modifier.fillMaxHeight(),

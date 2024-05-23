@@ -18,14 +18,20 @@ class SearchViewModel(
     val searchState: StateFlow<SearchState> = _searchState.asStateFlow()
 
     fun search(titleToSearch: String) {
-        viewModelScope.launch {
-            _searchState.value = SearchState()
-            val mangaList = async { getMangaWithTitleUseCase(titleToSearch) }.await()
-            _searchState.value = SearchState(
-                isLoading = false,
-                mangaList = mangaList,
-                isError = false
-            )
+        if (titleToSearch.isBlank()) {
+            _searchState.value = SearchState(isLoading = false)
+        } else {
+            viewModelScope.launch {
+                _searchState.value = SearchState()
+                val mangaList = async { getMangaWithTitleUseCase(titleToSearch).getOrDefault(
+                    emptyList()
+                ) }.await()
+                _searchState.value = SearchState(
+                    isLoading = false,
+                    mangaList = mangaList,
+                    isError = false
+                )
+            }
         }
     }
 }

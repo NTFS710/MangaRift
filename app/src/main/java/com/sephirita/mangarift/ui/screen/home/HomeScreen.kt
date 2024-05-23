@@ -1,12 +1,21 @@
 package com.sephirita.mangarift.ui.screen.home
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -44,56 +53,85 @@ fun HomeScreen(
             }
 
             else -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                Box(
+                   modifier = Modifier.fillMaxSize()
                 ) {
-                    MangaListType.entries.forEach { mangaType ->
-                        when (mangaType) {
-                            MangaListType.PopularNewTitles -> {
-                                BannerPager(
-                                    items = state.popularNewTitles,
-                                    detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) }
-                                )
-                                Spacer(modifier = Modifier.height(16.dp))
-                            }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState()),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        MangaListType.entries.forEach { mangaType ->
+                            when (mangaType) {
+                                MangaListType.PopularNewTitles -> {
+                                    BannerPager(
+                                        items = state.popularNewTitles,
+                                        detailNavigation = {
+                                            navigator.navigate(DetailsScreenDestination(it))
+                                        }
+                                    )
+                                    Spacer(modifier = Modifier.height(16.dp))
+                                }
 
-                            MangaListType.Seasonal -> {
-                                val items = state.season
-                                HorizontalMangaList(
-                                    listTitle = mangaType.title,
-                                    items = items,
-                                    detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) },
-                                    searchNavigation = { navigator.navigate(SearchScreenDestination("")) }
-                                )
-                                Spacer(modifier = Modifier.height(16.dp))
-                            }
+                                MangaListType.Seasonal -> {
+                                    val items = state.season
+                                    HorizontalMangaList(
+                                        listTitle = mangaType.title,
+                                        items = items,
+                                        detailNavigation = {
+                                            navigator.navigate(DetailsScreenDestination(it))
+                                        },
+                                        searchNavigation = {
+                                            navigator.navigate(SearchScreenDestination())
+                                        }
+                                    )
+                                    Spacer(modifier = Modifier.height(16.dp))
+                                }
 
-                            MangaListType.LatestUpdates -> {
-                                val items = state.latestUpdates
-                                HorizontalMangaList(
-                                    listTitle = mangaType.title,
-                                    items = items,
-                                    detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) },
-                                    searchNavigation = { navigator.navigate(SearchScreenDestination("")) }
-                                )
-                                Spacer(modifier = Modifier.height(16.dp))
-                            }
+                                MangaListType.LatestUpdates -> {
+                                    val items = state.latestUpdates
+                                    HorizontalMangaList(
+                                        listTitle = mangaType.title,
+                                        items = items,
+                                        detailNavigation = {
+                                            navigator.navigate(DetailsScreenDestination(it))
+                                        },
+                                        searchNavigation = {
+                                            navigator.navigate(SearchScreenDestination())
+                                        }
+                                    )
+                                    Spacer(modifier = Modifier.height(16.dp))
+                                }
 
-                            MangaListType.RecentlyAdded -> {
-                                val items = state.recentlyAdded
-                                HorizontalMangaList(
-                                    listTitle = mangaType.title,
-                                    items = items,
-                                    detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) },
-                                    searchNavigation = { navigator.navigate(SearchScreenDestination("")) }
-                                )
-                                Spacer(modifier = Modifier.height(16.dp))
+                                MangaListType.RecentlyAdded -> {
+                                    val items = state.recentlyAdded
+                                    HorizontalMangaList(
+                                        listTitle = mangaType.title,
+                                        items = items,
+                                        detailNavigation = {
+                                            navigator.navigate(DetailsScreenDestination(it))
+                                        },
+                                        searchNavigation = {
+                                            navigator.navigate(SearchScreenDestination())
+                                        }
+                                    )
+                                    Spacer(modifier = Modifier.height(16.dp))
+                                }
                             }
                         }
+                    }
+                    IconButton(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .statusBarsPadding(),
+                        colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.surface),
+                        onClick = {
+                            navigator.navigate(SearchScreenDestination())
+                        }
+                    ) {
+                        Icon(imageVector = Icons.Filled.Search, contentDescription = "Search Screen Icon")
                     }
                 }
             }

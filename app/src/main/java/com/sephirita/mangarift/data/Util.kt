@@ -1,45 +1,38 @@
-package com.sephirita.mangarift.domain
+package com.sephirita.mangarift.data
 
 import com.sephirita.mangarift.R
 import com.sephirita.mangarift.data.remote.dto.model.ChapterListResponse
 import com.sephirita.mangarift.data.remote.dto.model.DetailedMangaResponse
 import com.sephirita.mangarift.data.remote.dto.model.MangaListResponse
-import com.sephirita.mangarift.data.remote.dto.model.SeasonResponse
 import com.sephirita.mangarift.data.remote.dto.model.chapter.page.ChapterPagesResponse
-import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.domain.model.Chapter
+import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.domain.model.Tag
 import com.sephirita.mangarift.ui.model.Language
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
 
 private const val AUTHOR_TYPE = "author"
 private const val COVER_ART_TYPE = "cover_art"
 private const val COVER_ART_BASE_URL = "https://mangadex.org/covers"
 
-fun String.toDate(): String =
-    OffsetDateTime.parse(
-        this,
-        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX")
-    ).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-
-fun Float.formatChapterNumber(): String =
-    if (this % this.toInt() > 0) this.toString() else this.toInt().toString()
-
 fun MangaListResponse.toList(): List<Manga> {
     val mangaList: MutableList<Manga> = mutableListOf()
     data?.forEach { manga ->
         val (author, image) = findAuthorAndCover(manga)
-        val title = manga.attributes?.title
-        val description = manga.attributes?.description
+        val altTitles = manga.attributes?.altTitles
+        val title = with(manga.attributes?.title) {
+            this?.get("en") ?: this?.get("ja-ro") ?: this?.get("pt-br") ?:
+            altTitles?.find { it.containsKey("en") }?.get("en") ?:
+            altTitles?.find { it.containsKey("ja-ro") }?.get("ja-ro") ?:
+            altTitles?.find { it.containsKey("pt-br") }?.get("pt-br") ?: ""
+        }
         mangaList.add(
             Manga(
                 id = manga.id,
                 author = author ?: "",
                 image = image ?: "",
-                title = title?.get("pt-br") ?: title?.get("en") ?: "",
-                rating = "8.5",
-                description = description?.get("pt-br") ?: title?.get("en") ?: "",
+                title = title,
+                rating = "8.5", // alterar um dia
+                description = "",
                 tags = getTags(manga.attributes?.tags),
                 chapters = emptyList()
             )
@@ -51,15 +44,23 @@ fun MangaListResponse.toList(): List<Manga> {
 fun DetailedMangaResponse.toManga(): Manga {
     val manga = data?.let { manga ->
         val (author, image) = findAuthorAndCover(manga)
-        val title = manga.attributes?.title
-        val description = manga.attributes?.description
+        val description = with(manga.attributes?.description) {
+            this?.get("pt-br") ?: this?.get("en") ?: this?.get("ja-ro") ?: ""
+        }
+        val altTitles = manga.attributes?.altTitles
+        val title = with(manga.attributes?.title) {
+            this?.get("en") ?: this?.get("ja-ro") ?: this?.get("pt-br") ?:
+            altTitles?.find { it.containsKey("en") }?.get("en") ?:
+            altTitles?.find { it.containsKey("ja-ro") }?.get("ja-ro") ?:
+            altTitles?.find { it.containsKey("pt-br") }?.get("pt-br") ?: ""
+        }
         Manga(
             id = manga.id,
             author = author ?: "",
             image = image ?: "",
-            title = title?.get("pt-br") ?: title?.get("en") ?: "",
+            title = title,
             rating = "8.5",
-            description = description?.get("pt-br") ?: description?.get("en") ?: "",
+            description = description,
             tags = getTags(manga.attributes?.tags),
             chapters = emptyList()
         )
@@ -75,10 +76,10 @@ fun ChapterListResponse.formatChapters(): Map<Float, List<Chapter>> {
     this.data.forEach { currentChapter ->
         val scanName = currentChapter.relationships?.find { it.type == "scanlation_group" }?.attributes?.name
         val languageFlag = when (currentChapter.attributes.translatedLanguage) {
-        Language.PT_BR -> R.drawable.ic_br_flag
-        Language.EN -> R.drawable.ic_en_flag
-        else -> R.drawable.ic_unk_flag
-    }
+            Language.PT_BR -> R.drawable.ic_br_flag
+            Language.EN -> R.drawable.ic_en_flag
+            else -> R.drawable.ic_unk_flag
+        }
         chapters.add(
             Chapter(
                 id = currentChapter.id,

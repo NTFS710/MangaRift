@@ -17,7 +17,7 @@ class ReaderViewModel(
 
     fun getChapterToRead(chapterId: String) {
         viewModelScope.launch {
-            _chapterPages.value = getChapterPagesUseCase(chapterId)
+            _chapterPages.value = getChapterPagesUseCase(chapterId).getOrDefault(emptyList())
         }
     }
 }

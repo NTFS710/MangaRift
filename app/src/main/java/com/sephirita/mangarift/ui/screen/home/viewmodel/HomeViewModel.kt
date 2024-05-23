@@ -31,10 +31,10 @@ class HomeViewModel(
     private fun getMangas() {
         viewModelScope.launch {
             val callsResults = awaitAll(
-                async { getPopularNewTitlesUseCase() },
-                async { getSeasonUseCase() },
-                async { getLatestUpdatesUseCase() },
-                async { getRecentlyAddedUseCase() }
+                async { getPopularNewTitlesUseCase().getOrDefault(emptyList()) },
+                async { getSeasonUseCase().getOrDefault(emptyList()) },
+                async { getLatestUpdatesUseCase().getOrDefault(emptyList()) },
+                async { getRecentlyAddedUseCase().getOrDefault(emptyList()) }
             )
 
             val popularNewTitles = callsResults[0].toMutableStateList()
