@@ -91,7 +91,7 @@ fun DetailsScreen(
                         .height(backgroundHeight + corner)
                         .fillMaxWidth(),
                     alignment = Alignment.TopCenter,
-                    contentScale = ContentScale.FillWidth,
+                    contentScale = ContentScale.Crop,
                     model = manga.image,
                     contentDescription = "Background Detail Image",
                 )
@@ -102,7 +102,11 @@ fun DetailsScreen(
                         modifier = Modifier
                             .height(backgroundHeight)
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                                bottom = 4.dp
+                            ),
                         contentAlignment = Alignment.BottomStart
                     ) {
                         StrokedText(text = manga.title)
