@@ -8,6 +8,10 @@ enum class StateAnimationType {
     DETAILED_PAGES {
         override val animationUrl: String
             get() = "https://lottie.host/525687df-0a4c-4d47-92b5-093c6a2d0861/2BMSYMB0tg.json"
+    },
+    NONE {
+        override val animationUrl: String
+            get() = ""
     };
 
     abstract val animationUrl: String
