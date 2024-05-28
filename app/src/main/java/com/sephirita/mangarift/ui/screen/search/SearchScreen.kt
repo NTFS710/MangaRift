@@ -52,9 +52,7 @@ fun SearchScreen(
     val state by viewModel.searchState.collectAsState()
 
     LaunchedEffect(key1 = Unit) {
-        initialSearch?.let {
-            viewModel.initialSearch(initialSearch)
-        }
+        viewModel.initialSearch(initialSearch)
     }
 
     PullToRefreshBox(

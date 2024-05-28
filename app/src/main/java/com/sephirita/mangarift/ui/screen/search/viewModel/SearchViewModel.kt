@@ -29,10 +29,6 @@ class SearchViewModel(
     private var initialized = false
     private var lastSearch: String = ""
 
-    init {
-        _searchState.value = SearchState(isLoading = false)
-    }
-
     fun search(titleToSearch: String) {
         viewModelScope.launch {
             _searchState.value = SearchState()
@@ -56,7 +52,7 @@ class SearchViewModel(
         }
     }
 
-    fun initialSearch(initialSearch: MangaListType) {
+    fun initialSearch(initialSearch: MangaListType?) {
         if (initialized) return
         viewModelScope.launch {
             _searchState.value = SearchState()
@@ -110,7 +106,7 @@ class SearchViewModel(
                     }
                 }
                 else -> {
-                    _searchState.value = SearchState(isLoading = false, isError = true)
+                    _searchState.value = SearchState(isLoading = false, isError = initialSearch != null)
                     initialized = true
                 }
             }
