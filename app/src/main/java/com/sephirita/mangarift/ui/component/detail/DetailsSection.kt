@@ -29,7 +29,6 @@ fun DetailsSection(
             TagSection(titleText = "Gêneros", tags = tags)
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = description)
-            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

@@ -90,7 +90,7 @@ fun DetailsScreen(
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
                         .navigationBarsPadding()
-                        .padding(bottom = 10.dp),
+                        .padding(bottom = 18.dp),
                     contentAlignment = Alignment.TopCenter
                 ) {
                     SubcomposeAsyncImage(
@@ -178,6 +178,7 @@ fun DetailsScreen(
                     }
                 }
             }
+
             AnimatedVisibility(
                 visible = isLoading || isError,
                 enter = fadeIn(tween(300)),
@@ -185,9 +186,7 @@ fun DetailsScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
                 when {
-                    isLoading -> {
-                        Loader(StateAnimationType.DETAILED_PAGES)
-                    }
+                    isLoading -> Loader(StateAnimationType.DETAILED_PAGES)
 
                     isError -> {
                         println("deu erro")
