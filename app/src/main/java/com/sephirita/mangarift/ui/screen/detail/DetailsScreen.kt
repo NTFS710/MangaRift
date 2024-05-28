@@ -1,6 +1,11 @@
 package com.sephirita.mangarift.ui.screen.detail
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,9 +18,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -26,16 +33,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.sephirita.mangarift.ui.components.detail.DetailsPager
-import com.sephirita.mangarift.ui.components.header.Header
-import com.sephirita.mangarift.ui.components.text.StrokedText
+import com.sephirita.mangarift.ui.component.detail.DetailsPager
+import com.sephirita.mangarift.ui.component.header.Header
+import com.sephirita.mangarift.ui.component.load.Loader
+import com.sephirita.mangarift.ui.component.text.StrokedText
+import com.sephirita.mangarift.ui.model.StateAnimationType
 import com.sephirita.mangarift.ui.screen.destinations.ReaderScreenDestination
 import com.sephirita.mangarift.ui.screen.detail.viewmodel.DetailViewModel
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Destination
 @Composable
@@ -51,16 +61,15 @@ fun DetailsScreen(
     val state by viewModel.detailState.collectAsState()
     val chaptersState by viewModel.chaptersManga.collectAsState()
 
-    LaunchedEffect(key1 = viewModel) {
+    LaunchedEffect(key1 = Unit) {
         viewModel.getMangaDetails(id)
     }
 
-    with(state) {
-        if (isLoading) {
-            println("carrega")
-        } else if (isError) {
-            println("deu errado")
-        } else {
+    PullToRefreshBox(
+        isRefreshing = state.isLoading,
+        onRefresh = { viewModel.refresh(id) }
+    ) {
+        with(state) {
             Scaffold(
                 topBar = { Header(onBackPressed = { navigator.navigateUp() }) },
                 bottomBar = {
@@ -81,15 +90,17 @@ fun DetailsScreen(
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
                         .navigationBarsPadding()
-                        .padding(bottom = 10.dp),
+                        .padding(bottom = 18.dp),
                     contentAlignment = Alignment.TopCenter
                 ) {
-                    AsyncImage(
-                        modifier = Modifier.height(backgroundHeight + corner),
+                    SubcomposeAsyncImage(
+                        modifier = Modifier
+                            .height(backgroundHeight + corner)
+                            .fillMaxWidth(),
                         alignment = Alignment.TopCenter,
-                        contentScale = ContentScale.FillWidth,
+                        contentScale = ContentScale.Crop,
                         model = manga.image,
-                        contentDescription = "Background Detail Image"
+                        contentDescription = "Background Detail Image",
                     )
                     Column(
                         modifier = Modifier.fillMaxSize()
@@ -98,7 +109,11 @@ fun DetailsScreen(
                             modifier = Modifier
                                 .height(backgroundHeight)
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp),
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    bottom = 4.dp
+                                ),
                             contentAlignment = Alignment.BottomStart
                         ) {
                             StrokedText(text = manga.title)
@@ -113,7 +128,7 @@ fun DetailsScreen(
                                     )
                                 )
                                 .background(MaterialTheme.colorScheme.background)
-                                .padding(top = 8.dp)
+//                                .padding(top = 8.dp)
                         ) {
                             Column(
                                 modifier = Modifier.fillMaxSize(),
@@ -150,10 +165,31 @@ fun DetailsScreen(
                                     changeChaptersOrder = { viewModel.changeOrder(it) },
                                     expandedChapterList = expandedChapter,
                                     expandChapterCallback = { viewModel.expandChapter(it) },
-                                    readerNavigation = { navigator.navigate(ReaderScreenDestination(it)) }
+                                    readerNavigation = {
+                                        navigator.navigate(
+                                            ReaderScreenDestination(
+                                                it
+                                            )
+                                        )
+                                    }
                                 )
                             }
                         }
+                    }
+                }
+            }
+
+            AnimatedVisibility(
+                visible = isLoading || isError,
+                enter = fadeIn(tween(300)),
+                exit = fadeOut(tween(300)),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                when {
+                    isLoading -> Loader(StateAnimationType.DETAILED_PAGES)
+
+                    isError -> {
+                        println("deu erro")
                     }
                 }
             }

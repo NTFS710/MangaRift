@@ -1,11 +1,10 @@
 package com.sephirita.mangarift.domain.usecase
 
-import com.sephirita.mangarift.data.remote.dto.Service
 import com.sephirita.mangarift.domain.model.Manga
-import com.sephirita.mangarift.domain.toList
+import com.sephirita.mangarift.domain.repository.MangaDexRepository
 
-class RecentlyAddedUseCase(private val api: Service) {
-    suspend operator fun invoke(): List<Manga> {
-        return api.getRecentlyAdded().toList()
+class RecentlyAddedUseCase(private val repository: MangaDexRepository) {
+    suspend operator fun invoke(limit: Int = 15): Result<List<Manga>> {
+        return repository.getRecentlyAdded(limit)
     }
 }

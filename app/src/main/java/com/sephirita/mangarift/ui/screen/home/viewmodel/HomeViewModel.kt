@@ -28,20 +28,27 @@ class HomeViewModel(
         getMangas()
     }
 
-    private fun getMangas() {
+    fun getMangas() {
         viewModelScope.launch {
-            val popularNewTitles = async { getPopularNewTitlesUseCase() }
-            val season = async { getSeasonUseCase() }
-            val latestUpdates = async { getLatestUpdatesUseCase() }
-            val recentlyAdded = async { getRecentlyAddedUseCase() }
-            val callsResults = awaitAll(popularNewTitles, season, latestUpdates, recentlyAdded)
+            _homeState.value = HomeState()
+            val callsResults = awaitAll(
+                async { getPopularNewTitlesUseCase().getOrDefault(emptyList()) },
+                async { getSeasonUseCase().getOrDefault(emptyList()) },
+                async { getLatestUpdatesUseCase().getOrDefault(emptyList()) },
+                async { getRecentlyAddedUseCase().getOrDefault(emptyList()) }
+            )
+
+            val popularNewTitles = callsResults[0].toMutableStateList()
+            val season = callsResults[1].toMutableStateList()
+            val latestUpdates = callsResults[2].toMutableStateList()
+            val recentlyAdded = callsResults[3].toMutableStateList()
 
             _homeState.value = HomeState(
                 isLoading = false,
-                popularNewTitles = callsResults[0].toMutableStateList(),
-                season = callsResults[1].toMutableStateList(),
-                latestUpdates = callsResults[2].toMutableStateList(),
-                recentlyAdded = callsResults[3].toMutableStateList()
+                popularNewTitles = popularNewTitles,
+                season = season,
+                latestUpdates = latestUpdates,
+                recentlyAdded = recentlyAdded
             )
         }
     }
