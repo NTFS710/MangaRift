@@ -6,9 +6,9 @@ import com.sephirita.mangarift.domain.model.Manga
 interface MangaDexRepository {
     suspend fun getPopularNewTitles(): Result<List<Manga>>
 
-    suspend fun getRecentlyAdded(): Result<List<Manga>>
+    suspend fun getRecentlyAdded(limit: Int): Result<List<Manga>>
 
-    suspend fun getLatestUpdates(): Result<List<Manga>>
+    suspend fun getLatestUpdates(limit: Int): Result<List<Manga>>
 
     suspend fun getMangaWithTitle(mangaTitle: String): Result<List<Manga>>
 

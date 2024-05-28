@@ -31,7 +31,7 @@ class ServiceImpl(
         }.body()
     }
 
-    override suspend fun getRecentlyAdded(): MangaListResponse {
+    override suspend fun getRecentlyAdded(limit: Int): MangaListResponse {
         return client.get(HttpRoutes.MANGA) {
             url {
                 encodedParameters.append("order[createdAt]", "desc")
@@ -42,12 +42,12 @@ class ServiceImpl(
                 encodedParameters.append("contentRating[]", "safe")
                 encodedParameters.append("contentRating[]", "erotica")
                 encodedParameters.append("contentRating[]", "suggestive")
-                encodedParameters.append("limit", "15")
+                encodedParameters.append("limit", "$limit")
             }
         }.body()
     }
 
-    override suspend fun getLatestUpdates(): MangaListResponse {
+    override suspend fun getLatestUpdates(limit: Int): MangaListResponse {
         return client.get(HttpRoutes.MANGA) {
             url {
                 encodedParameters.append("order[latestUploadedChapter]", "desc")
@@ -58,7 +58,7 @@ class ServiceImpl(
                 encodedParameters.append("contentRating[]", "safe")
                 encodedParameters.append("contentRating[]", "erotica")
                 encodedParameters.append("contentRating[]", "suggestive")
-                encodedParameters.append("limit", "15")
+                encodedParameters.append("limit", "$limit")
             }
         }.body()
     }

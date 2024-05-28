@@ -21,18 +21,18 @@ class MangaDexRepositoryImpl(private val api: Service) : MangaDexRepository {
         }
     }
 
-    override suspend fun getRecentlyAdded(): Result<List<Manga>> {
+    override suspend fun getRecentlyAdded(limit: Int): Result<List<Manga>> {
         return withContext(Dispatchers.IO) {
             runCatching {
-                api.getRecentlyAdded().toList()
+                api.getRecentlyAdded(limit = limit).toList()
             }
         }
     }
 
-    override suspend fun getLatestUpdates(): Result<List<Manga>> {
+    override suspend fun getLatestUpdates(limit: Int): Result<List<Manga>> {
         return withContext(Dispatchers.IO) {
             runCatching {
-                api.getLatestUpdates().toList()
+                api.getLatestUpdates(limit = limit).toList()
             }
         }
     }

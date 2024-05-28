@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.rememberTransformableState
@@ -11,12 +12,12 @@ import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -28,7 +29,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -36,7 +36,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.sephirita.mangarift.ui.component.dialog.ReadingStyleDialog
@@ -45,19 +44,19 @@ import com.sephirita.mangarift.ui.model.StateAnimationType
 import com.sephirita.mangarift.ui.screen.reader.viewmodel.ReaderViewModel
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Destination
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ReaderScreen(chapterId: String) {
-    val viewModel: ReaderViewModel = koinViewModel()
-    val chapterPages by viewModel.chapterPages.collectAsState()
-
     var scale by remember { mutableFloatStateOf(1f) }
     var offset by remember { mutableStateOf(Offset.Zero) }
     var showDialog by remember { mutableStateOf(false) }
     var horizontalReading by remember { mutableStateOf(true) }
-    val pagerState = rememberPagerState(pageCount = { chapterPages.size })
+
+    val viewModel: ReaderViewModel = koinViewModel()
+    val state by viewModel.readerState.collectAsState()
+    val pagerState = rememberPagerState(pageCount = { state.pages.size })
 
     LaunchedEffect(key1 = Unit) {
         viewModel.getChapterToRead(chapterId)
@@ -65,89 +64,116 @@ fun ReaderScreen(chapterId: String) {
 
     HideSystemBars()
 
-    BoxWithConstraints(
-        modifier = Modifier
-            .fillMaxSize()
-            .combinedClickable(
-                onClick = {},
-                onLongClick = { showDialog = true },
-                interactionSource = null,
-                indication = null
-            )
+    PullToRefreshBox(
+        isRefreshing = state.isLoading,
+        onRefresh = { viewModel.getChapterToRead(chapterId) }
     ) {
-        val transformableState =
-            rememberTransformableState { zoomChange, offsetChange, rotationChange ->
-                scale = (scale * zoomChange).coerceIn(1f, 5f)
-                val extraWidth = (scale - 1) * constraints.maxWidth
-                val extraHeight = (scale - 1) * constraints.maxHeight
-                val maxX = extraWidth / 2
-                val maxY = extraHeight / 2
-                offset = Offset(
-                    x = (offset.x + (scale * offsetChange.x)).coerceIn(-maxX, maxX),
-                    y = (offset.y + (scale * offsetChange.y)).coerceIn(-maxY, maxY)
-                )
-            }
+        with(state) {
+            when {
+                isLoading -> Loader(loadingAnimationType = StateAnimationType.NONE)
 
-        if (showDialog) {
-            ReadingStyleDialog(
-                changeDialogVisibility = { showDialog = it },
-                changeReadingStyle = { horizontalReading = it }
-            )
-        }
-
-        if (horizontalReading) {
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .graphicsLayer(
-                        scaleX = scale,
-                        scaleY = scale,
-                        translationX = offset.x,
-                        translationY = offset.y
-                    ),
-                beyondViewportPageCount = 3
-            ) {
-                val currentItem = chapterPages[it]
-                SubcomposeAsyncImage(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .transformable(state = transformableState, canPan = { scale != 1f }),
-                    contentScale = ContentScale.Fit,
-                    alignment = Alignment.Center,
-                    model = currentItem,
-                    contentDescription = "Manga Page",
-                    loading = {
-                        Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
-                    }
-                )
-            }
-        } else {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .graphicsLayer(
-                        scaleX = scale,
-                        scaleY = scale,
-                        translationX = offset.x,
-                        translationY = offset.y
-                    )
-                    .transformable(state = transformableState, canPan = { scale != 1f })
-                    .verticalScroll(rememberScrollState()),
-            ) {
-                chapterPages.forEachIndexed { index, it ->
-                    val currentItem = chapterPages[index]
-                    SubcomposeAsyncImage(
+                isError -> {
+                    Column(
                         modifier = Modifier
-                            .fillMaxSize(),
-                        contentScale = ContentScale.Fit,
-                        alignment = Alignment.Center,
-                        model = currentItem,
-                        contentDescription = "Manga Page",
-                        loading = {
-                            Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        Toast.makeText(LocalContext.current, "Deu pau", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                else -> {
+                    BoxWithConstraints(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .combinedClickable(
+                                onClick = {},
+                                onLongClick = { showDialog = true },
+                                interactionSource = null,
+                                indication = null
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        val transformableState =
+                            rememberTransformableState { zoomChange, offsetChange, rotationChange ->
+                                scale = (scale * zoomChange).coerceIn(1f, 5f)
+                                val extraWidth = (scale - 1) * constraints.maxWidth
+                                val extraHeight = (scale - 1) * constraints.maxHeight
+                                val maxX = extraWidth / 2
+                                val maxY = extraHeight / 2
+                                offset = Offset(
+                                    x = (offset.x + (scale * offsetChange.x)).coerceIn(-maxX, maxX),
+                                    y = (offset.y + (scale * offsetChange.y)).coerceIn(-maxY, maxY)
+                                )
+                            }
+
+                        if (showDialog) {
+                            ReadingStyleDialog(
+                                changeDialogVisibility = { showDialog = it },
+                                changeReadingStyle = { horizontalReading = it }
+                            )
                         }
-                    )
+
+                        if (horizontalReading) {
+                            HorizontalPager(
+                                state = pagerState,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .graphicsLayer(
+                                        scaleX = scale,
+                                        scaleY = scale,
+                                        translationX = offset.x,
+                                        translationY = offset.y
+                                    ),
+                                beyondViewportPageCount = 3
+                            ) {
+                                val currentItem = state.pages[it]
+                                SubcomposeAsyncImage(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .transformable(
+                                            state = transformableState,
+                                            canPan = { scale != 1f }),
+                                    contentScale = ContentScale.Fit,
+                                    alignment = Alignment.Center,
+                                    model = currentItem,
+                                    contentDescription = "Manga Page",
+                                    loading = {
+                                        Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
+                                    }
+                                )
+                            }
+                        } else {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .graphicsLayer(
+                                        scaleX = scale,
+                                        scaleY = scale,
+                                        translationX = offset.x,
+                                        translationY = offset.y
+                                    )
+                                    .transformable(
+                                        state = transformableState,
+                                        canPan = { scale != 1f })
+                                    .verticalScroll(rememberScrollState()),
+                            ) {
+                                state.pages.forEachIndexed { index, it ->
+                                    val currentItem = state.pages[index]
+                                    SubcomposeAsyncImage(
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentScale = ContentScale.Fit, //
+                                        alignment = Alignment.Center,
+                                        model = currentItem,
+                                        contentDescription = "Manga Page",
+                                        loading = {
+                                            Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

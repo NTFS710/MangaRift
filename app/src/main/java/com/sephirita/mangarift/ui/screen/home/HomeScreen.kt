@@ -84,7 +84,7 @@ fun HomeScreen(
                                             navigator.navigate(DetailsScreenDestination(it))
                                         },
                                         searchNavigation = {
-                                            navigator.navigate(SearchScreenDestination())
+                                            navigator.navigate(SearchScreenDestination(initialSearch = mangaType))
                                         }
                                     )
                                     Spacer(modifier = Modifier.height(16.dp))
@@ -99,7 +99,7 @@ fun HomeScreen(
                                             navigator.navigate(DetailsScreenDestination(it))
                                         },
                                         searchNavigation = {
-                                            navigator.navigate(SearchScreenDestination())
+                                            navigator.navigate(SearchScreenDestination(initialSearch = mangaType))
                                         }
                                     )
                                     Spacer(modifier = Modifier.height(16.dp))
@@ -114,7 +114,7 @@ fun HomeScreen(
                                             navigator.navigate(DetailsScreenDestination(it))
                                         },
                                         searchNavigation = {
-                                            navigator.navigate(SearchScreenDestination())
+                                            navigator.navigate(SearchScreenDestination(initialSearch = mangaType))
                                         }
                                     )
                                     Spacer(modifier = Modifier.height(16.dp))

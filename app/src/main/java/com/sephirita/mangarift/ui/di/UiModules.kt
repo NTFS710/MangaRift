@@ -38,6 +38,9 @@ val uiModules = module {
     }
     viewModel {
         SearchViewModel(
+            get(),
+            get(),
+            get(),
             get()
         )
     }

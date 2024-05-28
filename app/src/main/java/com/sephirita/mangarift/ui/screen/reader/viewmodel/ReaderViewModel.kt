@@ -8,8 +8,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import okhttp3.internal.wait
-import java.lang.Thread.sleep
 
 class ReaderViewModel(
     private val getChapterPagesUseCase: ChapterPagesUseCase
@@ -18,13 +16,10 @@ class ReaderViewModel(
     private val _readerState = MutableStateFlow(ReaderState())
     val readerState: StateFlow<ReaderState> = _readerState.asStateFlow()
 
-    var count: Int = 0
-
     fun getChapterToRead(chapterId: String) {
         viewModelScope.launch {
-            _readerState.value = ReaderState(isLoading = true)
-            with(getChapterPagesUseCase(chapterId, count = if (count == 3) 3 else 0)) {
-                count++
+            _readerState.value = ReaderState(isLoading = true, isError = false)
+            with(getChapterPagesUseCase(chapterId)) {
                 onSuccess {
                     _readerState.value = ReaderState(
                         isLoading = false,
