@@ -1,5 +1,9 @@
 package com.sephirita.mangarift.ui.screen.home
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,11 +15,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -34,6 +40,7 @@ import com.sephirita.mangarift.ui.screen.destinations.SearchScreenDestination
 import com.sephirita.mangarift.ui.screen.home.viewmodel.HomeViewModel
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Destination(start = true)
 @Composable
 fun HomeScreen(
@@ -42,96 +49,121 @@ fun HomeScreen(
     val viewModel: HomeViewModel = koinViewModel()
     val state by viewModel.homeState.collectAsState()
 
-    with(state) {
-        when {
-            isLoading -> {
-                Loader(StateAnimationType.FLIPPING_PAGES)
-            }
+    PullToRefreshBox(
+        isRefreshing = state.isLoading,
+        onRefresh = { viewModel.getMangas() }
+    ) {
+        with(state) {
 
-            isError -> {
-                println("deu erro")
-            }
-
-            else -> {
-                Box(
-                   modifier = Modifier.fillMaxSize()
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState()),
-                        verticalArrangement = Arrangement.Top,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        MangaListType.entries.forEach { mangaType ->
-                            when (mangaType) {
-                                MangaListType.PopularNewTitles -> {
-                                    BannerPager(
-                                        items = state.popularNewTitles,
-                                        detailNavigation = {
-                                            navigator.navigate(DetailsScreenDestination(it))
-                                        }
-                                    )
-                                    Spacer(modifier = Modifier.height(16.dp))
-                                }
+                    MangaListType.entries.forEach { mangaType ->
+                        when (mangaType) {
+                            MangaListType.PopularNewTitles -> {
+                                BannerPager(
+                                    items = state.popularNewTitles,
+                                    detailNavigation = {
+                                        navigator.navigate(DetailsScreenDestination(it))
+                                    }
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                            }
 
-                                MangaListType.Seasonal -> {
-                                    val items = state.season
-                                    HorizontalMangaList(
-                                        listTitle = mangaType.title,
-                                        items = items,
-                                        detailNavigation = {
-                                            navigator.navigate(DetailsScreenDestination(it))
-                                        },
-                                        searchNavigation = {
-                                            navigator.navigate(SearchScreenDestination(initialSearch = mangaType))
-                                        }
-                                    )
-                                    Spacer(modifier = Modifier.height(16.dp))
-                                }
+                            MangaListType.Seasonal -> {
+                                val items = state.season
+                                HorizontalMangaList(
+                                    listTitle = mangaType.title,
+                                    items = items,
+                                    detailNavigation = {
+                                        navigator.navigate(DetailsScreenDestination(it))
+                                    },
+                                    searchNavigation = {
+                                        navigator.navigate(
+                                            SearchScreenDestination(
+                                                initialSearch = mangaType
+                                            )
+                                        )
+                                    }
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                            }
 
-                                MangaListType.LatestUpdates -> {
-                                    val items = state.latestUpdates
-                                    HorizontalMangaList(
-                                        listTitle = mangaType.title,
-                                        items = items,
-                                        detailNavigation = {
-                                            navigator.navigate(DetailsScreenDestination(it))
-                                        },
-                                        searchNavigation = {
-                                            navigator.navigate(SearchScreenDestination(initialSearch = mangaType))
-                                        }
-                                    )
-                                    Spacer(modifier = Modifier.height(16.dp))
-                                }
+                            MangaListType.LatestUpdates -> {
+                                val items = state.latestUpdates
+                                HorizontalMangaList(
+                                    listTitle = mangaType.title,
+                                    items = items,
+                                    detailNavigation = {
+                                        navigator.navigate(DetailsScreenDestination(it))
+                                    },
+                                    searchNavigation = {
+                                        navigator.navigate(
+                                            SearchScreenDestination(
+                                                initialSearch = mangaType
+                                            )
+                                        )
+                                    }
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                            }
 
-                                MangaListType.RecentlyAdded -> {
-                                    val items = state.recentlyAdded
-                                    HorizontalMangaList(
-                                        listTitle = mangaType.title,
-                                        items = items,
-                                        detailNavigation = {
-                                            navigator.navigate(DetailsScreenDestination(it))
-                                        },
-                                        searchNavigation = {
-                                            navigator.navigate(SearchScreenDestination(initialSearch = mangaType))
-                                        }
-                                    )
-                                    Spacer(modifier = Modifier.height(16.dp))
-                                }
+                            MangaListType.RecentlyAdded -> {
+                                val items = state.recentlyAdded
+                                HorizontalMangaList(
+                                    listTitle = mangaType.title,
+                                    items = items,
+                                    detailNavigation = {
+                                        navigator.navigate(DetailsScreenDestination(it))
+                                    },
+                                    searchNavigation = {
+                                        navigator.navigate(
+                                            SearchScreenDestination(
+                                                initialSearch = mangaType
+                                            )
+                                        )
+                                    }
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
                             }
                         }
                     }
-                    IconButton(
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .statusBarsPadding(),
-                        colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.surface),
-                        onClick = {
-                            navigator.navigate(SearchScreenDestination())
-                        }
-                    ) {
-                        Icon(imageVector = Icons.Filled.Search, contentDescription = "Search Screen Icon")
+                }
+                IconButton(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .statusBarsPadding(),
+                    colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.surface),
+                    onClick = {
+                        navigator.navigate(SearchScreenDestination())
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = "Search Screen Icon"
+                    )
+                }
+            }
+            AnimatedVisibility(
+                visible = isLoading || isError,
+                enter = fadeIn(tween(300)),
+                exit = fadeOut(tween(300)),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                when {
+                    isLoading -> {
+                        Loader(StateAnimationType.FLIPPING_PAGES)
+                    }
+
+                    isError -> {
+                        println("deu erro")
                     }
                 }
             }

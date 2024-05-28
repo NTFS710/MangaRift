@@ -33,6 +33,7 @@ class DetailViewModel(
     fun getMangaDetails(mangaId: String) {
         if (!fetched) {
             viewModelScope.launch {
+                _detailState.value = DetailState()
                 val callsResults = awaitAll(
                     async { getMangaDetailsUseCase(mangaId).getOrDefault(Manga()) },
                     async { getMangaChaptersUseCase(mangaId).getOrDefault(emptyMap()) }
@@ -56,6 +57,11 @@ class DetailViewModel(
                 }
             }
         }
+    }
+
+    fun refresh(mangaId: String) {
+        fetched = false
+        getMangaDetails(mangaId)
     }
 
     fun changeOrder(order: ChaptersOrder) {

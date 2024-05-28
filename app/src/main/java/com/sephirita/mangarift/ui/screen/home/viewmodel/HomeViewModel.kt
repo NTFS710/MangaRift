@@ -28,8 +28,9 @@ class HomeViewModel(
         getMangas()
     }
 
-    private fun getMangas() {
+    fun getMangas() {
         viewModelScope.launch {
+            _homeState.value = HomeState()
             val callsResults = awaitAll(
                 async { getPopularNewTitlesUseCase().getOrDefault(emptyList()) },
                 async { getSeasonUseCase().getOrDefault(emptyList()) },
