@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 private const val LIMIT = 100
+private const val INITIAL = ""
 
 class SearchViewModel(
     private val getMangaWithTitleUseCase: MangaWithTitleUseCase,
@@ -26,6 +27,7 @@ class SearchViewModel(
     val searchState: StateFlow<SearchState> = _searchState.asStateFlow()
 
     private var initialized = false
+    private var lastSearch: String = ""
 
     init {
         _searchState.value = SearchState(isLoading = false)
@@ -41,6 +43,7 @@ class SearchViewModel(
                         mangaList = it,
                         isError = false
                     )
+                    initialized = true
                 }
                 onFailure {
                     _searchState.value = SearchState(
@@ -49,10 +52,11 @@ class SearchViewModel(
                     )
                 }
             }
+            lastSearch = titleToSearch
         }
     }
 
-    fun initialSearch(initialSearch: MangaListType?) {
+    fun initialSearch(initialSearch: MangaListType) {
         if (initialized) return
         viewModelScope.launch {
             _searchState.value = SearchState()
@@ -109,6 +113,21 @@ class SearchViewModel(
                     _searchState.value = SearchState(isLoading = false, isError = true)
                     initialized = true
                 }
+            }
+            lastSearch = INITIAL
+        }
+    }
+
+    fun refresh(initialSearch: MangaListType?) {
+        when (lastSearch) {
+            INITIAL -> {
+                initialSearch?.let {
+                    initialized = false
+                    initialSearch(it)
+                }
+            }
+            else -> {
+                search(lastSearch)
             }
         }
     }

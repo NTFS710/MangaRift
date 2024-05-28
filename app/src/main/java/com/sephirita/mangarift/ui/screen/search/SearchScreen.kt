@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -26,6 +28,7 @@ import com.sephirita.mangarift.ui.screen.destinations.DetailsScreenDestination
 import com.sephirita.mangarift.ui.screen.search.viewModel.SearchViewModel
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Destination
 @Composable
 fun SearchScreen(
@@ -33,7 +36,7 @@ fun SearchScreen(
     initialSearch: MangaListType? = null
 ) {
     val viewModel: SearchViewModel = koinViewModel()
-    val searchState by viewModel.searchState.collectAsState()
+    val state by viewModel.searchState.collectAsState()
 
     LaunchedEffect(key1 = Unit) {
         initialSearch?.let {
@@ -41,30 +44,35 @@ fun SearchScreen(
         }
     }
 
-    with(searchState) {
-        when {
-            isLoading -> {
-                Loader(StateAnimationType.FLIPPING_PAGES)
-            }
-
-            isError -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    Toast.makeText(LocalContext.current, "Deu pau", Toast.LENGTH_SHORT).show()
+    PullToRefreshBox(
+        isRefreshing = state.isLoading,
+        onRefresh = { viewModel.refresh(initialSearch) }
+    ) {
+        with(state) {
+            when {
+                isLoading -> {
+                    Loader(StateAnimationType.FLIPPING_PAGES)
                 }
-            }
 
-            else -> {
-                Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                    SearchBar(onSearch = { viewModel.search(it) })
-                    Spacer(modifier = Modifier.height(16.dp))
-                    VerticalMangaList(
-                        searchItems = searchState.mangaList,
-                        detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) }
-                    )
+                isError -> {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        Toast.makeText(LocalContext.current, "Deu pau", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                else -> {
+                    Column {
+                        SearchBar(onSearch = { viewModel.search(it) })
+                        Spacer(modifier = Modifier.height(16.dp))
+                        VerticalMangaList(
+                            searchItems = state.mangaList,
+                            detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) }
+                        )
+                    }
                 }
             }
         }
