@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sephirita.mangarift.ui.component.banner.BannerPager
-import com.sephirita.mangarift.ui.component.header.Header
+import com.sephirita.mangarift.ui.component.error.ErrorToast
 import com.sephirita.mangarift.ui.component.list.horizontal.HorizontalMangaList
 import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.model.MangaListType
@@ -184,7 +184,7 @@ fun HomeScreen(
                     isLoading -> Loader(StateAnimationType.FLIPPING_PAGES)
 
                     isError -> {
-                        println("deu erro")
+                        ErrorToast(enabled = state.isError) { viewModel.getMangas() }
                     }
                 }
             }

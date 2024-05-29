@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -20,8 +19,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -43,12 +40,13 @@ import androidx.core.view.WindowInsetsControllerCompat
 import coil.compose.SubcomposeAsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.sephirita.mangarift.ui.component.dialog.ReadingStyleDialog
+import com.sephirita.mangarift.ui.component.error.ErrorToast
 import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.model.StateAnimationType
 import com.sephirita.mangarift.ui.screen.reader.viewmodel.ReaderViewModel
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Destination
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -68,75 +66,42 @@ fun ReaderScreen(chapterId: String) {
 
     HideSystemBars()
 
-    PullToRefreshBox(
-        isRefreshing = state.isLoading,
-        onRefresh = { viewModel.getChapterToRead(chapterId) }
-    ) {
-        with(state) {
-            BoxWithConstraints(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .combinedClickable(
-                        onClick = {},
-                        onLongClick = { showDialog = true },
-                        interactionSource = null,
-                        indication = null
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                val transformableState =
-                    rememberTransformableState { zoomChange, offsetChange, rotationChange ->
-                        scale = (scale * zoomChange).coerceIn(1f, 5f)
-                        val extraWidth = (scale - 1) * constraints.maxWidth
-                        val extraHeight = (scale - 1) * constraints.maxHeight
-                        val maxX = extraWidth / 2
-                        val maxY = extraHeight / 2
-                        offset = Offset(
-                            x = (offset.x + (scale * offsetChange.x)).coerceIn(-maxX, maxX),
-                            y = (offset.y + (scale * offsetChange.y)).coerceIn(-maxY, maxY)
-                        )
-                    }
-
-                if (showDialog) {
-                    ReadingStyleDialog(
-                        changeDialogVisibility = { showDialog = it },
-                        changeReadingStyle = { horizontalReading = it }
+    with(state) {
+        BoxWithConstraints(
+            modifier = Modifier
+                .fillMaxSize()
+                .combinedClickable(
+                    onClick = {},
+                    onLongClick = { showDialog = true },
+                    interactionSource = null,
+                    indication = null
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            val transformableState =
+                rememberTransformableState { zoomChange, offsetChange, rotationChange ->
+                    scale = (scale * zoomChange).coerceIn(1f, 5f)
+                    val extraWidth = (scale - 1) * constraints.maxWidth
+                    val extraHeight = (scale - 1) * constraints.maxHeight
+                    val maxX = extraWidth / 2
+                    val maxY = extraHeight / 2
+                    offset = Offset(
+                        x = (offset.x + (scale * offsetChange.x)).coerceIn(-maxX, maxX),
+                        y = (offset.y + (scale * offsetChange.y)).coerceIn(-maxY, maxY)
                     )
                 }
 
-                if (horizontalReading) {
-                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                        HorizontalPager(
-                            state = pagerState,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .graphicsLayer(
-                                    scaleX = scale,
-                                    scaleY = scale,
-                                    translationX = offset.x,
-                                    translationY = offset.y
-                                ),
-                            beyondViewportPageCount = 3
-                        ) {
-                            val currentItem = state.pages[it]
-                            SubcomposeAsyncImage(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .transformable(
-                                        state = transformableState,
-                                        canPan = { scale != 1f }),
-                                contentScale = ContentScale.Fit,
-                                alignment = Alignment.Center,
-                                model = currentItem,
-                                contentDescription = "Manga Page",
-                                loading = {
-                                    Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
-                                }
-                            )
-                        }
-                    }
-                } else {
-                    Column(
+            if (showDialog) {
+                ReadingStyleDialog(
+                    changeDialogVisibility = { showDialog = it },
+                    changeReadingStyle = { horizontalReading = it }
+                )
+            }
+
+            if (horizontalReading) {
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    HorizontalPager(
+                        state = pagerState,
                         modifier = Modifier
                             .fillMaxSize()
                             .graphicsLayer(
@@ -144,48 +109,69 @@ fun ReaderScreen(chapterId: String) {
                                 scaleY = scale,
                                 translationX = offset.x,
                                 translationY = offset.y
-                            )
-                            .transformable(
-                                state = transformableState,
-                                canPan = { scale != 1f })
-                            .verticalScroll(rememberScrollState()),
+                            ),
+                        beyondViewportPageCount = 3
                     ) {
-                        state.pages.forEachIndexed { index, it ->
-                            val currentItem = state.pages[index]
-                            SubcomposeAsyncImage(
-                                modifier = Modifier.fillMaxSize(),
-                                contentScale = ContentScale.Fit, //
-                                alignment = Alignment.Center,
-                                model = currentItem,
-                                contentDescription = "Manga Page",
-                                loading = {
-                                    Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
-                                }
-                            )
-                        }
+                        val currentItem = state.pages[it]
+                        SubcomposeAsyncImage(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .transformable(
+                                    state = transformableState,
+                                    canPan = { scale != 1f }),
+                            contentScale = ContentScale.Fit,
+                            alignment = Alignment.Center,
+                            model = currentItem,
+                            contentDescription = "Manga Page",
+                            loading = {
+                                Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
+                            }
+                        )
+                    }
+                }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .graphicsLayer(
+                            scaleX = scale,
+                            scaleY = scale,
+                            translationX = offset.x,
+                            translationY = offset.y
+                        )
+                        .transformable(
+                            state = transformableState,
+                            canPan = { scale != 1f })
+                        .verticalScroll(rememberScrollState()),
+                ) {
+                    state.pages.forEachIndexed { index, it ->
+                        val currentItem = state.pages[index]
+                        SubcomposeAsyncImage(
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Fit, //
+                            alignment = Alignment.Center,
+                            model = currentItem,
+                            contentDescription = "Manga Page",
+                            loading = {
+                                Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
+                            }
+                        )
                     }
                 }
             }
+        }
 
-            AnimatedVisibility(
-                visible = isLoading || isError,
-                enter = fadeIn(tween(300)),
-                exit = fadeOut(tween(300)),
-                modifier = Modifier.fillMaxSize()
-            ) {
-                when {
-                    isLoading -> Loader(loadingAnimationType = StateAnimationType.NONE)
+        AnimatedVisibility(
+            visible = isLoading || isError,
+            enter = fadeIn(tween(300)),
+            exit = fadeOut(tween(300)),
+            modifier = Modifier.fillMaxSize()
+        ) {
+            when {
+                isLoading -> Loader(loadingAnimationType = StateAnimationType.NONE)
 
-                    isError -> {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .verticalScroll(rememberScrollState())
-                        ) {
-                            Toast.makeText(LocalContext.current, "Deu pau", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    }
+                isError -> {
+                    ErrorToast(enabled = state.isError) { viewModel.getChapterToRead(chapterId) }
                 }
             }
         }

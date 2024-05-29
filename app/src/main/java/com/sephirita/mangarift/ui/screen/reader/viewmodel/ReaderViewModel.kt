@@ -7,6 +7,7 @@ import com.sephirita.mangarift.ui.screen.reader.state.ReaderState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ReaderViewModel(
@@ -18,17 +19,19 @@ class ReaderViewModel(
 
     fun getChapterToRead(chapterId: String) {
         viewModelScope.launch {
-            _readerState.value = ReaderState(isLoading = true, isError = false)
+            _readerState.update { ReaderState(isLoading = true, isError = false) }
             with(getChapterPagesUseCase(chapterId)) {
-                onSuccess {
-                    _readerState.value = ReaderState(
-                        isLoading = false,
-                        pages = it
-                        // falta nextChapters
-                    )
+                onSuccess { pages ->
+                    _readerState.update {
+                        ReaderState(
+                            isLoading = false,
+                            pages = pages
+                            // falta nextChapters
+                        )
+                    }
                 }
                 onFailure {
-                    _readerState.value = ReaderState(isLoading = false, isError = true)
+                    _readerState.update { ReaderState(isLoading = false, isError = true) }
                 }
             }
         }

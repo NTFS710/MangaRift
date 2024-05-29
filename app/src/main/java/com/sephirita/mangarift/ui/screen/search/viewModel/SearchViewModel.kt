@@ -11,6 +11,7 @@ import com.sephirita.mangarift.ui.model.MangaListType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 private const val LIMIT = 100
@@ -31,21 +32,21 @@ class SearchViewModel(
 
     fun search(titleToSearch: String) {
         viewModelScope.launch {
-            _searchState.value = SearchState()
+            _searchState.update { SearchState() }
             with(getMangaWithTitleUseCase(titleToSearch)) {
-                onSuccess {
-                    _searchState.value = SearchState(
-                        isLoading = false,
-                        mangaList = it,
-                        isError = false
-                    )
+                onSuccess { mangas ->
+                    _searchState.update {
+                        SearchState(
+                            isLoading = false,
+                            mangaList = mangas,
+                            isError = false
+                        )
+                    }
                     initialized = true
                 }
                 onFailure {
-                    _searchState.value = SearchState(
-                        isLoading = false,
-                        isError = true
-                    )
+                    _searchState.update { SearchState(isLoading = false, isError = true) }
+                    initialized = false
                 }
             }
             lastSearch = titleToSearch
@@ -55,58 +56,69 @@ class SearchViewModel(
     fun initialSearch(initialSearch: MangaListType?) {
         if (initialized) return
         viewModelScope.launch {
-            _searchState.value = SearchState()
+            _searchState.update { SearchState() }
             when (initialSearch) {
                 MangaListType.RecentlyAdded -> {
                     with(getRecentlyAddedUseCase(limit = LIMIT)) {
-                        onSuccess {
-                            _searchState.value = SearchState(
-                                isLoading = false,
-                                isError = false,
-                                mangaList = it
-                            )
+                        onSuccess { mangas ->
+                            _searchState.update {
+                                SearchState(
+                                    isLoading = false,
+                                    isError = false,
+                                    mangaList = mangas
+                                )
+                            }
                             initialized = true
                         }
                         onFailure {
-                            _searchState.value = SearchState(isLoading = false, isError = true)
+                            _searchState.update { SearchState(isLoading = false, isError = true) }
                             initialized = false
                         }
                     }
                 }
                 MangaListType.LatestUpdates -> {
                     with(getLatestUpdatesUseCase(limit = LIMIT)) {
-                        onSuccess {
-                            _searchState.value = SearchState(
-                                isLoading = false,
-                                isError = false,
-                                mangaList = it
-                            )
+                        onSuccess { mangas ->
+                            _searchState.update {
+                                SearchState(
+                                    isLoading = false,
+                                    isError = false,
+                                    mangaList = mangas
+                                )
+                            }
                             initialized = true
                         }
                         onFailure {
-                            _searchState.value = SearchState(isLoading = false, isError = true)
+                            _searchState.update { SearchState(isLoading = false, isError = true) }
                             initialized = false
                         }
                     }
                 }
                 MangaListType.Seasonal -> {
                     with(getSeasonUseCase(getAll = true)) {
-                        onSuccess {
-                            _searchState.value = SearchState(
-                                isLoading = false,
-                                isError = false,
-                                mangaList = it
-                            )
+                        onSuccess { mangas ->
+                            _searchState.update {
+                                SearchState(
+                                    isLoading = false,
+                                    isError = false,
+                                    mangaList = mangas
+                                )
+                            }
                             initialized = true
                         }
                         onFailure {
-                            _searchState.value = SearchState(isLoading = false, isError = true)
+                            _searchState.update { SearchState(isLoading = false, isError = true) }
                             initialized = false
                         }
                     }
                 }
                 else -> {
-                    _searchState.value = SearchState(isLoading = false, isError = initialSearch != null)
+                    _searchState.update {
+                        SearchState(
+                            isLoading = false,
+                            isError = initialSearch != null
+                        )
+                    }
                     initialized = true
                 }
             }

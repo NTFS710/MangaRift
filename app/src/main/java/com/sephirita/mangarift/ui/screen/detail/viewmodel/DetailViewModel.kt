@@ -33,7 +33,7 @@ class DetailViewModel(
     fun getMangaDetails(mangaId: String) {
         if (!fetched) {
             viewModelScope.launch {
-                _detailState.value = DetailState()
+                _detailState.update { DetailState() }
                 val callsResults = awaitAll(
                     async { getMangaDetailsUseCase(mangaId).getOrDefault(Manga()) },
                     async { getMangaChaptersUseCase(mangaId).getOrDefault(emptyMap()) }
@@ -42,17 +42,21 @@ class DetailViewModel(
                 val details = callsResults[0] as? Manga
                 val chapters = (callsResults[1] as? Map<Float, List<Chapter>>)
                 if (details == null || chapters == null) {
-                    _detailState.value = DetailState(isLoading = false, isError = true)
+                    _detailState.update { DetailState(isLoading = false, isError = true) }
                 } else {
-                    _detailState.value = DetailState(
-                        isLoading = false,
-                        manga = details
-                    )
-                    _chaptersManga.value = FormatedChapters(
-                        order = ChaptersOrder.Natural,
-                        natural = chapters,
-                        reversed = chapters.toSortedMap(reverseOrder())
-                    )
+                    _detailState.update {
+                        DetailState(
+                            isLoading = false,
+                            manga = details
+                        )
+                    }
+                    _chaptersManga.update {
+                        FormatedChapters(
+                            order = ChaptersOrder.Natural,
+                            natural = chapters,
+                            reversed = chapters.toSortedMap(reverseOrder())
+                        )
+                    }
                     fetched = true
                 }
             }

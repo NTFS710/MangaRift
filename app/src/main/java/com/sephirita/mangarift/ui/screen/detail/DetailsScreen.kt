@@ -1,7 +1,6 @@
 package com.sephirita.mangarift.ui.screen.detail
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -22,7 +21,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -37,6 +35,7 @@ import coil.compose.SubcomposeAsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sephirita.mangarift.ui.component.detail.DetailsPager
+import com.sephirita.mangarift.ui.component.error.ErrorToast
 import com.sephirita.mangarift.ui.component.header.Header
 import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.component.text.StrokedText
@@ -45,7 +44,6 @@ import com.sephirita.mangarift.ui.screen.destinations.ReaderScreenDestination
 import com.sephirita.mangarift.ui.screen.detail.viewmodel.DetailViewModel
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Destination
 @Composable
@@ -65,76 +63,72 @@ fun DetailsScreen(
         viewModel.getMangaDetails(id)
     }
 
-    PullToRefreshBox(
-        isRefreshing = state.isLoading,
-        onRefresh = { viewModel.refresh(id) }
-    ) {
-        with(state) {
-            Scaffold(
-                topBar = { Header(onBackPressed = { navigator.navigateUp() }) },
-                bottomBar = {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.background)
-                            .padding(bottom = 8.dp)
-                            .navigationBarsPadding(),
-                        verticalArrangement = Arrangement.spacedBy(6.dp)
-                    ) {
-                        HorizontalDivider()
-                    }
-                }
-            ) {
-                Box(
+    with(state) {
+        Scaffold(
+            topBar = { Header(onBackPressed = { navigator.navigateUp() }) },
+            bottomBar = {
+                Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
-                        .navigationBarsPadding()
-                        .padding(bottom = 18.dp),
-                    contentAlignment = Alignment.TopCenter
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.background)
+                        .padding(bottom = 8.dp)
+                        .navigationBarsPadding(),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    SubcomposeAsyncImage(
+                    HorizontalDivider()
+                }
+            }
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .navigationBarsPadding()
+                    .padding(bottom = 18.dp),
+                contentAlignment = Alignment.TopCenter
+            ) {
+                SubcomposeAsyncImage(
+                    modifier = Modifier
+                        .height(backgroundHeight + corner)
+                        .fillMaxWidth(),
+                    alignment = Alignment.TopCenter,
+                    contentScale = ContentScale.Crop,
+                    model = manga.image,
+                    contentDescription = "Background Detail Image",
+                )
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Box(
                         modifier = Modifier
-                            .height(backgroundHeight + corner)
-                            .fillMaxWidth(),
-                        alignment = Alignment.TopCenter,
-                        contentScale = ContentScale.Crop,
-                        model = manga.image,
-                        contentDescription = "Background Detail Image",
-                    )
-                    Column(
-                        modifier = Modifier.fillMaxSize()
+                            .height(backgroundHeight)
+                            .fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                                bottom = 4.dp
+                            ),
+                        contentAlignment = Alignment.BottomStart
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .height(backgroundHeight)
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    bottom = 4.dp
-                                ),
-                            contentAlignment = Alignment.BottomStart
-                        ) {
-                            StrokedText(text = manga.title)
-                        }
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clip(
-                                    shape = RoundedCornerShape(
-                                        topStart = corner,
-                                        topEnd = corner
-                                    )
+                        StrokedText(text = manga.title)
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(
+                                shape = RoundedCornerShape(
+                                    topStart = corner,
+                                    topEnd = corner
                                 )
-                                .background(MaterialTheme.colorScheme.background)
+                            )
+                            .background(MaterialTheme.colorScheme.background)
 //                                .padding(top = 8.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Column(
-                                modifier = Modifier.fillMaxSize(),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
 //                                Row(
 //                                    modifier = Modifier
 //                                        .fillMaxWidth()
@@ -158,41 +152,41 @@ fun DetailsScreen(
 //                                    )
 //                                }
 //                                HorizontalDivider(color = Gray)
-                                DetailsPager(
-                                    tags = manga.tags,
-                                    description = manga.description,
-                                    chapters = chaptersState,
-                                    changeChaptersOrder = { viewModel.changeOrder(it) },
-                                    expandedChapterList = expandedChapter,
-                                    expandChapterCallback = { viewModel.expandChapter(it) },
-                                    readerNavigation = {
-                                        navigator.navigate(
-                                            ReaderScreenDestination(
-                                                it
-                                            )
+                            DetailsPager(
+                                tags = manga.tags,
+                                description = manga.description,
+                                chapters = chaptersState,
+                                changeChaptersOrder = { viewModel.changeOrder(it) },
+                                expandedChapterList = expandedChapter,
+                                expandChapterCallback = { viewModel.expandChapter(it) },
+                                readerNavigation = {
+                                    navigator.navigate(
+                                        ReaderScreenDestination(
+                                            it
                                         )
-                                    }
-                                )
-                            }
+                                    )
+                                }
+                            )
                         }
                     }
                 }
             }
+        }
 
-            AnimatedVisibility(
-                visible = isLoading || isError,
-                enter = fadeIn(tween(300)),
-                exit = fadeOut(tween(300)),
-                modifier = Modifier.fillMaxSize()
-            ) {
-                when {
-                    isLoading -> Loader(StateAnimationType.DETAILED_PAGES)
+        AnimatedVisibility(
+            visible = isLoading || isError,
+            enter = fadeIn(tween(300)),
+            exit = fadeOut(tween(300)),
+            modifier = Modifier.fillMaxSize()
+        ) {
+            when {
+                isLoading -> Loader(StateAnimationType.DETAILED_PAGES)
 
-                    isError -> {
-                        println("deu erro")
-                    }
+                isError -> {
+                    ErrorToast(enabled = state.isError) { viewModel.refresh(id) }
                 }
             }
         }
     }
+
 }
