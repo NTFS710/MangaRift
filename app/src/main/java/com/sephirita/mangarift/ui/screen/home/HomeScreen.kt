@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sephirita.mangarift.ui.component.banner.BannerPager
-import com.sephirita.mangarift.ui.component.error.ErrorToast
+import com.sephirita.mangarift.ui.screen.error.ErrorToast
 import com.sephirita.mangarift.ui.component.list.horizontal.HorizontalMangaList
 import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.model.MangaListType
@@ -51,9 +51,7 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination(start = true)
 @Composable
-fun HomeScreen(
-    navigator: DestinationsNavigator
-) {
+fun HomeScreen(navigator: DestinationsNavigator) {
     val viewModel: HomeViewModel = koinViewModel()
     val state by viewModel.homeState.collectAsState()
 
@@ -162,9 +160,7 @@ fun HomeScreen(
                             .align(Alignment.TopEnd)
                             .statusBarsPadding(),
                         colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.surface),
-                        onClick = {
-                            navigator.navigate(SearchScreenDestination())
-                        }
+                        onClick = { navigator.navigate(SearchScreenDestination()) }
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Search,
@@ -184,7 +180,10 @@ fun HomeScreen(
                     isLoading -> Loader(StateAnimationType.FLIPPING_PAGES)
 
                     isError -> {
-                        ErrorToast(enabled = state.isError) { viewModel.getMangas() }
+                        ErrorToast(
+                            enabled = state.isError,
+                            onBackPressed = { navigator.navigateUp() }
+                        ) { viewModel.getMangas() }
                     }
                 }
             }

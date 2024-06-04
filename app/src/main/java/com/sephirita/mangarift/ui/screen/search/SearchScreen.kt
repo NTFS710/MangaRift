@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -26,7 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.sephirita.mangarift.ui.component.error.ErrorToast
+import com.sephirita.mangarift.ui.screen.error.ErrorToast
 import com.sephirita.mangarift.ui.component.list.vertical.VerticalMangaList
 import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.component.search.SearchBar
@@ -99,13 +98,14 @@ fun SearchScreen(
         ) {
             when {
                 isLoading -> {
-                    println("Carregando $state")
                     Loader(StateAnimationType.FLIPPING_PAGES)
                 }
 
                 isError -> {
-                    println("Deu erro isError $state")
-                    ErrorToast(enabled = state.isError) { viewModel.refresh(initialSearch) }
+                    ErrorToast(
+                        enabled = state.isError,
+                        onBackPressed = { navigator.navigateUp() }
+                    ) { viewModel.refresh(initialSearch) }
                 }
             }
         }

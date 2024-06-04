@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -35,7 +34,7 @@ import coil.compose.SubcomposeAsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sephirita.mangarift.ui.component.detail.DetailsPager
-import com.sephirita.mangarift.ui.component.error.ErrorToast
+import com.sephirita.mangarift.ui.screen.error.ErrorToast
 import com.sephirita.mangarift.ui.component.header.Header
 import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.component.text.StrokedText
@@ -183,7 +182,10 @@ fun DetailsScreen(
                 isLoading -> Loader(StateAnimationType.DETAILED_PAGES)
 
                 isError -> {
-                    ErrorToast(enabled = state.isError) { viewModel.refresh(id) }
+                    ErrorToast(
+                        enabled = state.isError,
+                        onBackPressed = { navigator.navigateUp() }
+                    ) { viewModel.refresh(id) }
                 }
             }
         }

@@ -39,8 +39,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import coil.compose.SubcomposeAsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sephirita.mangarift.ui.component.dialog.ReadingStyleDialog
-import com.sephirita.mangarift.ui.component.error.ErrorToast
+import com.sephirita.mangarift.ui.screen.error.ErrorToast
 import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.model.StateAnimationType
 import com.sephirita.mangarift.ui.screen.reader.viewmodel.ReaderViewModel
@@ -50,7 +51,10 @@ import org.koin.androidx.compose.koinViewModel
 @Destination
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ReaderScreen(chapterId: String) {
+fun ReaderScreen(
+    chapterId: String,
+    navigator: DestinationsNavigator
+) {
     var scale by remember { mutableFloatStateOf(1f) }
     var offset by remember { mutableStateOf(Offset.Zero) }
     var showDialog by remember { mutableStateOf(false) }
@@ -171,7 +175,10 @@ fun ReaderScreen(chapterId: String) {
                 isLoading -> Loader(loadingAnimationType = StateAnimationType.NONE)
 
                 isError -> {
-                    ErrorToast(enabled = state.isError) { viewModel.getChapterToRead(chapterId) }
+                    ErrorToast(
+                        enabled = state.isError,
+                        onBackPressed = { navigator.navigateUp() }
+                    ) { viewModel.getChapterToRead(chapterId) }
                 }
             }
         }
