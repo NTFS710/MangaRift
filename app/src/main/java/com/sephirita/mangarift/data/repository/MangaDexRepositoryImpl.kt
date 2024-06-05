@@ -11,12 +11,16 @@ import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.domain.repository.MangaDexRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class MangaDexRepositoryImpl(private val api: Service) : MangaDexRepository {
     override suspend fun getPopularNewTitles(): Result<List<Manga>> {
         return withContext(Dispatchers.IO) {
             runCatching {
-                api.getPopularNewTitles().toList()
+                val lastMonthDate = LocalDate.now().minusMonths(1)
+                val formattedDate = "${lastMonthDate}T03:00:00"
+                api.getPopularNewTitles(formattedDate).toList()
             }
         }
     }

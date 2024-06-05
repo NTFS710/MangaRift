@@ -2,6 +2,7 @@ package com.sephirita.mangarift.ui.component.banner
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
@@ -19,7 +20,9 @@ fun BannerPager(
         state = pagerState,
         modifier = Modifier
             .fillMaxWidth()
-            .height(360.dp)
+            .padding(bottom = if (items.isNotEmpty()) 0.dp else 80.dp)
+            .height(if (items.isNotEmpty()) 360.dp else 0.dp)
+
     ) {
         val currentItem = items[it]
         Banner(item = currentItem, onClick = { detailNavigation(currentItem.id) })

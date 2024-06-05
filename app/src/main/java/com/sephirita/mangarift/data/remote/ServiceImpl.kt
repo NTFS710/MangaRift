@@ -13,10 +13,10 @@ import io.ktor.client.request.get
 class ServiceImpl(
     private val client: HttpClient
 ) : Service {
-    override suspend fun getPopularNewTitles(): MangaListResponse {
+    override suspend fun getPopularNewTitles(createdSinceDate: String): MangaListResponse {
         return client.get(HttpRoutes.MANGA) {
             url {
-                encodedParameters.append("createdAtSince", "2024-04-05T03:00:00")
+                encodedParameters.append("createdAtSince", createdSinceDate) // pegar data do dia, as 3 da manhã
                 encodedParameters.append("order[followedCount]", "desc")
                 encodedParameters.append("hasAvailableChapters", "true")
                 encodedParameters.append("availableTranslatedLanguage[]", "pt-br")
