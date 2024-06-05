@@ -3,6 +3,7 @@ package com.sephirita.mangarift.ui.screen.home.viewmodel
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.ui.screen.home.state.HomeState
 import com.sephirita.mangarift.domain.usecase.LatestUpdatesUseCase
 import com.sephirita.mangarift.domain.usecase.PopularNewTitlesUseCase
@@ -33,27 +34,34 @@ class HomeViewModel(
         viewModelScope.launch {
             _homeState.update { HomeState() }
             val callsResults = awaitAll(
-                async { getPopularNewTitlesUseCase().getOrDefault(emptyList()) },
-                async { getSeasonUseCase().getOrDefault(emptyList()) },
-                async { getLatestUpdatesUseCase().getOrDefault(emptyList()) },
-                async { getRecentlyAddedUseCase().getOrDefault(emptyList()) }
+                async { getPopularNewTitlesUseCase() },
+                async { getSeasonUseCase() },
+                async { getLatestUpdatesUseCase() },
+                async { getRecentlyAddedUseCase() }
             )
 
-//            callsResults.any { it.isFailure }
+            val hasFailed = callsResults.any { it.isFailure }
 
-            val popularNewTitles = callsResults[0].toMutableStateList()
-            val season = callsResults[1].toMutableStateList()
-            val latestUpdates = callsResults[2].toMutableStateList()
-            val recentlyAdded = callsResults[3].toMutableStateList()
-
-            _homeState.update {
-                HomeState(
-                    isLoading = false,
-                    popularNewTitles = popularNewTitles,
-                    season = season,
-                    latestUpdates = latestUpdates,
-                    recentlyAdded = recentlyAdded
-                )
+            if (hasFailed) {
+                _homeState.update { HomeState(isLoading = false, isError = true) }
+            } else {
+                _homeState.update {
+                    val popularNewTitles =
+                        callsResults[0].getOrDefault(emptyList()).toMutableStateList()
+                    val season =
+                        callsResults[1].getOrDefault(emptyList()).toMutableStateList()
+                    val latestUpdates =
+                        callsResults[2].getOrDefault(emptyList()).toMutableStateList()
+                    val recentlyAdded =
+                        callsResults[3].getOrDefault(emptyList()).toMutableStateList()
+                    HomeState(
+                        isLoading = false,
+                        popularNewTitles = popularNewTitles,
+                        season = season,
+                        latestUpdates = latestUpdates,
+                        recentlyAdded = recentlyAdded
+                    )
+                }
             }
         }
     }

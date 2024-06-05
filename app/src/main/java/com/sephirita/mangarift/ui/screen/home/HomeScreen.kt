@@ -159,7 +159,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                         modifier = Modifier
                             .align(Alignment.TopEnd)
                             .statusBarsPadding(),
-                        colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.surface),
+                        colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.background),
                         onClick = { navigator.navigate(SearchScreenDestination()) }
                     ) {
                         Icon(

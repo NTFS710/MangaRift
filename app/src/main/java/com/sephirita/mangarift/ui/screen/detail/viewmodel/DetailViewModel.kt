@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@Suppress("UNCHECKED_CAST")
 class DetailViewModel(
     private val getMangaDetailsUseCase: MangaDetailsUseCase,
     private val getMangaChaptersUseCase: MangaChaptersUseCase
@@ -35,27 +36,34 @@ class DetailViewModel(
             viewModelScope.launch {
                 _detailState.update { DetailState() }
                 val callsResults = awaitAll(
-                    async { getMangaDetailsUseCase(mangaId).getOrDefault(Manga()) },
-                    async { getMangaChaptersUseCase(mangaId).getOrDefault(emptyMap()) }
+                    async { getMangaDetailsUseCase(mangaId) } ,
+                    async { getMangaChaptersUseCase(mangaId) }
                 )
 
-                val details = callsResults[0] as? Manga
-                val chapters = (callsResults[1] as? Map<Float, List<Chapter>>)
-                if (details == null || chapters == null) {
+                val hasFailed = callsResults.any { it.isFailure }
+
+                if (hasFailed) {
                     _detailState.update { DetailState(isLoading = false, isError = true) }
+                    fetched = false
                 } else {
-                    _detailState.update {
-                        DetailState(
-                            isLoading = false,
-                            manga = details
-                        )
+                    callsResults[0].onSuccess { result ->
+                        val manga = (result as Manga)
+                        _detailState.update {
+                            DetailState(
+                                isLoading = false,
+                                manga = manga
+                            )
+                        }
                     }
-                    _chaptersManga.update {
-                        FormatedChapters(
-                            order = ChaptersOrder.Natural,
-                            natural = chapters,
-                            reversed = chapters.toSortedMap(reverseOrder())
-                        )
+                    callsResults[1].onSuccess { result ->
+                        val chapters = (result as Map<Float, List<Chapter>>)
+                        _chaptersManga.update {
+                            FormatedChapters(
+                                order = ChaptersOrder.Natural,
+                                natural = chapters,
+                                reversed = chapters.toSortedMap(reverseOrder())
+                            )
+                        }
                     }
                     fetched = true
                 }

@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
@@ -21,7 +22,9 @@ fun StrokedText(
     textStrokeColor: Color = Color.Black,
     textStrokeWidth: Float = 12f,
     textStrokeMiter: Float = 4f,
-    textStrokeJoin: StrokeJoin = StrokeJoin.Round
+    textStrokeJoin: StrokeJoin = StrokeJoin.Round,
+    maxLines: Int = Int.MAX_VALUE,
+    overflow: TextOverflow = TextOverflow.Clip
 ) {
     Box(modifier = modifier) {
         Text(
@@ -36,13 +39,17 @@ fun StrokedText(
                         join = textStrokeJoin
                     )
                 )
-            )
+            ),
+            maxLines = maxLines,
+            overflow = overflow
         )
 
         Text(
             text = text,
             color = textColor,
-            fontSize = size
+            fontSize = size,
+            maxLines = maxLines,
+            overflow = overflow
         )
     }
 }

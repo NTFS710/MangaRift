@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
@@ -84,7 +85,7 @@ fun Banner(
                             modifier = Modifier.fillMaxHeight(),
                             verticalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text(text = item.title)
+                            Text(text = item.title, maxLines = 8, overflow = TextOverflow.Ellipsis)
                             Text(text = item.author)
                         }
                     }

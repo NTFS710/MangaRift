@@ -8,5 +8,5 @@ data class Manga (
     val rating: String = "",
     val description: String = "",
     val tags: List<Tag> = emptyList(),
-    val chapters: List<Chapter> = emptyList()
+    val chapters: List<Chapter> = emptyList() // Não tô usando a lista de capitulos
 )

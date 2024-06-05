@@ -31,42 +31,41 @@ fun HorizontalMangaList(
     detailNavigation: (String) -> Unit,
     searchNavigation: () -> Unit
 ) {
-    Box(
-        modifier = modifier.clipToBounds()
-    ) {
-        Column(
-            modifier = Modifier
-                .clipToBounds(),
-            horizontalAlignment = Alignment.Start
+    if (items.isNotEmpty()) {
+        Box(
+            modifier = modifier.clipToBounds()
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+            Column(
+                modifier = Modifier.clipToBounds(),
+                horizontalAlignment = Alignment.Start
             ) {
-                Text(
-                    text = listTitle,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(start = 8.dp, bottom = 6.dp)
-                )
-                Icon(
-                    modifier = Modifier.clickable(onClick = searchNavigation),
-                    painter = painterResource(id = R.drawable.ic_round_arrow_forward),
-                    contentDescription = "Icone para avançar na navegação"
-                )
-            }
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxSize(),
-                horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.Start),
-                contentPadding = PaddingValues(horizontal = 8.dp)
-            ) {
-                itemsIndexed(
-                    items = items,
-                    itemContent = {index, item ->
-                        HorizontalMangaListItem(item = item, onClick = { detailNavigation(it) })
-                    }
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = listTitle,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(start = 8.dp, bottom = 6.dp)
+                    )
+                    Icon(
+                        modifier = Modifier.clickable(onClick = searchNavigation),
+                        painter = painterResource(id = R.drawable.ic_round_arrow_forward),
+                        contentDescription = "Icone para avançar na navegação"
+                    )
+                }
+                LazyRow(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.Start),
+                    contentPadding = PaddingValues(horizontal = 8.dp)
+                ) {
+                    itemsIndexed(
+                        items = items,
+                        itemContent = { index, item ->
+                            HorizontalMangaListItem(item = item, onClick = { detailNavigation(it) })
+                        }
+                    )
+                }
             }
         }
     }

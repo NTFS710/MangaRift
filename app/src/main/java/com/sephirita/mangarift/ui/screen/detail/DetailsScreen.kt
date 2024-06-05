@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
@@ -55,14 +56,14 @@ fun DetailsScreen(
     val corner = 24.dp
 
     val viewModel: DetailViewModel = koinViewModel()
-    val state by viewModel.detailState.collectAsState()
+    val detailState by viewModel.detailState.collectAsState()
     val chaptersState by viewModel.chaptersManga.collectAsState()
 
     LaunchedEffect(key1 = Unit) {
         viewModel.getMangaDetails(id)
     }
 
-    with(state) {
+    with(detailState) {
         Scaffold(
             topBar = { Header(onBackPressed = { navigator.navigateUp() }) },
             bottomBar = {
@@ -109,7 +110,11 @@ fun DetailsScreen(
                             ),
                         contentAlignment = Alignment.BottomStart
                     ) {
-                        StrokedText(text = manga.title)
+                        StrokedText(
+                            text = manga.title,
+                            maxLines = 3,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                     Box(
                         modifier = Modifier
@@ -183,7 +188,7 @@ fun DetailsScreen(
 
                 isError -> {
                     ErrorToast(
-                        enabled = state.isError,
+                        enabled = detailState.isError,
                         onBackPressed = { navigator.navigateUp() }
                     ) { viewModel.refresh(id) }
                 }
