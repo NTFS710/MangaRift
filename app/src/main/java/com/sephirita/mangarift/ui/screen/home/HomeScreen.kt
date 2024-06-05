@@ -16,8 +16,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,13 +37,13 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sephirita.mangarift.ui.component.banner.BannerPager
-import com.sephirita.mangarift.ui.screen.error.ErrorToast
 import com.sephirita.mangarift.ui.component.list.horizontal.HorizontalMangaList
 import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.model.MangaListType
 import com.sephirita.mangarift.ui.model.StateAnimationType
 import com.sephirita.mangarift.ui.screen.destinations.DetailsScreenDestination
 import com.sephirita.mangarift.ui.screen.destinations.SearchScreenDestination
+import com.sephirita.mangarift.ui.screen.error.ErrorToast
 import com.sephirita.mangarift.ui.screen.home.viewmodel.HomeViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -75,16 +75,16 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                 }
             ) {
                 Box(
-                    modifier = Modifier.fillMaxSize().padding(bottom = 48.dp)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 48.dp)
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState()),
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        MangaListType.entries.forEach { mangaType ->
+                        items(MangaListType.entries) { mangaType ->
                             when (mangaType) {
                                 MangaListType.PopularNewTitles -> {
                                     BannerPager(
@@ -153,6 +153,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                                     Spacer(modifier = Modifier.height(16.dp))
                                 }
                             }
+
                         }
                     }
                     IconButton(
@@ -169,7 +170,6 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                     }
                 }
             }
-
             AnimatedVisibility(
                 visible = isLoading || isError,
                 enter = fadeIn(tween(300)),
