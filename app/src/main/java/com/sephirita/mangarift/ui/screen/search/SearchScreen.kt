@@ -31,7 +31,7 @@ import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.component.search.SearchBar
 import com.sephirita.mangarift.ui.model.MangaListType
 import com.sephirita.mangarift.ui.model.StateAnimationType
-import com.sephirita.mangarift.ui.screen.destinations.DetailsScreenDestination
+import com.sephirita.mangarift.ui.screen.destinations.DetailScreenDestination
 import com.sephirita.mangarift.ui.screen.search.viewModel.SearchViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -73,23 +73,10 @@ fun SearchScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 VerticalMangaList(
                     searchItems = state.mangaList,
-                    detailNavigation = { navigator.navigate(DetailsScreenDestination(it)) }
+                    detailNavigation = { navigator.navigate(DetailScreenDestination(it)) }
                 )
             }
         }
-
-//        when {
-//            isLoading -> {
-//                println("Carregando $state")
-//                Loader(StateAnimationType.FLIPPING_PAGES)
-//            }
-//
-//            isError -> {
-//                println("Deu erro isError $state")
-//                ErrorToast(enabled = state.isError) { viewModel.refresh(initialSearch) }
-//            }
-//        }
-
         AnimatedVisibility(
             visible = isLoading || isError,
             enter = fadeIn(tween(300)),

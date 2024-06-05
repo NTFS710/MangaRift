@@ -41,7 +41,7 @@ import com.sephirita.mangarift.ui.component.list.horizontal.HorizontalMangaList
 import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.model.MangaListType
 import com.sephirita.mangarift.ui.model.StateAnimationType
-import com.sephirita.mangarift.ui.screen.destinations.DetailsScreenDestination
+import com.sephirita.mangarift.ui.screen.destinations.DetailScreenDestination
 import com.sephirita.mangarift.ui.screen.destinations.SearchScreenDestination
 import com.sephirita.mangarift.ui.screen.error.ErrorToast
 import com.sephirita.mangarift.ui.screen.home.viewmodel.HomeViewModel
@@ -90,7 +90,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                                     BannerPager(
                                         items = state.popularNewTitles,
                                         detailNavigation = {
-                                            navigator.navigate(DetailsScreenDestination(it))
+                                            navigator.navigate(DetailScreenDestination(it))
                                         }
                                     )
                                     Spacer(modifier = Modifier.height(16.dp))
@@ -102,7 +102,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                                         listTitle = mangaType.title,
                                         items = items,
                                         detailNavigation = {
-                                            navigator.navigate(DetailsScreenDestination(it))
+                                            navigator.navigate(DetailScreenDestination(it))
                                         },
                                         searchNavigation = {
                                             navigator.navigate(
@@ -121,7 +121,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                                         listTitle = mangaType.title,
                                         items = items,
                                         detailNavigation = {
-                                            navigator.navigate(DetailsScreenDestination(it))
+                                            navigator.navigate(DetailScreenDestination(it))
                                         },
                                         searchNavigation = {
                                             navigator.navigate(
@@ -140,7 +140,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                                         listTitle = mangaType.title,
                                         items = items,
                                         detailNavigation = {
-                                            navigator.navigate(DetailsScreenDestination(it))
+                                            navigator.navigate(DetailScreenDestination(it))
                                         },
                                         searchNavigation = {
                                             navigator.navigate(

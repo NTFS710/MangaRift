@@ -14,9 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -35,19 +34,19 @@ import coil.compose.SubcomposeAsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sephirita.mangarift.ui.component.detail.DetailsPager
-import com.sephirita.mangarift.ui.screen.error.ErrorToast
 import com.sephirita.mangarift.ui.component.header.Header
 import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.component.text.StrokedText
 import com.sephirita.mangarift.ui.model.StateAnimationType
 import com.sephirita.mangarift.ui.screen.destinations.ReaderScreenDestination
 import com.sephirita.mangarift.ui.screen.detail.viewmodel.DetailViewModel
+import com.sephirita.mangarift.ui.screen.error.ErrorToast
 import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Destination
 @Composable
-fun DetailsScreen(
+fun DetailScreen(
     navigator: DestinationsNavigator,
     id: String
 ) {
@@ -79,60 +78,61 @@ fun DetailsScreen(
                 }
             }
         ) {
-            Box(
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
                     .navigationBarsPadding()
                     .padding(bottom = 18.dp),
-                contentAlignment = Alignment.TopCenter
+                verticalArrangement = Arrangement.Top
             ) {
-                SubcomposeAsyncImage(
-                    modifier = Modifier
-                        .height(backgroundHeight + corner)
-                        .fillMaxWidth(),
-                    alignment = Alignment.TopCenter,
-                    contentScale = ContentScale.Crop,
-                    model = manga.image,
-                    contentDescription = "Background Detail Image",
-                )
-                Column(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .height(backgroundHeight)
-                            .fillMaxWidth()
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                bottom = 4.dp
-                            ),
-                        contentAlignment = Alignment.BottomStart
-                    ) {
-                        StrokedText(
-                            text = manga.title,
-                            maxLines = 3,
-                            overflow = TextOverflow.Ellipsis
+                item {
+                    Box {
+                        SubcomposeAsyncImage(
+                            modifier = Modifier
+                                .height(backgroundHeight + corner)
+                                .fillMaxWidth(),
+                            alignment = Alignment.TopCenter,
+                            contentScale = ContentScale.Crop,
+                            model = manga.image,
+                            contentDescription = "Background Detail Image",
                         )
-                    }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(
-                                shape = RoundedCornerShape(
-                                    topStart = corner,
-                                    topEnd = corner
-                                )
-                            )
-                            .background(MaterialTheme.colorScheme.background)
-//                                .padding(top = 8.dp)
-                    ) {
                         Column(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            modifier = Modifier.fillMaxSize()
                         ) {
+                            Box(
+                                modifier = Modifier
+                                    .height(backgroundHeight)
+                                    .fillMaxWidth()
+                                    .padding(
+                                        start = 16.dp,
+                                        end = 16.dp,
+                                        bottom = 4.dp
+                                    ),
+                                contentAlignment = Alignment.BottomStart
+                            ) {
+                                StrokedText(
+                                    text = manga.title,
+                                    maxLines = 3,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clip(
+                                        shape = RoundedCornerShape(
+                                            topStart = corner,
+                                            topEnd = corner
+                                        )
+                                    )
+                                    .background(MaterialTheme.colorScheme.background)
+//                                .padding(top = 8.dp)
+                            ) {
+                                Column(
+                                    modifier = Modifier.fillMaxSize(),
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
 //                                Row(
 //                                    modifier = Modifier
 //                                        .fillMaxWidth()
@@ -156,27 +156,28 @@ fun DetailsScreen(
 //                                    )
 //                                }
 //                                HorizontalDivider(color = Gray)
-                            DetailsPager(
-                                tags = manga.tags,
-                                description = manga.description,
-                                chapters = chaptersState,
-                                changeChaptersOrder = { viewModel.changeOrder(it) },
-                                expandedChapterList = expandedChapter,
-                                expandChapterCallback = { viewModel.expandChapter(it) },
-                                readerNavigation = {
-                                    navigator.navigate(
-                                        ReaderScreenDestination(
-                                            it
-                                        )
+                                    DetailsPager(
+                                        tags = manga.tags,
+                                        description = manga.description,
+                                        chapters = chaptersState,
+                                        changeChaptersOrder = { viewModel.changeOrder(it) },
+                                        expandedChapterList = expandedChapter,
+                                        expandChapterCallback = { viewModel.expandChapter(it) },
+                                        readerNavigation = {
+                                            navigator.navigate(
+                                                ReaderScreenDestination(
+                                                    it
+                                                )
+                                            )
+                                        }
                                     )
                                 }
-                            )
+                            }
                         }
                     }
                 }
             }
         }
-
         AnimatedVisibility(
             visible = isLoading || isError,
             enter = fadeIn(tween(300)),
@@ -195,5 +196,4 @@ fun DetailsScreen(
             }
         }
     }
-
 }
