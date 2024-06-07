@@ -43,7 +43,7 @@ import com.sephirita.mangarift.ui.model.MangaListType
 import com.sephirita.mangarift.ui.model.StateAnimationType
 import com.sephirita.mangarift.ui.screen.destinations.DetailScreenDestination
 import com.sephirita.mangarift.ui.screen.destinations.SearchScreenDestination
-import com.sephirita.mangarift.ui.screen.error.ErrorToast
+import com.sephirita.mangarift.ui.screen.error.ErrorScreen
 import com.sephirita.mangarift.ui.screen.home.viewmodel.HomeViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -180,7 +180,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                     isLoading -> Loader(StateAnimationType.FLIPPING_PAGES)
 
                     isError -> {
-                        ErrorToast(
+                        ErrorScreen(
                             enabled = state.isError,
                             onBackPressed = { navigator.navigateUp() }
                         ) { viewModel.getMangas() }

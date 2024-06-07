@@ -34,13 +34,14 @@ import coil.compose.SubcomposeAsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sephirita.mangarift.ui.component.detail.DetailsPager
-import com.sephirita.mangarift.ui.component.header.Header
+import com.sephirita.mangarift.ui.component.header.DetailHeader
 import com.sephirita.mangarift.ui.component.load.Loader
+import com.sephirita.mangarift.ui.component.scaffold.ScrollableScreenContainer
 import com.sephirita.mangarift.ui.component.text.StrokedText
 import com.sephirita.mangarift.ui.model.StateAnimationType
 import com.sephirita.mangarift.ui.screen.destinations.ReaderScreenDestination
 import com.sephirita.mangarift.ui.screen.detail.viewmodel.DetailViewModel
-import com.sephirita.mangarift.ui.screen.error.ErrorToast
+import com.sephirita.mangarift.ui.screen.error.ErrorScreen
 import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -63,14 +64,14 @@ fun DetailScreen(
     }
 
     with(detailState) {
-        Scaffold(
-            topBar = { Header(onBackPressed = { navigator.navigateUp() }) },
+        ScrollableScreenContainer(
+            onNavigateBack = { navigator.navigateUp() },
+            imageUri = manga.image,
             bottomBar = {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.background)
-                        .padding(bottom = 8.dp)
                         .navigationBarsPadding(),
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
@@ -78,106 +79,138 @@ fun DetailScreen(
                 }
             }
         ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .navigationBarsPadding()
-                    .padding(bottom = 18.dp),
-                verticalArrangement = Arrangement.Top
-            ) {
-                item {
-                    Box {
-                        SubcomposeAsyncImage(
-                            modifier = Modifier
-                                .height(backgroundHeight + corner)
-                                .fillMaxWidth(),
-                            alignment = Alignment.TopCenter,
-                            contentScale = ContentScale.Crop,
-                            model = manga.image,
-                            contentDescription = "Background Detail Image",
+            DetailsPager(
+                tags = manga.tags,
+                description = manga.description,
+                chapters = chaptersState,
+                changeChaptersOrder = { viewModel.changeOrder(it) },
+                expandedChapterList = expandedChapter,
+                expandChapterCallback = { viewModel.expandChapter(it) },
+                readerNavigation = {
+                    navigator.navigate(
+                        ReaderScreenDestination(
+                            it
                         )
-                        Column(
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .height(backgroundHeight)
-                                    .fillMaxWidth()
-                                    .padding(
-                                        start = 16.dp,
-                                        end = 16.dp,
-                                        bottom = 4.dp
-                                    ),
-                                contentAlignment = Alignment.BottomStart
-                            ) {
-                                StrokedText(
-                                    text = manga.title,
-                                    maxLines = 3,
-                                    overflow = TextOverflow.Ellipsis
-                                )
-                            }
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .clip(
-                                        shape = RoundedCornerShape(
-                                            topStart = corner,
-                                            topEnd = corner
-                                        )
-                                    )
-                                    .background(MaterialTheme.colorScheme.background)
-//                                .padding(top = 8.dp)
-                            ) {
-                                Column(
-                                    modifier = Modifier.fillMaxSize(),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-//                                Row(
-//                                    modifier = Modifier
-//                                        .fillMaxWidth()
-//                                        .padding(bottom = 8.dp),
-//                                    verticalAlignment = CenterVertically,
-//                                    horizontalArrangement = Arrangement.SpaceEvenly
-//                                ) {
-//                                    Row(verticalAlignment = CenterVertically) {
-//                                        RatingBar(
-//                                            rating = manga.rating.toDouble(), starSize = 26.dp
+                    )
+                }
+            )
+        }
+
+//        Scaffold(
+//            topBar = { DetailHeader(onBackPressed = { navigator.navigateUp() }) },
+//            bottomBar = {
+//                Column(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .background(MaterialTheme.colorScheme.background)
+//                        .padding(bottom = 8.dp)
+//                        .navigationBarsPadding(),
+//                    verticalArrangement = Arrangement.spacedBy(6.dp)
+//                ) {
+//                    HorizontalDivider()
+//                }
+//            }
+//        ) {
+//            LazyColumn(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .navigationBarsPadding()
+//                    .padding(bottom = 18.dp),
+//                verticalArrangement = Arrangement.Top
+//            ) {
+//                item {
+//                    Box {
+//                        SubcomposeAsyncImage(
+//                            modifier = Modifier
+//                                .height(backgroundHeight + corner)
+//                                .fillMaxWidth(),
+//                            alignment = Alignment.TopCenter,
+//                            contentScale = ContentScale.Crop,
+//                            model = manga.image,
+//                            contentDescription = "Background Detail Image",
+//                        )
+//                        Column(
+//                            modifier = Modifier.fillMaxSize()
+//                        ) {
+//                            Box(
+//                                modifier = Modifier
+//                                    .height(backgroundHeight)
+//                                    .fillMaxWidth()
+//                                    .padding(
+//                                        start = 16.dp,
+//                                        end = 16.dp,
+//                                        bottom = 4.dp
+//                                    ),
+//                                contentAlignment = Alignment.BottomStart
+//                            ) {
+//                                StrokedText(
+//                                    text = manga.title,
+//                                    maxLines = 3,
+//                                    overflow = TextOverflow.Ellipsis
+//                                )
+//                            }
+//                            Box(
+//                                modifier = Modifier
+//                                    .fillMaxSize()
+//                                    .clip(
+//                                        shape = RoundedCornerShape(
+//                                            topStart = corner,
+//                                            topEnd = corner
 //                                        )
-//                                        Spacer(modifier = Modifier.width(4.dp))
-//                                        Text(text = manga.rating, fontSize = 20.sp)
-//                                    }
-//                                    Icon(
-//                                        modifier = Modifier
-//                                            .size(24.dp, 24.dp)
-//                                            .clickable { },
-//                                        contentDescription = "Bookmark",
-//                                        painter = painterResource(id = R.drawable.ic_outline_bookmark) // Adicionar ícone pintado pra mostrar ao usuário que o mangá está na lista de favoritos dele
+//                                    )
+//                                    .background(MaterialTheme.colorScheme.background)
+////                                .padding(top = 8.dp)
+//                            ) {
+//                                Column(
+//                                    modifier = Modifier.fillMaxSize(),
+//                                    verticalArrangement = Arrangement.Center,
+//                                    horizontalAlignment = Alignment.CenterHorizontally
+//                                ) {
+////                                Row(
+////                                    modifier = Modifier
+////                                        .fillMaxWidth()
+////                                        .padding(bottom = 8.dp),
+////                                    verticalAlignment = CenterVertically,
+////                                    horizontalArrangement = Arrangement.SpaceEvenly
+////                                ) {
+////                                    Row(verticalAlignment = CenterVertically) {
+////                                        RatingBar(
+////                                            rating = manga.rating.toDouble(), starSize = 26.dp
+////                                        )
+////                                        Spacer(modifier = Modifier.width(4.dp))
+////                                        Text(text = manga.rating, fontSize = 20.sp)
+////                                    }
+////                                    Icon(
+////                                        modifier = Modifier
+////                                            .size(24.dp, 24.dp)
+////                                            .clickable { },
+////                                        contentDescription = "Bookmark",
+////                                        painter = painterResource(id = R.drawable.ic_outline_bookmark) // Adicionar ícone pintado pra mostrar ao usuário que o mangá está na lista de favoritos dele
+////                                    )
+////                                }
+////                                HorizontalDivider(color = Gray)
+//                                    DetailsPager(
+//                                        tags = manga.tags,
+//                                        description = manga.description,
+//                                        chapters = chaptersState,
+//                                        changeChaptersOrder = { viewModel.changeOrder(it) },
+//                                        expandedChapterList = expandedChapter,
+//                                        expandChapterCallback = { viewModel.expandChapter(it) },
+//                                        readerNavigation = {
+//                                            navigator.navigate(
+//                                                ReaderScreenDestination(
+//                                                    it
+//                                                )
+//                                            )
+//                                        }
 //                                    )
 //                                }
-//                                HorizontalDivider(color = Gray)
-                                    DetailsPager(
-                                        tags = manga.tags,
-                                        description = manga.description,
-                                        chapters = chaptersState,
-                                        changeChaptersOrder = { viewModel.changeOrder(it) },
-                                        expandedChapterList = expandedChapter,
-                                        expandChapterCallback = { viewModel.expandChapter(it) },
-                                        readerNavigation = {
-                                            navigator.navigate(
-                                                ReaderScreenDestination(
-                                                    it
-                                                )
-                                            )
-                                        }
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
         AnimatedVisibility(
             visible = isLoading || isError,
             enter = fadeIn(tween(300)),
@@ -188,7 +221,7 @@ fun DetailScreen(
                 isLoading -> Loader(StateAnimationType.DETAILED_PAGES)
 
                 isError -> {
-                    ErrorToast(
+                    ErrorScreen(
                         enabled = detailState.isError,
                         onBackPressed = { navigator.navigateUp() }
                     ) { viewModel.refresh(id) }

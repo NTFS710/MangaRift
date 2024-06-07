@@ -25,10 +25,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.sephirita.mangarift.ui.screen.error.ErrorToast
+import com.sephirita.mangarift.ui.component.header.DetailHeader
+import com.sephirita.mangarift.ui.component.header.SearchHeader
+import com.sephirita.mangarift.ui.screen.error.ErrorScreen
 import com.sephirita.mangarift.ui.component.list.vertical.VerticalMangaList
 import com.sephirita.mangarift.ui.component.load.Loader
-import com.sephirita.mangarift.ui.component.search.SearchBar
 import com.sephirita.mangarift.ui.model.MangaListType
 import com.sephirita.mangarift.ui.model.StateAnimationType
 import com.sephirita.mangarift.ui.screen.destinations.DetailScreenDestination
@@ -69,7 +70,10 @@ fun SearchScreen(
                     .fillMaxSize()
                     .padding(bottom = 48.dp)
             ) {
-                SearchBar(onSearch = { viewModel.search(it) })
+                SearchHeader(
+                    onBackPressed = { navigator.navigateUp() },
+                    onSearch = { viewModel.search(it) }
+                )
                 Spacer(modifier = Modifier.height(16.dp))
                 VerticalMangaList(
                     searchItems = state.mangaList,
@@ -89,7 +93,7 @@ fun SearchScreen(
                 }
 
                 isError -> {
-                    ErrorToast(
+                    ErrorScreen(
                         enabled = state.isError,
                         onBackPressed = { navigator.navigateUp() }
                     ) { viewModel.refresh(initialSearch) }

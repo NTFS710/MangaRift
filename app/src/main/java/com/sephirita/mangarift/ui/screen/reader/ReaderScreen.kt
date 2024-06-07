@@ -41,7 +41,7 @@ import coil.compose.SubcomposeAsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sephirita.mangarift.ui.component.dialog.ReadingStyleDialog
-import com.sephirita.mangarift.ui.screen.error.ErrorToast
+import com.sephirita.mangarift.ui.screen.error.ErrorScreen
 import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.model.StateAnimationType
 import com.sephirita.mangarift.ui.screen.reader.viewmodel.ReaderViewModel
@@ -49,7 +49,6 @@ import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Destination
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ReaderScreen(
     chapterId: String,
@@ -103,35 +102,33 @@ fun ReaderScreen(
             }
 
             if (horizontalReading) {
-                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                    HorizontalPager(
-                        state = pagerState,
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .graphicsLayer(
+                            scaleX = scale,
+                            scaleY = scale,
+                            translationX = offset.x,
+                            translationY = offset.y
+                        ),
+                    beyondViewportPageCount = 3
+                ) {
+                    val currentItem = state.pages[it]
+                    SubcomposeAsyncImage(
                         modifier = Modifier
                             .fillMaxSize()
-                            .graphicsLayer(
-                                scaleX = scale,
-                                scaleY = scale,
-                                translationX = offset.x,
-                                translationY = offset.y
-                            ),
-                        beyondViewportPageCount = 3
-                    ) {
-                        val currentItem = state.pages[it]
-                        SubcomposeAsyncImage(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .transformable(
-                                    state = transformableState,
-                                    canPan = { scale != 1f }),
-                            contentScale = ContentScale.Fit,
-                            alignment = Alignment.Center,
-                            model = currentItem,
-                            contentDescription = "Manga Page",
-                            loading = {
-                                Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
-                            }
-                        )
-                    }
+                            .transformable(
+                                state = transformableState,
+                                canPan = { scale != 1f }),
+                        contentScale = ContentScale.Fit,
+                        alignment = Alignment.Center,
+                        model = currentItem,
+                        contentDescription = "Manga Page",
+                        loading = {
+                            Loader(loadingAnimationType = StateAnimationType.DETAILED_PAGES)
+                        }
+                    )
                 }
             } else {
                 Column(
@@ -175,7 +172,7 @@ fun ReaderScreen(
                 isLoading -> Loader(loadingAnimationType = StateAnimationType.NONE)
 
                 isError -> {
-                    ErrorToast(
+                    ErrorScreen(
                         enabled = state.isError,
                         onBackPressed = { navigator.navigateUp() }
                     ) { viewModel.getChapterToRead(chapterId) }

@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.sephirita.mangarift.R
 
 @Composable
-fun Header(
+fun DetailHeader(
     modifier: Modifier = Modifier,
     onBackPressed: () -> Unit
 ) {

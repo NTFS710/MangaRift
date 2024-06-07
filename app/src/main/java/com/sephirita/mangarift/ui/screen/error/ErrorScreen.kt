@@ -16,17 +16,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.sephirita.mangarift.ui.component.header.Header
+import com.sephirita.mangarift.ui.component.header.DetailHeader
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ErrorToast(
+fun ErrorScreen(
     enabled: Boolean,
     onBackPressed: () -> Unit,
     tryAgain: () -> Unit
 ) {
     Scaffold(
-        topBar = { Header(onBackPressed = onBackPressed) }
+        topBar = { DetailHeader(onBackPressed = onBackPressed) }
     ) {
         Box(
             modifier = Modifier
