@@ -39,15 +39,16 @@ import coil.compose.AsyncImage
 import com.sephirita.mangarift.R
 
 
-internal const val IMAGE_HEIGHT = 400
+internal const val IMAGE_HEIGHT = 424
 internal const val PARALLAX_COEFFICIENT = 0.75F
-internal const val CORNER = 0
+internal const val CORNER = 24
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ScrollableScreenContainer(
     onNavigateBack: () -> Unit,
     imageUri: String?,
+    mangaTitle: @Composable () -> Unit,
     bottomBar: @Composable () -> Unit,
     scrollableContent: @Composable () -> Unit
 ) {
@@ -75,11 +76,28 @@ fun ScrollableScreenContainer(
                 item {
                     Image(
                         imageUri = imageUri,
+                        mangaTitle = mangaTitle,
                         lazyListState = lazyListState,
                         getCollapsingProgress = { getCollapsingProgress() },
                     )
                 }
-                item { scrollableContent() }
+                item {
+                    Box(
+                        modifier = Modifier
+                            .offset(y = -(CORNER.dp))
+                            .graphicsLayer {
+                                val progress = getCollapsingProgress()
+                                val animatedCorner = CORNER - (CORNER - (CORNER * progress))
+
+                                clip = true
+
+                                shape = RoundedCornerShape(
+                                    topStart = animatedCorner.dp,
+                                    topEnd = animatedCorner.dp
+                                )
+                            }
+                    ) { scrollableContent() }
+                }
             }
 
             ToolbarContainer(
@@ -95,6 +113,7 @@ fun ScrollableScreenContainer(
 @Composable
 internal fun Image(
     imageUri: String?,
+    mangaTitle: @Composable () -> Unit,
     lazyListState: LazyListState,
     getCollapsingProgress: () -> Float
 ) {
@@ -115,27 +134,20 @@ internal fun Image(
         AsyncImage(
             model = imageUri,
             contentDescription = null,
-            contentScale = ContentScale.FillWidth,
+            alignment = Alignment.TopCenter,
+            contentScale = ContentScale.Crop,
             modifier = imageModifier
         )
 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(CORNER.dp)
-                .align(Alignment.BottomCenter)
-                .graphicsLayer {
-                    val progress = getCollapsingProgress()
-                    val animatedCorner = CORNER - (CORNER - (CORNER * progress))
-
-                    shape = RoundedCornerShape(
-                        topStart = animatedCorner.dp,
-                        topEnd = animatedCorner.dp
-                    )
-                    clip = true
-                }
-                .background(colorScheme.background)
-        )
+                .padding(horizontal = 16.dp)
+                .offset(y = -CORNER.dp)
+                .align(Alignment.BottomStart)
+        ){
+            mangaTitle()
+        }
     }
 }
 
@@ -210,7 +222,7 @@ private fun BoxScope.ToolbarBackground(getCollapsingProgress: () -> Float) {
 private fun BoxScope.ToolbarIcons(
     onNavigateBack: () -> Unit
 ) {
-    val iconBackgroundAlpha = 0.5F
+    val iconBackgroundAlpha = 0.8F
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -235,7 +247,7 @@ private fun BoxScope.ToolbarIcons(
                 tint = Color.White,
                 modifier = Modifier
                     .size(18.dp)
-                    .offset(x = -1.dp)
+                    .offset(x = -(1.dp))
             )
         }
     }

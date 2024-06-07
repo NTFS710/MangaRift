@@ -14,27 +14,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.SubcomposeAsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.sephirita.mangarift.ui.component.detail.DetailsPager
-import com.sephirita.mangarift.ui.component.header.DetailHeader
 import com.sephirita.mangarift.ui.component.load.Loader
 import com.sephirita.mangarift.ui.component.scaffold.ScrollableScreenContainer
 import com.sephirita.mangarift.ui.component.text.StrokedText
@@ -67,6 +60,13 @@ fun DetailScreen(
         ScrollableScreenContainer(
             onNavigateBack = { navigator.navigateUp() },
             imageUri = manga.image,
+            mangaTitle = {
+                StrokedText(
+                    text = manga.title,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
+                )
+            },
             bottomBar = {
                 Column(
                     modifier = Modifier
@@ -79,6 +79,16 @@ fun DetailScreen(
                 }
             }
         ) {
+            Box(
+                modifier = Modifier
+                    .height(backgroundHeight)
+                    .fillMaxWidth()
+                    .padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 4.dp
+                    )
+            )
             DetailsPager(
                 tags = manga.tags,
                 description = manga.description,
@@ -98,18 +108,6 @@ fun DetailScreen(
 
 //        Scaffold(
 //            topBar = { DetailHeader(onBackPressed = { navigator.navigateUp() }) },
-//            bottomBar = {
-//                Column(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .background(MaterialTheme.colorScheme.background)
-//                        .padding(bottom = 8.dp)
-//                        .navigationBarsPadding(),
-//                    verticalArrangement = Arrangement.spacedBy(6.dp)
-//                ) {
-//                    HorizontalDivider()
-//                }
-//            }
 //        ) {
 //            LazyColumn(
 //                modifier = Modifier
@@ -120,15 +118,6 @@ fun DetailScreen(
 //            ) {
 //                item {
 //                    Box {
-//                        SubcomposeAsyncImage(
-//                            modifier = Modifier
-//                                .height(backgroundHeight + corner)
-//                                .fillMaxWidth(),
-//                            alignment = Alignment.TopCenter,
-//                            contentScale = ContentScale.Crop,
-//                            model = manga.image,
-//                            contentDescription = "Background Detail Image",
-//                        )
 //                        Column(
 //                            modifier = Modifier.fillMaxSize()
 //                        ) {
