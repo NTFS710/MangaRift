@@ -44,9 +44,6 @@ fun DetailScreen(
     navigator: DestinationsNavigator,
     id: String
 ) {
-    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
-    val backgroundHeight = (screenHeight / 10) * 4
-    val corner = 24.dp
 
     val viewModel: DetailViewModel = koinViewModel()
     val detailState by viewModel.detailState.collectAsState()
@@ -72,23 +69,12 @@ fun DetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.background)
-                        .navigationBarsPadding(),
-                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                        .navigationBarsPadding()
                 ) {
                     HorizontalDivider()
                 }
             }
         ) {
-            Box(
-                modifier = Modifier
-                    .height(backgroundHeight)
-                    .fillMaxWidth()
-                    .padding(
-                        start = 16.dp,
-                        end = 16.dp,
-                        bottom = 4.dp
-                    )
-            )
             DetailsPager(
                 tags = manga.tags,
                 description = manga.description,
@@ -106,100 +92,6 @@ fun DetailScreen(
             )
         }
 
-//        Scaffold(
-//            topBar = { DetailHeader(onBackPressed = { navigator.navigateUp() }) },
-//        ) {
-//            LazyColumn(
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .navigationBarsPadding()
-//                    .padding(bottom = 18.dp),
-//                verticalArrangement = Arrangement.Top
-//            ) {
-//                item {
-//                    Box {
-//                        Column(
-//                            modifier = Modifier.fillMaxSize()
-//                        ) {
-//                            Box(
-//                                modifier = Modifier
-//                                    .height(backgroundHeight)
-//                                    .fillMaxWidth()
-//                                    .padding(
-//                                        start = 16.dp,
-//                                        end = 16.dp,
-//                                        bottom = 4.dp
-//                                    ),
-//                                contentAlignment = Alignment.BottomStart
-//                            ) {
-//                                StrokedText(
-//                                    text = manga.title,
-//                                    maxLines = 3,
-//                                    overflow = TextOverflow.Ellipsis
-//                                )
-//                            }
-//                            Box(
-//                                modifier = Modifier
-//                                    .fillMaxSize()
-//                                    .clip(
-//                                        shape = RoundedCornerShape(
-//                                            topStart = corner,
-//                                            topEnd = corner
-//                                        )
-//                                    )
-//                                    .background(MaterialTheme.colorScheme.background)
-////                                .padding(top = 8.dp)
-//                            ) {
-//                                Column(
-//                                    modifier = Modifier.fillMaxSize(),
-//                                    verticalArrangement = Arrangement.Center,
-//                                    horizontalAlignment = Alignment.CenterHorizontally
-//                                ) {
-////                                Row(
-////                                    modifier = Modifier
-////                                        .fillMaxWidth()
-////                                        .padding(bottom = 8.dp),
-////                                    verticalAlignment = CenterVertically,
-////                                    horizontalArrangement = Arrangement.SpaceEvenly
-////                                ) {
-////                                    Row(verticalAlignment = CenterVertically) {
-////                                        RatingBar(
-////                                            rating = manga.rating.toDouble(), starSize = 26.dp
-////                                        )
-////                                        Spacer(modifier = Modifier.width(4.dp))
-////                                        Text(text = manga.rating, fontSize = 20.sp)
-////                                    }
-////                                    Icon(
-////                                        modifier = Modifier
-////                                            .size(24.dp, 24.dp)
-////                                            .clickable { },
-////                                        contentDescription = "Bookmark",
-////                                        painter = painterResource(id = R.drawable.ic_outline_bookmark) // Adicionar ícone pintado pra mostrar ao usuário que o mangá está na lista de favoritos dele
-////                                    )
-////                                }
-////                                HorizontalDivider(color = Gray)
-//                                    DetailsPager(
-//                                        tags = manga.tags,
-//                                        description = manga.description,
-//                                        chapters = chaptersState,
-//                                        changeChaptersOrder = { viewModel.changeOrder(it) },
-//                                        expandedChapterList = expandedChapter,
-//                                        expandChapterCallback = { viewModel.expandChapter(it) },
-//                                        readerNavigation = {
-//                                            navigator.navigate(
-//                                                ReaderScreenDestination(
-//                                                    it
-//                                                )
-//                                            )
-//                                        }
-//                                    )
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
         AnimatedVisibility(
             visible = isLoading || isError,
             enter = fadeIn(tween(300)),

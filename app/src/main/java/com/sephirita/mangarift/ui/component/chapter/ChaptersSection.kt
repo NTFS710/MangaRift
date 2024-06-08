@@ -34,9 +34,7 @@ fun ChaptersSection(
     val chaptersList = if (chapters.order == Natural) chapters.natural else chapters.reversed
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(top = 8.dp)
+        modifier = modifier.fillMaxSize().padding(top = 8.dp)
     ) {
         Column {
             Row(

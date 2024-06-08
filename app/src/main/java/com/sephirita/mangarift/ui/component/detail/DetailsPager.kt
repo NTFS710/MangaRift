@@ -47,7 +47,6 @@ fun DetailsPager(
 
     Box(
         modifier = modifier
-            .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .navigationBarsPadding(),
         contentAlignment = Alignment.Center

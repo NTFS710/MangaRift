@@ -20,9 +20,7 @@ fun DetailsSection(
     description: String
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp)
+        modifier = modifier.fillMaxSize().padding(horizontal = 16.dp)
     ) {
         Column {
             Spacer(modifier = Modifier.height(8.dp))

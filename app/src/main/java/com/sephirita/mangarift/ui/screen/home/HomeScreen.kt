@@ -66,19 +66,13 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(MaterialTheme.colorScheme.background)
-                            .padding(bottom = 8.dp)
-                            .navigationBarsPadding(),
-                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                            .navigationBarsPadding()
                     ) {
                         HorizontalDivider()
                     }
                 }
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = 48.dp)
-                ) {
+                Box(modifier = Modifier.fillMaxSize().navigationBarsPadding()) {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Top,
@@ -150,7 +144,6 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                                             )
                                         }
                                     )
-                                    Spacer(modifier = Modifier.height(16.dp))
                                 }
                             }
 
