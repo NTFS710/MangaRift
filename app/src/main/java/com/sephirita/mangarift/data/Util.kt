@@ -8,7 +8,7 @@ import com.sephirita.mangarift.data.remote.dto.model.chapter.page.ChapterPagesRe
 import com.sephirita.mangarift.domain.model.Chapter
 import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.domain.model.Tag
-import com.sephirita.mangarift.ui.model.Language
+import com.sephirita.mangarift.presentation.model.Language
 
 private const val AUTHOR_TYPE = "author"
 private const val COVER_ART_TYPE = "cover_art"

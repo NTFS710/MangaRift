@@ -73,6 +73,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0'
     implementation "com.airbnb.android:lottie-compose:6.3.0"
 
+    implementation "com.github.skydoves:cloudy:0.1.2"
 
     implementation "io.insert-koin:koin-android:3.4.0"
     implementation "io.insert-koin:koin-androidx-compose:3.4.0"
