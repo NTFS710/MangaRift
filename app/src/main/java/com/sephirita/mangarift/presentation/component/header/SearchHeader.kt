@@ -55,7 +55,7 @@ fun SearchHeader(
                             .padding(top = 20.dp)
                             .size(32.dp)
                             .clip(CircleShape)
-                            .clickable(onClick = {}),
+                            .clickable(onClick = onBackPressed),
                         painter = painterResource(id = R.drawable.ic_round_arrow_back),
                         contentDescription = "Icone para voltar na navegação"
                     )

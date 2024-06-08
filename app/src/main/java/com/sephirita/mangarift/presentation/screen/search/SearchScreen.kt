@@ -65,9 +65,7 @@ fun SearchScreen(
             }
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 48.dp)
+                modifier = Modifier.fillMaxSize().navigationBarsPadding()
             ) {
                 SearchHeader(
                     onBackPressed = { navigator.navigateUp() },
