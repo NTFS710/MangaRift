@@ -2,7 +2,6 @@ package com.sephirita.mangarift.presentation.screen.splash.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sephirita.mangarift.presentation.model.BlurAnimation
 import com.sephirita.mangarift.presentation.screen.splash.state.SplashState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

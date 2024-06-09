@@ -4,8 +4,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 
-enum class DetailsTab {
-    Details {
+enum class DetailsTab(val index: Int) {
+    Details(0) {
         @Composable
         override fun getText(): String {
             return "Detalhes"
@@ -15,11 +15,8 @@ enum class DetailsTab {
         override fun getCorners(): RoundedCornerShape {
             return RoundedCornerShape(bottomEnd = 8.dp)
         }
-
-        override val index: Int
-            get() = 0
     },
-    Chapters {
+    Chapters(1) {
         @Composable
         override fun getText(): String {
             return "Capítulos"
@@ -29,9 +26,6 @@ enum class DetailsTab {
         override fun getCorners(): RoundedCornerShape {
             return RoundedCornerShape(bottomStart = 8.dp)
         }
-
-        override val index: Int
-            get() = 1
     };
 
     @Composable
@@ -39,6 +33,4 @@ enum class DetailsTab {
 
     @Composable
     abstract fun getCorners(): RoundedCornerShape
-
-    abstract val index: Int
 }

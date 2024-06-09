@@ -20,9 +20,7 @@ fun Loader(loadingAnimationType: StateAnimationType) {
         spec = LottieCompositionSpec.Url(loadingAnimationType.animationUrl)
     )
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ) {
         LottieAnimation(

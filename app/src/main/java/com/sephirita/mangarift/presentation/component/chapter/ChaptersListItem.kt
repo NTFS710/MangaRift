@@ -16,11 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sephirita.mangarift.R
-import com.sephirita.mangarift.domain.model.Chapter
 import com.sephirita.mangarift.domain.formatChapterNumber
+import com.sephirita.mangarift.domain.model.Chapter
 
 @Composable
 fun ChaptersListItem(
@@ -29,17 +30,9 @@ fun ChaptersListItem(
     readerNavigation: () -> Unit
 ) {
     with(chapter) {
-        Box(
-            modifier = modifier
-                .fillMaxWidth()
-                .clickable(onClick = readerNavigation)
-        ) {
+        Box(modifier = modifier.fillMaxWidth().clickable(onClick = readerNavigation)) {
             Column(
-                modifier = Modifier.padding(
-                    start = 32.dp,
-                    top = 4.dp,
-                    bottom = 4.dp
-                ),
+                modifier = Modifier.padding(start = 32.dp, top = 4.dp, bottom = 4.dp, end = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(0.dp),
                 horizontalAlignment = Alignment.Start
             ) {
@@ -50,7 +43,11 @@ fun ChaptersListItem(
                         contentDescription = "Language flag"
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "Ch. ${chapterNumber.formatChapterNumber()} $title")
+                    Text(
+                        text = "Ch. ${chapterNumber.formatChapterNumber()} $title",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
                 if (scan.isNotBlank()) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -60,7 +57,13 @@ fun ChaptersListItem(
                             contentDescription = "Language flag"
                         )
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text(text = scan, fontSize = 14.sp, lineHeight = 14.sp)
+                        Text(
+                            text = scan,
+                            fontSize = 14.sp,
+                            lineHeight = 14.sp,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                 }
             }

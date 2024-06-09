@@ -86,7 +86,7 @@ class DetailViewModel(
 
     fun expandChapter(chapterNumber: Float) {
         val currentState = detailState.value
-        val isExpanded = currentState.expandedChapter[chapterNumber] ?: false
-        currentState.expandedChapter[chapterNumber] = !isExpanded
+        val isExpanded = currentState.expandedChapters[chapterNumber] ?: false
+        currentState.expandedChapters[chapterNumber] = !isExpanded
     }
 }

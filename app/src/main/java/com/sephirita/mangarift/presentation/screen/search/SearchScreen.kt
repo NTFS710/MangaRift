@@ -45,7 +45,7 @@ fun SearchScreen(
     val viewModel: SearchViewModel = koinViewModel()
     val state by viewModel.searchState.collectAsState()
 
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(Unit) {
         viewModel.initialSearch(initialSearch)
     }
 

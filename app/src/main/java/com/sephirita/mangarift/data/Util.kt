@@ -9,6 +9,8 @@ import com.sephirita.mangarift.domain.model.Chapter
 import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.domain.model.Tag
 import com.sephirita.mangarift.presentation.model.Language
+import com.sephirita.mangarift.presentation.model.Language.Companion.EN
+import com.sephirita.mangarift.presentation.model.Language.Companion.PT_BR
 
 private const val AUTHOR_TYPE = "author"
 private const val COVER_ART_TYPE = "cover_art"
@@ -38,6 +40,7 @@ fun MangaListResponse.toList(): List<Manga> {
             )
         )
     }
+
     return mangaList
 }
 
@@ -66,18 +69,16 @@ fun DetailedMangaResponse.toManga(): Manga {
         )
     }
 
-
     return manga ?: Manga()
 }
 
 fun ChapterListResponse.formatChapters(): Map<Float, List<Chapter>> {
-
     val chapters = mutableListOf<Chapter>()
     this.data.forEach { currentChapter ->
         val scanName = currentChapter.relationships?.find { it.type == "scanlation_group" }?.attributes?.name
         val languageFlag = when (currentChapter.attributes.translatedLanguage) {
-            Language.PT_BR -> R.drawable.ic_br_flag
-            Language.EN -> R.drawable.ic_en_flag
+            PT_BR -> R.drawable.ic_br_flag
+            EN -> R.drawable.ic_en_flag
             else -> R.drawable.ic_unk_flag
         }
         chapters.add(
@@ -104,6 +105,7 @@ fun ChapterPagesResponse.formatChapterToView(): List<String> {
             "$baseUrl/data/${chapter.hash}/$it"
         )
     }
+
     return chapterPages
 }
 
@@ -117,6 +119,7 @@ private fun findAuthorAndCover(manga: com.sephirita.mangarift.data.remote.dto.mo
             image = getMangaImage(manga.id, relationship.attributes?.fileName)
         }
     }
+
     return Pair(author, image)
 }
 
@@ -134,5 +137,6 @@ private fun getTags(tags: List<com.sephirita.mangarift.data.remote.dto.model.man
             )
         )
     }
+
     return result
 }

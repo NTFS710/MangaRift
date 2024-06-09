@@ -62,7 +62,7 @@ fun ReaderScreen(
     val state by viewModel.readerState.collectAsState()
     val pagerState = rememberPagerState(pageCount = { state.pages.size })
 
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(Unit) {
         viewModel.getChapterToRead(chapterId)
     }
 

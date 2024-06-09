@@ -8,5 +8,5 @@ data class DetailState(
     val isLoading: Boolean = true,
     val isError: Boolean = false,
     val manga: Manga = Manga(),
-    val expandedChapter: SnapshotStateMap<Float, Boolean> = mutableStateMapOf()
+    val expandedChapters: SnapshotStateMap<Float, Boolean> = mutableStateMapOf()
 )

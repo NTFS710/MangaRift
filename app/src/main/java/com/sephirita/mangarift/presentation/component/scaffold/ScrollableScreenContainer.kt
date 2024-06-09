@@ -16,10 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -34,9 +34,12 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sephirita.mangarift.R
+import com.sephirita.mangarift.presentation.component.text.StrokedText
 
 
 internal const val IMAGE_HEIGHT = 424
@@ -48,11 +51,11 @@ internal const val CORNER = 24
 fun ScrollableScreenContainer(
     onNavigateBack: () -> Unit,
     imageUri: String?,
-    mangaTitle: @Composable () -> Unit,
+    title: String?,
     bottomBar: @Composable () -> Unit,
-    scrollableContent: @Composable () -> Unit
+    scrollableContent: LazyListScope.(Dp) -> Unit
 ) {
-    Scaffold(bottomBar = bottomBar) {
+    Scaffold(modifier = Modifier.background(colorScheme.background), bottomBar = bottomBar) {
         val lazyListState = rememberLazyListState()
         val cornerSizeInPx = with(LocalDensity.current) { CORNER.dp.toPx() }
 
@@ -76,28 +79,12 @@ fun ScrollableScreenContainer(
                 item {
                     Image(
                         imageUri = imageUri,
-                        mangaTitle = mangaTitle,
+                        title = title,
                         lazyListState = lazyListState,
                         getCollapsingProgress = { getCollapsingProgress() },
                     )
                 }
-                item {
-                    Box(
-                        modifier = Modifier
-                            .offset(y = -(CORNER.dp))
-                            .graphicsLayer {
-                                val progress = getCollapsingProgress()
-                                val animatedCorner = CORNER - (CORNER - (CORNER * progress))
-
-                                clip = true
-
-                                shape = RoundedCornerShape(
-                                    topStart = animatedCorner.dp,
-                                    topEnd = animatedCorner.dp
-                                )
-                            }
-                    ) { scrollableContent() }
-                }
+                scrollableContent(CORNER.dp)
             }
 
             ToolbarContainer(
@@ -113,7 +100,7 @@ fun ScrollableScreenContainer(
 @Composable
 internal fun Image(
     imageUri: String?,
-    mangaTitle: @Composable () -> Unit,
+    title: String?,
     lazyListState: LazyListState,
     getCollapsingProgress: () -> Float
 ) {
@@ -139,14 +126,20 @@ internal fun Image(
             modifier = imageModifier
         )
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .offset(y = -CORNER.dp)
-                .align(Alignment.BottomStart)
-        ){
-            mangaTitle()
+        title?.let {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .offset(y = -CORNER.dp)
+                    .align(Alignment.BottomStart)
+            ) {
+                StrokedText(
+                    text = it,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }
