@@ -16,9 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.SubcomposeAsyncImage
@@ -30,11 +30,10 @@ import com.sephirita.mangarift.presentation.model.StateAnimationType
 fun HorizontalMangaListItem(
     modifier: Modifier = Modifier,
     item: Manga,
+    itemWidth: Dp,
+    itemHeight: Dp,
     onClick: (String) -> Unit
 ) {
-    val screenSize = LocalConfiguration.current.screenWidthDp.dp
-    val itemWidth = screenSize / 3
-    val itemHeight = itemWidth + 60.dp
     Box(
         modifier = modifier
             .size(width = itemWidth, height = itemHeight)
