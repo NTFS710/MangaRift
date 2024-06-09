@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
@@ -92,6 +93,7 @@ fun DetailScreen(
                         .fillMaxWidth()
                         .background(colorScheme.background)
                         .offset(y = -offset)
+                        .clip(RoundedCornerShape(topStart = offset, topEnd = offset))
                 ) {
                     DetailsTab.entries.forEach {
                         Box(

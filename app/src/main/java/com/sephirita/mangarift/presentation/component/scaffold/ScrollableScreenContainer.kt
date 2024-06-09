@@ -215,7 +215,7 @@ private fun BoxScope.ToolbarBackground(getCollapsingProgress: () -> Float) {
 private fun BoxScope.ToolbarIcons(
     onNavigateBack: () -> Unit
 ) {
-    val iconBackgroundAlpha = 0.8F
+    val iconBackgroundAlpha = 0.0F
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -223,7 +223,7 @@ private fun BoxScope.ToolbarIcons(
         modifier = Modifier
             .fillMaxWidth()
             .statusBarsPadding()
-            .padding(vertical = 8.dp, horizontal = 16.dp)
+            .padding(vertical = 16.dp, horizontal = 16.dp)
             .align(Alignment.TopCenter)
     ) {
         Box(
@@ -239,7 +239,7 @@ private fun BoxScope.ToolbarIcons(
                 contentDescription = null,
                 tint = Color.White,
                 modifier = Modifier
-                    .size(18.dp)
+                    .size(32.dp)
                     .offset(x = -(1.dp))
             )
         }
