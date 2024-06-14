@@ -31,8 +31,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 import com.sephirita.mangarift.R
 import com.sephirita.mangarift.presentation.screen.destinations.HomeScreenDestination
+import com.sephirita.mangarift.presentation.screen.destinations.SplashDestination
 import com.sephirita.mangarift.presentation.screen.splash.viewmodel.SplashViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -61,7 +63,9 @@ fun Splash(navigator: DestinationsNavigator) {
         if (!showBlur) {
             coroutineScope.launch {
                 delay(1000)
-                navigator.navigate(HomeScreenDestination)
+                navigator.navigate(HomeScreenDestination) {
+                    popUpTo(SplashDestination) { inclusive = true }
+                }
             }
         }
     }
