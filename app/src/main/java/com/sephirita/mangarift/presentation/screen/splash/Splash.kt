@@ -1,6 +1,5 @@
 package com.sephirita.mangarift.presentation.screen.splash
 
-
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween

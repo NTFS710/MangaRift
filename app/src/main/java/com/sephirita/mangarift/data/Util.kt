@@ -8,7 +8,6 @@ import com.sephirita.mangarift.data.remote.dto.model.chapter.page.ChapterPagesRe
 import com.sephirita.mangarift.domain.model.Chapter
 import com.sephirita.mangarift.domain.model.Manga
 import com.sephirita.mangarift.domain.model.Tag
-import com.sephirita.mangarift.presentation.model.Language
 import com.sephirita.mangarift.presentation.model.Language.Companion.EN
 import com.sephirita.mangarift.presentation.model.Language.Companion.PT_BR
 
