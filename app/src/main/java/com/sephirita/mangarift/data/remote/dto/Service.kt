@@ -8,7 +8,7 @@ import com.sephirita.mangarift.data.remote.dto.model.SeasonResponse
 import com.sephirita.mangarift.data.remote.dto.model.chapter.page.ChapterPagesResponse
 
 interface Service {
-    suspend fun getPopularNewTitles(): MangaListResponse
+    suspend fun getPopularNewTitles(createdSinceDate: String): MangaListResponse
 
     suspend fun getRecentlyAdded(limit: Int): MangaListResponse
 
